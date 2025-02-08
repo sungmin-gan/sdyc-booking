@@ -1,3 +1,17 @@
+const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
+let currentDay = currentDate.getDay();
+
+let calendarMonth = currentMonth;
+let calendarYear = currentYear;
+let calendarDates = [];
+
+// --- --- --- //
+
 const getCalendarDates=()=>{
 	//Get Previous Month's
 	let firstDate = new Date(calendarYear, calendarMonth, 1);
@@ -100,6 +114,3 @@ e("previousMonth").addEventListener("click", () => {
   resetCalendarClasses()
   fillCalendar()
 })
-
-renderCalendar()
-fillCalendar()
