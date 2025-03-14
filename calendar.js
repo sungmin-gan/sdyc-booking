@@ -156,6 +156,7 @@ const clearBookings = () => {
 	for (let i=0; i<bookingsToDisplay.length; i++) {
 		e(`booking_${i}`).remove();
 	}
+	bookingsToDisplay = [];
 }
 
 // For Controlling Booking Details Form
