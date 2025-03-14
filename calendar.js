@@ -105,6 +105,8 @@ e("nextMonth").addEventListener("click", () => {
 		clearBookings()
     resetCalendarClasses()
     fillCalendar()
+		extractBookings()
+		displayBookings()
 })
 
 e("previousMonth").addEventListener("click", () => {
@@ -117,6 +119,8 @@ e("previousMonth").addEventListener("click", () => {
 		clearBookings()
     resetCalendarClasses()
     fillCalendar()
+		extractBookings()
+		displayBookings()
 })
 
 // For Filling the Calendar with Bookings //
