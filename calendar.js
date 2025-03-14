@@ -10,6 +10,8 @@ let calendarMonth = currentMonth;
 let calendarYear = currentYear;
 let calendarDates = [];
 
+let bookingsToDisplay = [];
+
 // For Making the Basic Calendar //
 
 const getCalendarDates = () => {
@@ -100,6 +102,7 @@ e("nextMonth").addEventListener("click", () => {
     } else {
         calendarMonth += 1
     }
+		clearBookings()
     resetCalendarClasses()
     fillCalendar()
 })
@@ -111,13 +114,12 @@ e("previousMonth").addEventListener("click", () => {
     } else {
         calendarMonth -= 1
     }
+		clearBookings()
     resetCalendarClasses()
     fillCalendar()
 })
 
 // For Filling the Calendar with Bookings //
-
-let bookingsToDisplay = [];
 
 const extractBookings = () => {
 	calendarDates.forEach((date, i) => {
@@ -150,12 +152,18 @@ const displayBookings = () => {
   })
 }
 
+const clearBookings = () => {
+	for (let i=0; i<bookingsToDisplay.length; i++) {
+		e(`booking_${i}`).remove();
+	}
+}
+
 // For Controlling Booking Details Form
 
 let dbFieldsDisabled = true;
 
 let bdElements = {
-    estimate: e("estimate"),
+  estimate: e("estimate"),
   invoiced: e("invoiced"),
   vessel: e("vessel"),
   requestedDate: e("requestedDate"),
