@@ -143,10 +143,10 @@ function extractBookings() {
 function extractTimeFormatted(dateTime) {
     let time = dateTime.substring(11, 16);
     let hour = (parseInt(time.substring(0,2)) > 12 ? parseInt(time.substring(0,2)) - 12 : parseInt(time.substring(0,2)));
-    let suffix = (parseInt(time.substring(0,2)) > 11 ? "PM" : "AM");
+    let suffix = (parseInt(time.substring(0,2)) > 11 ? "p" : "a");
     let restOfTime = time.substring(2);
     if (parseInt(hour) == 0) { hourFormatted = "12" }
-    return `${hour}${restOfTime} ${suffix}`
+    return `${hour}${restOfTime}${suffix}`
 }
 
 function displayBookings() {
@@ -157,7 +157,7 @@ function displayBookings() {
         let bookingBadge = document.createElement("div");
         bookingBadge.classList.add("text-block-6");
         bookingBadge.setAttribute("id", `booking_${i}`)
-        bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)} ${booking.booking.firstName} ${booking.booking.lastName}`;
+        bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)} - ${booking.booking.firstName} ${booking.booking.lastName}`;
         bookingDiv.appendChild(bookingBadge);
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
         // Set event listener
