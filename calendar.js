@@ -146,7 +146,7 @@ function extractTimeFormatted(dateTime) {
     let suffix = (parseInt(time.substring(0,2)) > 11 ? "PM" : "AM");
     let restOfTime = time.substring(2);
     if (parseInt(hour) == 0) { hourFormatted = "12" }
-    return `${hourFormatted}${restOfTime} ${suffix}`
+    return `${hour}${restOfTime} ${suffix}`
 }
 
 function displayBookings() {
