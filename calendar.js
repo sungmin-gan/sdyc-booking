@@ -157,7 +157,7 @@ function displayBookings() {
         let bookingBadge = document.createElement("div");
         bookingBadge.classList.add("text-block-6");
         bookingBadge.setAttribute("id", `booking_${i}`)
-        bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)} - ${booking.booking.firstName} ${booking.booking.lastName}`;
+        bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)}  ${booking.booking.firstName} ${booking.booking.lastName}`;
         bookingDiv.appendChild(bookingBadge);
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
         // Set event listener
