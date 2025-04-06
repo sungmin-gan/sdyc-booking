@@ -198,16 +198,16 @@ let bdElements = {
 }
 
 function populateBookingDetails(booking) {
-    bdElements.passengers.value = booking.Passengers;
-    //bdElements.occasion.value = booking.Occasion;
+    bdElements.passengers.value = booking.passengers;
+    bdElements.occasion.value = booking.occasion;
     //bdElements.alcohol.value = (booking.alcohol) ? "Yes" : "No";
-    bdElements.notes.value = booking["Additional Info"];
-    bdElements.firstName.value = booking["First Name"];
-    bdElements.lastName.value = booking["Last Name"];
-    bdElements.phone.value = booking.Phone;
-    bdElements.email.value = booking.Email;
-    bdElements.contactMode.value = booking["Contact Mode"];
-    bdElements.textOptIn.value = (booking["Text Opt In"]) ? "Yes" : "No";
+    bdElements.notes.value = booking.additionalInfo;
+    bdElements.firstName.value = booking.firstName;
+    bdElements.lastName.value = booking.lastName;
+    bdElements.phone.value = booking.phone;
+    bdElements.email.value = booking.email;
+    bdElements.contactMode.value = booking.contactMode;
+    bdElements.textOptIn.value = (booking.textOptIn) ? "Yes" : "No";
 }
 
 function clearBookingDetails(booking) {
