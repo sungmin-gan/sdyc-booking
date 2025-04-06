@@ -198,6 +198,7 @@ let bdElements = {
 }
 
 function populateBookingDetails(booking) {
+    console.log(booking)
     bdElements.passengers.value = booking.passengers;
     bdElements.occasion.value = booking.occasion;
     //bdElements.alcohol.value = (booking.alcohol) ? "Yes" : "No";
