@@ -267,6 +267,7 @@ function disableBDFields() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].disabled = true
     })
+    bdElements.internalNotes.disabled = false;
     if (!dbFieldsDisabled) {
         e("saveButton").classList.remove("show")
         e("editButton").classList.remove("hidden")
