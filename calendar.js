@@ -228,11 +228,11 @@ let bdElements = {
     phone: e("phone"),
     textOptIn: e("textOptIn"),
     // Invoice Info
-    estimate: e("estimate"),
-    invoiced: e("invoiced"),
+    //estimate: e("estimate"),
+    //invoiced: e("invoiced"),
     // Misc Info
-    requestedDate: e("requestedDate"),
-    alternateDate: e("alternateDate")
+    //requestedDate: e("requestedDate"),
+    //alternateDate: e("alternateDate")
 }
 
 function populateBookingDetails(booking) {
