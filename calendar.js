@@ -216,7 +216,7 @@ let bdElements = {
     dateTimeText: e("dateTimeText"),
     passengersText: e("passengersText"),
     //passengers: e("passengers"),
-    //vessel: e("vessel"),
+    vessel: e("vessel"),
     occasion: e("occasion"),
     alcohol: e("alcohol"),
     notes: e("notes"),
@@ -244,15 +244,15 @@ function populateBookingDetails(booking) {
     //bdElements.passengers.value = booking.passengers;
     //bdElements.vessel.value = booking.vessel;
     //bdElements.occasion.value = booking.occasion;
-    //bdElements.alcohol.value = (booking.alcohol) ? "Yes" : "No";
-    bdElements.notes.innerHTML = booking.additionalInfo;
+    bdElements.alcohol.value = booking.alcohol;
+    bdElements.notes.innerHTML = booking.additionalInfo || "-";
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
     bdElements.contactMode.value = booking.contactMode;
     bdElements.email.value = booking.email;
     bdElements.phone.value = booking.phone;
-    bdElements.textOptIn.value = (booking.textOptIn) ? "Yes" : "No";
+    bdElements.textOptIn.value = booking.textOptIn;
 }
 
 function clearBookingDetails(booking) {
