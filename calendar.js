@@ -241,11 +241,11 @@ function populateBookingDetails(booking) {
     bdElements.formTitle.innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     bdElements.dateTimeText.innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
     bdElements.passengersText.innerHTML = `${booking.passengers} Passengers`;
-    bdElements.passengers.value = booking.passengers;
+    //bdElements.passengers.value = booking.passengers;
     //bdElements.vessel.value = booking.vessel;
     //bdElements.occasion.value = booking.occasion;
     //bdElements.alcohol.value = (booking.alcohol) ? "Yes" : "No";
-    bdElements.notes.value = booking.additionalInfo;
+    bdElements.notes.innerHTML = booking.additionalInfo;
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
