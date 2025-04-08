@@ -1,6 +1,9 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 let currentDate = new Date();
@@ -179,35 +182,78 @@ function clearBookings() {
 
 let dbFieldsDisabled = true;
 
+function extractTimeFormattedFull(dateTime) {
+    let time = dateTime.substring(11, 16);
+    let hour = (parseInt(time.substring(0,2)) > 12 ? parseInt(time.substring(0,2)) - 12 : parseInt(time.substring(0,2)));
+    let suffix = (parseInt(time.substring(0,2)) > 11 ? "PM" : "AM");
+    let restOfTime = time.substring(2);
+    if (parseInt(hour) == 0) { hourFormatted = "12" }
+    return `${hour}${restOfTime} ${suffix}`
+}
+
+function makeDateSpanPretty(dateTime_1, dateTime_2) {
+    let day_1 = new Date(`${YEAR[parseInt(dateTime_1.substring(5, 7))-1]} ${dateTime_1.substring(8, 10)} ,${dateTime_1.substring(0, 4)}`);
+    day_1 = WEEKABBR[day_1.getDay()];
+    let date_1 = `${day_1} ${parseInt(dateTime_1.substring(5, 7))}/${parseInt(dateTime_1.substring(8, 10))}/${parseInt(dateTime_1.substring(0, 4))}`;
+    let time_1 = extractTimeFormattedFull(dateTime_1)
+
+    let day_2 = new Date(`${YEAR[parseInt(dateTime_2.substring(5, 7))-1]} ${dateTime_2.substring(8, 10)} ,${dateTime_2.substring(0, 4)}`);
+    console.log(day_2)
+    day_2 = WEEKABBR[day_2.getDay()];
+    
+    let date_2 = `${day_2} ${parseInt(dateTime_2.substring(5, 7))}/${parseInt(dateTime_2.substring(8, 10))}/${parseInt(dateTime_2.substring(0, 4))}`;
+    let time_2 = extractTimeFormattedFull(dateTime_2)
+    
+    if (date_1 == date_2) {
+        return `${date_1} ${time_1} - ${time_2}`
+    } else {
+        return `${date_1} ${time_1} - ${date_2} ${time_2}`
+    }
+}
+
 let bdElements = {
-    estimate: e("estimate"),
-    invoiced: e("invoiced"),
-    vessel: e("vessel"),
-    requestedDate: e("requestedDate"),
-    alternateDate: e("alternateDate"),
+    // Charter Info
+    formWindowTitle: e("formWindowTitle"),
+    formTitle: e("formTitle"),
+    dateTimeText: e("dateTimeText"),
+    passengersText: e("passengersText"),
     passengers: e("passengers"),
+    vessel: e("vessel"),
     occasion: e("occasion"),
     alcohol: e("alcohol"),
     notes: e("notes"),
+    // Customer Info
     firstName: e("firstName"),
     lastName: e("lastName"),
-    phone: e("phone"),
-    email: e("email"),
     contactMode: e("contactMode"),
-    textOptIn: e("textOptIn")
+    email: e("email"),
+    phone: e("phone"),
+    textOptIn: e("textOptIn"),
+    // Invoice Info
+    estimate: e("estimate"),
+    invoiced: e("invoiced"),
+    // Misc Info
+    requestedDate: e("requestedDate"),
+    alternateDate: e("alternateDate")
 }
 
 function populateBookingDetails(booking) {
-    console.log(booking)
+    // Charter Info
+    bdElements.formWindowTitle.innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
+    bdElements.formTitle.innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
+    bdElements.dateTimeText.innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
+    bdElements.passengersText.innerHTML = `${booking.passengers} Passengers`;
     bdElements.passengers.value = booking.passengers;
-    bdElements.occasion.value = booking.occasion;
+    //bdElements.vessel.value = booking.vessel;
+    //bdElements.occasion.value = booking.occasion;
     //bdElements.alcohol.value = (booking.alcohol) ? "Yes" : "No";
     bdElements.notes.value = booking.additionalInfo;
+    // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
-    bdElements.phone.value = booking.phone;
-    bdElements.email.value = booking.email;
     bdElements.contactMode.value = booking.contactMode;
+    bdElements.email.value = booking.email;
+    bdElements.phone.value = booking.phone;
     bdElements.textOptIn.value = (booking.textOptIn) ? "Yes" : "No";
 }
 
