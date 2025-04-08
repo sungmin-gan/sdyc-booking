@@ -209,7 +209,8 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
 }
 
 function resizeTextarea(textarea, fieldSizing) {
-	fieldSizing.innerHTML = textarea.value;
+    let newText = textarea.value.replaceAll('\n', '<br>')
+	fieldSizing.innerHTML = newText
     textarea.style.height = `${fieldSizing.offsetHeight}px`
 }
 
