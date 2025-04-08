@@ -196,7 +196,6 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
     let time_1 = extractTimeFormattedFull(dateTime_1)
 
     let day_2 = new Date(`${YEAR[parseInt(dateTime_2.substring(5, 7))-1]} ${dateTime_2.substring(8, 10)} ,${dateTime_2.substring(0, 4)}`);
-    console.log(day_2)
     day_2 = WEEKABBR[day_2.getDay()];
     
     let date_2 = `${day_2} ${parseInt(dateTime_2.substring(5, 7))}/${parseInt(dateTime_2.substring(8, 10))}/${parseInt(dateTime_2.substring(0, 4))}`;
@@ -207,6 +206,11 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
     } else {
         return `${date_1} ${time_1} - ${date_2} ${time_2}`
     }
+}
+
+function resizeTextarea(textarea, fieldSizing) {
+	fieldSizing.innerHTML = textarea.value;
+    textarea.style.height = `${fieldSizing.offsetHeight}px`
 }
 
 let bdElements = {
@@ -245,9 +249,10 @@ function populateBookingDetails(booking) {
     //bdElements.passengers.value = booking.passengers;
     //bdElements.vessel.value = booking.vessel;
     //bdElements.occasion.value = booking.occasion;
-    bdElements.alcohol.value = booking.alcohol;
+    bdElements.alcohol.value = booking.alcohol || false;
     bdElements.notes.innerHTML = booking.additionalInfo || "-";
-    bdElements.internalNotes.value = booking.internalNotes;
+    bdElements.internalNotes.value = booking.internalNotes || "";
+    resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"))
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
@@ -267,7 +272,6 @@ function disableBDFields() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].disabled = true
     })
-    bdElements.internalNotes.disabled = false;
     if (!dbFieldsDisabled) {
         e("saveButton").classList.remove("show")
         e("editButton").classList.remove("hidden")
