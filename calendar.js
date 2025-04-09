@@ -274,7 +274,7 @@ function disableBDFields() {
         bdElements[key].disabled = true
     })
     if (!dbFieldsDisabled) {
-        e("saveButton").classList.remove("show")
+        e("saveButton").classList.add("hidden")
         e("editButton").classList.remove("hidden")
     }
     dbFieldsDisabled = true;
@@ -284,8 +284,8 @@ function enableBDFields() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].disabled = false
     })
+    e("saveButton").classList.remove("hidden")
     e("editButton").classList.add("hidden")
-    e("saveButton").classList.add("show")
     dbFieldsDisabled = false;
 }
 
