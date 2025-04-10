@@ -278,6 +278,8 @@ function disableBDFields() {
         e("editButton").classList.remove("hidden")
         e("linePassengersInput").classList.add("hidden")
         e("linePassengersText").classList.remove("hidden")
+        e("lineCharterDatetimeInput").classList.add("hidden")
+        e("lineCharterDatetimeText").classList.remove("hidden")
     }
     dbFieldsDisabled = true;
 }
@@ -290,6 +292,8 @@ function enableBDFields() {
     e("editButton").classList.add("hidden")
     e("linePassengersInput").classList.remove("hidden")
     e("linePassengersText").classList.add("hidden")
+    e("lineCharterDatetimeInput").classList.remove("hidden")
+    e("lineCharterDatetimeText").classList.add("hidden")
     dbFieldsDisabled = false;
 }
 
