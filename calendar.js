@@ -276,6 +276,8 @@ function disableBDFields() {
     if (!dbFieldsDisabled) {
         e("saveButton").classList.add("hidden")
         e("editButton").classList.remove("hidden")
+        e("linePassengersInput").classList.add("hidden")
+        e("linePassengersText").classList.remove("hidden")
     }
     dbFieldsDisabled = true;
 }
@@ -286,6 +288,8 @@ function enableBDFields() {
     })
     e("saveButton").classList.remove("hidden")
     e("editButton").classList.add("hidden")
+    e("linePassengersInput").classList.remove("hidden")
+    e("linePassengersText").classList.add("hidden")
     dbFieldsDisabled = false;
 }
 
