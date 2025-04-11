@@ -247,6 +247,10 @@ function resizeTextarea(textarea, fieldSizing) {
     textarea.style.height = `${fieldSizing.offsetHeight}px`
 }
 
+e("internalNotes").addEventListener("input", () => {
+    resizeTextarea(e("internalNotes"), e("internalNotesFieldSizing"))
+})
+
 let bdElements = {
     // Charter Info
     formWindowTitle: e("formWindowTitle"),
