@@ -127,6 +127,39 @@ e("previousMonth").addEventListener("click", () => {
     displayBookings()
 })
 
+const tabs = {
+	calendar: { 
+  	tab: e("calendarTab"), 
+    section: e("calendarSection"), 
+    icon: e("calendarTabIcon")
+	},
+  yachts: { 
+  	tab: e("yachtsTab"),
+    section: e("yachtsSection"), 
+  	icon: e("yachtsTabIcon")  
+	}
+}
+
+let currentTab = tabs.calendar;
+
+function switchTabs(dest) {
+	if (dest == currentTab) { console.log("null"); return null } else {
+    currentTab.tab.classList.remove("selected");
+    currentTab.section.classList.add("hidden");
+    currentTab.icon.classList.remove("selected")
+    dest.tab.classList.add("selected");
+    dest.section.classList.remove("hidden");
+    dest.icon.classList.add("selected")
+    currentTab = dest;
+  }
+}
+
+e("calendarTab").addEventListener("click", () => { switchTabs(tabs.calendar) })
+e("yachtsTab").addEventListener("click", () => { switchTabs(tabs.yachts) })
+
+e('charterStartDate').setAttribute("type", "date");
+e('charterEndDate').setAttribute("type", "date");
+
 //// //// //// //// For Filling the Calendar with Bookings //// //// //// ////
 
 function extractBookings() {
@@ -322,3 +355,46 @@ e("editButton").addEventListener("click", () => {
 e("saveButton").addEventListener("click", () => {
     disableBDFields()
 })
+
+function setTimeInput(el) {
+	for (let i=9; i<12; i++) {
+  	let j = (i < 10 ? `0${i}` : `${i}`);
+    let option_1 = document.createElement("option");
+    option_1.textContent = `${j}:00 AM`;
+    option_1.value = `${j}:00`;
+    el.appendChild(option_1);
+    let option_2 = document.createElement("option");
+    option_2.textContent = `${j}:30 AM`;
+    option_2.value = `${j}:30`;
+    el.appendChild(option_2)
+  }
+  let option_noon_1 = document.createElement("option");
+  option_noon_1.textContent = `12:00 PM`;
+  option_noon_1.value = `12:00`;
+  el.appendChild(option_noon_1);
+  let option_noon_2 = document.createElement("option");
+  option_noon_2.textContent = `12:30 PM`;
+  option_noon_2.value = `12:30`;
+  el.appendChild(option_noon_2);
+  for (let i=1; i<12; i++) {
+    let option_1 = document.createElement("option");
+    option_1.textContent = `${i}:00 PM`;
+    option_1.value = `${i+12}:00`;
+    el.appendChild(option_1);
+    let option_2 = document.createElement("option");
+    option_2.textContent = `${i}:30 PM`;
+    option_2.value = `${i+12}:30`;
+    el.appendChild(option_2)
+  }
+  let option_midnight_1 = document.createElement("option");
+  option_midnight_1.textContent = `12:00 AM`;
+  option_midnight_1.value = `00:00`;
+  el.appendChild(option_midnight_1);
+  let option_midnight_2 = document.createElement("option");
+  option_midnight_2.textContent = `12:30 AM`;
+  option_midnight_2.value = `00:30`;
+  el.appendChild(option_midnight_2);
+}
+
+setTimeInput(e('charterStartTime'));
+setTimeInput(e('charterEndTime'));
