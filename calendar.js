@@ -128,30 +128,30 @@ e("previousMonth").addEventListener("click", () => {
 })
 
 const tabs = {
-	calendar: { 
-  	tab: e("calendarTab"), 
-    section: e("calendarSection"), 
-    icon: e("calendarTabIcon")
-	},
-  yachts: { 
-  	tab: e("yachtsTab"),
-    section: e("yachtsSection"), 
-  	icon: e("yachtsTabIcon")  
-	}
+    calendar: {
+        tab: e("calendarTab"),
+        section: e("calendarSection"),
+        icon: e("calendarTabIcon")
+    },
+    yachts: {
+        tab: e("yachtsTab"),
+        section: e("yachtsSection"),
+        icon: e("yachtsTabIcon")
+    }
 }
 
 let currentTab = tabs.calendar;
 
 function switchTabs(dest) {
-	if (dest == currentTab) { console.log("null"); return null } else {
-    currentTab.tab.classList.remove("selected");
-    currentTab.section.classList.add("hidden");
-    currentTab.icon.classList.remove("selected")
-    dest.tab.classList.add("selected");
-    dest.section.classList.remove("hidden");
-    dest.icon.classList.add("selected")
-    currentTab = dest;
-  }
+    if (dest == currentTab) { console.log("null"); return null } else {
+        currentTab.tab.classList.remove("selected");
+        currentTab.section.classList.add("hidden");
+        currentTab.icon.classList.remove("selected")
+        dest.tab.classList.add("selected");
+        dest.section.classList.remove("hidden");
+        dest.icon.classList.add("selected")
+        currentTab = dest;
+    }
 }
 
 e("calendarTab").addEventListener("click", () => { switchTabs(tabs.calendar) })
@@ -176,8 +176,8 @@ function extractBookings() {
 
 function extractTimeFormatted(dateTime) {
     let time = dateTime.substring(11, 16);
-    let hour = (parseInt(time.substring(0,2)) > 12 ? parseInt(time.substring(0,2)) - 12 : parseInt(time.substring(0,2)));
-    let suffix = (parseInt(time.substring(0,2)) > 11 ? "p" : "a");
+    let hour = (parseInt(time.substring(0, 2)) > 12 ? parseInt(time.substring(0, 2)) - 12 : parseInt(time.substring(0, 2)));
+    let suffix = (parseInt(time.substring(0, 2)) > 11 ? "p" : "a");
     let restOfTime = time.substring(2);
     if (parseInt(hour) == 0) { hourFormatted = "12" }
     return `${hour}${restOfTime}${suffix}`
@@ -215,25 +215,25 @@ let dbFieldsDisabled = true;
 
 function extractTimeFormattedFull(dateTime) {
     let time = dateTime.substring(11, 16);
-    let hour = (parseInt(time.substring(0,2)) > 12 ? parseInt(time.substring(0,2)) - 12 : parseInt(time.substring(0,2)));
-    let suffix = (parseInt(time.substring(0,2)) > 11 ? "PM" : "AM");
+    let hour = (parseInt(time.substring(0, 2)) > 12 ? parseInt(time.substring(0, 2)) - 12 : parseInt(time.substring(0, 2)));
+    let suffix = (parseInt(time.substring(0, 2)) > 11 ? "PM" : "AM");
     let restOfTime = time.substring(2);
     if (parseInt(hour) == 0) { hourFormatted = "12" }
     return `${hour}${restOfTime} ${suffix}`
 }
 
 function makeDateSpanPretty(dateTime_1, dateTime_2) {
-    let day_1 = new Date(`${YEAR[parseInt(dateTime_1.substring(5, 7))-1]} ${dateTime_1.substring(8, 10)} ,${dateTime_1.substring(0, 4)}`);
+    let day_1 = new Date(`${YEAR[parseInt(dateTime_1.substring(5, 7)) - 1]} ${dateTime_1.substring(8, 10)} ,${dateTime_1.substring(0, 4)}`);
     day_1 = WEEKABBR[day_1.getDay()];
     let date_1 = `${day_1} ${parseInt(dateTime_1.substring(5, 7))}/${parseInt(dateTime_1.substring(8, 10))}/${parseInt(dateTime_1.substring(0, 4))}`;
     let time_1 = extractTimeFormattedFull(dateTime_1)
 
-    let day_2 = new Date(`${YEAR[parseInt(dateTime_2.substring(5, 7))-1]} ${dateTime_2.substring(8, 10)} ,${dateTime_2.substring(0, 4)}`);
+    let day_2 = new Date(`${YEAR[parseInt(dateTime_2.substring(5, 7)) - 1]} ${dateTime_2.substring(8, 10)} ,${dateTime_2.substring(0, 4)}`);
     day_2 = WEEKABBR[day_2.getDay()];
-    
+
     let date_2 = `${day_2} ${parseInt(dateTime_2.substring(5, 7))}/${parseInt(dateTime_2.substring(8, 10))}/${parseInt(dateTime_2.substring(0, 4))}`;
     let time_2 = extractTimeFormattedFull(dateTime_2)
-    
+
     if (date_1 == date_2) {
         return `${date_1} ${time_1} - ${time_2}`
     } else {
@@ -243,7 +243,7 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
 
 function resizeTextarea(textarea, fieldSizing) {
     let newText = textarea.value.replaceAll('\n', '<br>')
-	fieldSizing.innerHTML = newText
+    fieldSizing.innerHTML = newText
     textarea.style.height = `${fieldSizing.offsetHeight}px`
 }
 
@@ -357,43 +357,43 @@ e("saveButton").addEventListener("click", () => {
 })
 
 function setTimeInput(el) {
-	for (let i=9; i<12; i++) {
-  	let j = (i < 10 ? `0${i}` : `${i}`);
-    let option_1 = document.createElement("option");
-    option_1.textContent = `${j}:00 AM`;
-    option_1.value = `${j}:00`;
-    el.appendChild(option_1);
-    let option_2 = document.createElement("option");
-    option_2.textContent = `${j}:30 AM`;
-    option_2.value = `${j}:30`;
-    el.appendChild(option_2)
-  }
-  let option_noon_1 = document.createElement("option");
-  option_noon_1.textContent = `12:00 PM`;
-  option_noon_1.value = `12:00`;
-  el.appendChild(option_noon_1);
-  let option_noon_2 = document.createElement("option");
-  option_noon_2.textContent = `12:30 PM`;
-  option_noon_2.value = `12:30`;
-  el.appendChild(option_noon_2);
-  for (let i=1; i<12; i++) {
-    let option_1 = document.createElement("option");
-    option_1.textContent = `${i}:00 PM`;
-    option_1.value = `${i+12}:00`;
-    el.appendChild(option_1);
-    let option_2 = document.createElement("option");
-    option_2.textContent = `${i}:30 PM`;
-    option_2.value = `${i+12}:30`;
-    el.appendChild(option_2)
-  }
-  let option_midnight_1 = document.createElement("option");
-  option_midnight_1.textContent = `12:00 AM`;
-  option_midnight_1.value = `00:00`;
-  el.appendChild(option_midnight_1);
-  let option_midnight_2 = document.createElement("option");
-  option_midnight_2.textContent = `12:30 AM`;
-  option_midnight_2.value = `00:30`;
-  el.appendChild(option_midnight_2);
+    for (let i = 9; i < 12; i++) {
+        let j = (i < 10 ? `0${i}` : `${i}`);
+        let option_1 = document.createElement("option");
+        option_1.textContent = `${j}:00 AM`;
+        option_1.value = `${j}:00`;
+        el.appendChild(option_1);
+        let option_2 = document.createElement("option");
+        option_2.textContent = `${j}:30 AM`;
+        option_2.value = `${j}:30`;
+        el.appendChild(option_2)
+    }
+    let option_noon_1 = document.createElement("option");
+    option_noon_1.textContent = `12:00 PM`;
+    option_noon_1.value = `12:00`;
+    el.appendChild(option_noon_1);
+    let option_noon_2 = document.createElement("option");
+    option_noon_2.textContent = `12:30 PM`;
+    option_noon_2.value = `12:30`;
+    el.appendChild(option_noon_2);
+    for (let i = 1; i < 12; i++) {
+        let option_1 = document.createElement("option");
+        option_1.textContent = `${i}:00 PM`;
+        option_1.value = `${i + 12}:00`;
+        el.appendChild(option_1);
+        let option_2 = document.createElement("option");
+        option_2.textContent = `${i}:30 PM`;
+        option_2.value = `${i + 12}:30`;
+        el.appendChild(option_2)
+    }
+    let option_midnight_1 = document.createElement("option");
+    option_midnight_1.textContent = `12:00 AM`;
+    option_midnight_1.value = `00:00`;
+    el.appendChild(option_midnight_1);
+    let option_midnight_2 = document.createElement("option");
+    option_midnight_2.textContent = `12:30 AM`;
+    option_midnight_2.value = `00:30`;
+    el.appendChild(option_midnight_2);
 }
 
 setTimeInput(e('charterStartTime'));
