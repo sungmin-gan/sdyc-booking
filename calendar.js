@@ -298,7 +298,7 @@ let bdElements = {
 
 function populateBookingDetails(booking) {
     // Charter Info
-    e("formWindownTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
+    e("formWindowTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("formTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("dateTimeText").innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
