@@ -275,11 +275,7 @@ e("internalNotes").addEventListener("input", () => {
 
 let bdElements = {
     // Charter Info
-    formWindowTitle: e("formWindowTitle"),
-    formTitle: e("formTitle"),
-    dateTimeText: e("dateTimeText"),
-    passengersText: e("passengersText"),
-    //passengers: e("passengers"),
+    passengers: e("passengers"),
     vessel: e("vessel"),
     occasion: e("occasion"),
     alcohol: e("alcohol"),
@@ -302,11 +298,11 @@ let bdElements = {
 
 function populateBookingDetails(booking) {
     // Charter Info
-    bdElements.formWindowTitle.innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
-    bdElements.formTitle.innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
-    bdElements.dateTimeText.innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
-    bdElements.passengersText.innerHTML = `${booking.passengers} Passengers`;
-    //bdElements.passengers.value = booking.passengers;
+    e("formWindownTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
+    e("formTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
+    e("dateTimeText").innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
+    e("passengersText").innerHTML = `${booking.passengers} Passengers`;
+    bdElements.passengers.value = booking.passengers;
     //bdElements.vessel.value = booking.vessel;
     //bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
