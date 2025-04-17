@@ -310,10 +310,10 @@ function populateBookingDetails(booking) {
     e("formWindowTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("formTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("dateTimeText").innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
-    bdElements.charterStartDate = segmentedDateTime(booking.charterStart).date;
-    bdElements.charterStartTime = segmentedDateTime(booking.charterStart).time;
-    bdElements.charterEndDate = segmentedDateTime(booking.charterEnd).date;
-    bdElements.charterEndTime = segmentedDateTime(booking.charterEnd).time;
+    bdElements.charterStartDate.value = segmentedDateTime(booking.charterStart).date;
+    bdElements.charterStartTime.value = segmentedDateTime(booking.charterStart).time;
+    bdElements.charterEndDate.value = segmentedDateTime(booking.charterEnd).date;
+    bdElements.charterEndTime.value = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
     bdElements.passengers.value = booking.passengers;
     bdElements.vessel.value = booking.vessel || "";
