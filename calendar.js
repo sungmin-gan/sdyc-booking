@@ -303,7 +303,7 @@ function populateBookingDetails(booking) {
     e("dateTimeText").innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
     bdElements.passengers.value = booking.passengers;
-    //bdElements.vessel.value = booking.vessel;
+    dElements.vessel.value = booking.vessel;
     //bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
     bdElements.notes.innerHTML = booking.additionalInfo || "-";
@@ -420,3 +420,12 @@ function setTimeInput(el) {
 
 setTimeInput(e('charterStartTime'));
 setTimeInput(e('charterEndTime'));
+
+function loadVesselSelections() {
+	vessels.forEach((vessel) => {
+  	let option = document.createElement("option");
+    option.value = vessel.id;
+    option.innerHTML = vessel.name;
+    e("vessel").appendChild(option)
+  })
+}
