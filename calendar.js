@@ -316,7 +316,7 @@ function populateBookingDetails(booking) {
     bdElements.charterEndTime = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
     bdElements.passengers.value = booking.passengers;
-    dElements.vessel.value = booking.vessel;
+    bdElements.vessel.value = booking.vessel || "";
     //bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
     bdElements.notes.innerHTML = booking.additionalInfo || "-";
