@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -252,7 +254,6 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
 
     let day_2 = new Date(`${YEAR[parseInt(dateTime_2.substring(5, 7)) - 1]} ${dateTime_2.substring(8, 10)} ,${dateTime_2.substring(0, 4)}`);
     day_2 = WEEKABBR[day_2.getDay()];
-
     let date_2 = `${day_2} ${parseInt(dateTime_2.substring(5, 7))}/${parseInt(dateTime_2.substring(8, 10))}/${parseInt(dateTime_2.substring(0, 4))}`;
     let time_2 = extractTimeFormattedFull(dateTime_2)
 
@@ -261,6 +262,12 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
     } else {
         return `${date_1} ${time_1} - ${date_2} ${time_2}`
     }
+}
+
+function segmentedDateTime(dateTime) {
+    const date = dateTime.substring(0,10);
+    const time = dateTime.substring(11,16);
+    return { date: date, time: time }    
 }
 
 function resizeTextarea(textarea, fieldSizing) {
@@ -275,6 +282,10 @@ e("internalNotes").addEventListener("input", () => {
 
 let bdElements = {
     // Charter Info
+    charterStartDate: e("charterStartDate"),
+    charterStartTime: e("charterStartTime"),
+    charterEndDate: e("charterEndDate"),
+    charterEndTime: e("charterEndTime"),
     passengers: e("passengers"),
     vessel: e("vessel"),
     occasion: e("occasion"),
@@ -301,6 +312,10 @@ function populateBookingDetails(booking) {
     e("formWindowTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("formTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("dateTimeText").innerHTML = makeDateSpanPretty(booking.charterStart, booking.charterEnd);
+    bdElements.charterStartDate = segmentedDateTime(booking.charterStart).date;
+    bdElements.charterStartTime = segmentedDateTime(booking.charterStart).time;
+    bdElements.charterEndDate = segmentedDateTime(booking.charterEnd).date;
+    bdElements.charterEndTime = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
     bdElements.passengers.value = booking.passengers;
     dElements.vessel.value = booking.vessel;
