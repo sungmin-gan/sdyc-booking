@@ -18,6 +18,28 @@ let bookingsToDisplay = [];
 
 //// //// //// //// For Making the Basic Calendar //// //// //// ////
 
+function getBookings(dateStart, dateEnd) {
+    return new Promise(async (resolve) => {
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/getBookings";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ dateStart: dateStart, dateEnd: dateEnd }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                const json = await response.json();
+                resolve(json.bookings);
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    })
+}
+
 function getCalendarDates() {
     //Get Previous Month's
     let firstDate = new Date(calendarYear, calendarMonth, 1);
