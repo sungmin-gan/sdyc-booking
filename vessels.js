@@ -57,6 +57,7 @@ function fillVesselLists() {
             slot.addEventListener("click", () => { setVessel(slot) })
             e(vesselList[vessel.class]).appendChild(slot)
         })
+        resolve()
     })
 }
 
