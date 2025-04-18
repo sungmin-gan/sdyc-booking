@@ -300,9 +300,6 @@ let bdElements = {
     // Invoice Info
     //estimate: e("estimate"),
     //invoiced: e("invoiced"),
-    // Misc Info
-    //requestedDate: e("requestedDate"),
-    //alternateDate: e("alternateDate")
 }
 
 function populateBookingDetails(booking) {
@@ -317,7 +314,7 @@ function populateBookingDetails(booking) {
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
     bdElements.passengers.value = booking.passengers;
     bdElements.vessel.value = booking.vessel || "";
-    //bdElements.occasion.value = booking.occasion;
+    bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
     bdElements.notes.innerHTML = booking.additionalInfo || "-";
     bdElements.internalNotes.value = booking.internalNotes || "";
