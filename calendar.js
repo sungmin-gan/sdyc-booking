@@ -471,8 +471,6 @@ function convertToUnix(isoString) {
     }
 }
 
-let ex = "2025-01-03T15:30:00-07:00";
-
 function setBookingUpdate() {
     let booking = bookingsToDisplay.find(x => x.booking.id == booking_update.id);
     booking = booking.booking;
@@ -531,7 +529,7 @@ function updateLocalBooking() {
 function closeBookingDetails() {
     clearBookingDetails()
     e("bookingDetails").classList.remove("open");
-    if (Object.keys(booking_update.update) > 0) {
+    if (Object.keys(booking_update.update).length > 0) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
             booking_update = { id: null, update: {} }
         })
