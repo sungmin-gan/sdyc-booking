@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -15,6 +17,11 @@ let calendarDates = [];
 
 let charterBookings = [];
 let bookingsToDisplay = [];
+
+let booking_update = {
+	id: null,
+    update: {}
+}
 
 //// //// //// //// For Making the Basic Calendar //// //// //// ////
 
@@ -218,6 +225,7 @@ function displayBookings() {
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
         // Set event listener
         bookingBadge.addEventListener("click", () => {
+            booking_update.id = booking.booking.id;
             populateBookingDetails(booking.booking)
             openBookingDetails()
         })
@@ -439,3 +447,28 @@ function loadVesselSelections() {
     e("vessel").appendChild(option)
   })
 }
+
+//// //// //// //// For Sending Booking Updates //// //// //// ////
+
+function setBookingUpdate() {
+    let booking = bookingsToDisplay.find(x => x.id == bookingsToDisplay.id);
+    Object.keys(bdElements).forEach((key) => {
+        if (key == "charterStartDate" || key == "charterStartTime") {
+            return null
+        }
+        else if (key == "charterEndDate" || "charterEndTime") {
+            return null
+        } else {
+            if (bdElements[key].value != booking[key]) {
+                booking_update[key] = bdElements[key].value
+            } else {
+                delete booking_update[key]
+            }
+        }
+    })
+}
+
+e("saveButton").addEventListener("click", () => {
+    setBookingUpdate();
+    console.log(booking_update)
+})
