@@ -390,10 +390,6 @@ e("editButton").addEventListener("click", () => {
     enableBDFields()
 })
 
-e("saveButton").addEventListener("click", () => {
-    disableBDFields()
-})
-
 function setTimeInput(el) {
     for (let i = 9; i < 12; i++) {
         let j = (i < 10 ? `0${i}` : `${i}`);
