@@ -253,11 +253,11 @@ function displayBookings() {
     })
 }
 
-function clearBookings() {
+function clearBookings(clearBookings = true) {
     for (let i = 0; i < bookingsToDisplay.length; i++) {
         e(`booking_${i}`).remove();
     }
-    bookingsToDisplay = [];
+    if (clearBookings) { bookingsToDisplay = [] }
 }
 
 //// //// //// //// For Controlling Booking Details Form //// //// //// ////
@@ -535,7 +535,7 @@ function closeBookingDetails() {
         updateBooking(booking_update.id, booking_update.update).then(() => {
             if (booking_update.update.charterStart || booking_update.update.charterEnd) {
                 clearBookings();
-                displayBookings()
+                displayBookings(false)
             }
             booking_update = { id: null, update: {} }
         })
