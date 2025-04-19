@@ -450,9 +450,10 @@ function loadVesselSelections() {
 
 function setBookingUpdate() {
     let booking = bookingsToDisplay.find(x => x.booking.id == booking_update.id);
+    console.log(booking)
     Object.keys(bdElements).forEach((key) => {
-        console.log(booking_update[key])
-        console.log(bdElements[key].value)
+        //console.log(booking_update[key])
+        //console.log(bdElements[key].value)
         if (key == "charterStartDate" || key == "charterStartTime") {
             return null
         }
