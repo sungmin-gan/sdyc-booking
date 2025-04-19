@@ -519,12 +519,9 @@ function setBookingUpdate() {
 }
 
 function updateLocalBooking() {
-    let charterBooking = charterBookings.find( x => x.id == booking_update.id);
-    let displayedBooking =  bookingsToDisplay.find( x => x.booking.id == booking_update.id);
-
     Object.keys(booking_update.update).forEach((key) => {
-        charterBooking[key] = booking_update.update[key];
-        displayedBooking.booking[key] = booking_update.update[key];
+        charterBookings.find( x => x.id == booking_update.id)[key] = booking_update.update[key];
+        bookingsToDisplay.find( x => x.booking.id == booking_update.id).booking[key] = booking_update.update[key];
     })
 }
 
