@@ -21,6 +21,41 @@ let booking_update = {
     update: {}
 }
 
+//// //// //// //// Tabs Control //// //// //// ////
+
+const tabs = {
+    calendar: {
+        tab: e("calendarTab"),
+        section: e("calendarSection"),
+        icon: e("calendarTabIcon")
+    },
+    yachts: {
+        tab: e("yachtsTab"),
+        section: e("yachtsSection"),
+        icon: e("yachtsTabIcon")
+    }
+}
+
+let currentTab = tabs.calendar;
+
+function switchTabs(dest) {
+    if (dest == currentTab) { console.log("null"); return null } else {
+        currentTab.tab.classList.remove("selected");
+        currentTab.section.classList.add("hidden");
+        currentTab.icon.classList.remove("selected")
+        dest.tab.classList.add("selected");
+        dest.section.classList.remove("hidden");
+        dest.icon.classList.add("selected")
+        currentTab = dest;
+    }
+}
+
+e("calendarTab").addEventListener("click", () => { switchTabs(tabs.calendar) })
+e("yachtsTab").addEventListener("click", () => { switchTabs(tabs.yachts) })
+
+e('charterStartDate').setAttribute("type", "date");
+e('charterEndDate').setAttribute("type", "date");
+
 //// //// //// //// For Making the Basic Calendar //// //// //// ////
 
 function getBookings(dateStart, dateEnd) {
@@ -173,40 +208,7 @@ e("previousMonth").addEventListener("click", () => {
     fillCalendar()
     extractBookings()
     displayBookings()
-})
-
-const tabs = {
-    calendar: {
-        tab: e("calendarTab"),
-        section: e("calendarSection"),
-        icon: e("calendarTabIcon")
-    },
-    yachts: {
-        tab: e("yachtsTab"),
-        section: e("yachtsSection"),
-        icon: e("yachtsTabIcon")
-    }
-}
-
-let currentTab = tabs.calendar;
-
-function switchTabs(dest) {
-    if (dest == currentTab) { console.log("null"); return null } else {
-        currentTab.tab.classList.remove("selected");
-        currentTab.section.classList.add("hidden");
-        currentTab.icon.classList.remove("selected")
-        dest.tab.classList.add("selected");
-        dest.section.classList.remove("hidden");
-        dest.icon.classList.add("selected")
-        currentTab = dest;
-    }
-}
-
-e("calendarTab").addEventListener("click", () => { switchTabs(tabs.calendar) })
-e("yachtsTab").addEventListener("click", () => { switchTabs(tabs.yachts) })
-
-e('charterStartDate').setAttribute("type", "date");
-e('charterEndDate').setAttribute("type", "date");
+})       
 
 //// //// //// //// For Filling the Calendar with Bookings //// //// //// ////
 
@@ -531,6 +533,10 @@ function closeBookingDetails() {
     e("bookingDetails").classList.remove("open");
     if (Object.keys(booking_update.update).length > 0) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
+            if (booking_update.update.charterStart || booking_update.update.charterEnd) {
+                clearBookings();
+                displayBookings()
+            }
             booking_update = { id: null, update: {} }
         })
     } else {
