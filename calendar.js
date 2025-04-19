@@ -45,6 +45,27 @@ function getBookings(dateStart, dateEnd) {
     })
 }
 
+function updateBooking(id, data) {
+    return new Promise(async (resolve) => {
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/updateBooking";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: id, data: data }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                resolve()
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    })
+}
+
 function getCalendarDates() {
     //Get Previous Month's
     let firstDate = new Date(calendarYear, calendarMonth, 1);
@@ -373,11 +394,6 @@ function openBookingDetails() {
     e("bookingDetails").classList.add("open");
 }
 
-function closeBookingDetails() {
-    clearBookingDetails()
-    e("bookingDetails").classList.remove("open")
-}
-
 e("xBookingDetails").addEventListener("click", () => {
     closeBookingDetails()
 })
@@ -444,30 +460,86 @@ function loadVesselSelections() {
 
 //// //// //// //// For Sending Booking Updates //// //// //// ////
 
-/*function setBookingUpdate() {
+function convertToUnix(isoString) {
+    let date = new Date(isoString);
+    date = date.toUTCString();
+    const milliseconds = Date.parse(date);
+    if (isNaN(milliseconds)) {
+        return null
+    } else {
+        return Math.floor(milliseconds / 1000)
+    }
+}
+
+let ex = "2025-01-03T15:30:00-07:00";
+
+function setBookingUpdate() {
     let booking = bookingsToDisplay.find(x => x.booking.id == booking_update.id);
-    console.log(booking)
+    booking = booking.booking;
     Object.keys(bdElements).forEach((key) => {
-        //console.log(booking_update[key])
-        //console.log(bdElements[key].value)
-        if (key == "charterStartDate" || key == "charterStartTime") {
-            return null
+        
+        let value = bdElements[key].value;
+        let additional = {};
+
+        if (value == "true") { value = true }
+        else if (value == "false") { value = false }
+        
+        else if (key == "charterStartDate" || key == "charterStartTime") {
+            value = `${bdElements.charterStartDate.value}T${bdElements.charterStartTime.value}:00-07:00`;
+            key = "charterStart";
+            additional["charterStartTimestamp"] = convertToUnix(value.substring(0,19))
         }
-        else if (key == "charterEndDate" || "charterEndTime") {
-            return null
+        else if (key == "charterEndDate" || key == "charterEndTime") {
+        	value = `${bdElements.charterEndDate.value}T${bdElements.charterEndTime.value}:00-07:00`;
+            key = "charterEnd";
+            additional["charterEndTimestamp"] = convertToUnix(value.substring(0,19))
+        }
+        else if (key == "vessel") {
+            let vessel = ( value == "" ? { name: "", displayName: "" } : vessels.find( x => x.id == value))
+            additional["vesselName"] = vessel.name;
+            additional["vesselDisplayName"] = vessel.displayName;
+        }
+
+        let booking_value = booking[key];
+        
+        if (value != booking_value) {
+            booking_update.update[key] = value;
+            Object.keys(additional).forEach((key_additional) => {
+                booking_update.update[key_additional] = additional[key_additional]
+            })
         } else {
-            if (bdElements[key].value != booking[key]) {
-                console.log(booking[key])
-                console.log(bdElements[key].value)
-                booking_update[key] = bdElements[key].value
-            } else {
-                delete booking_update[key]
-            }
+            delete booking_update.update[key];
+            Object.keys(additional).forEach((key_additional) => {
+                delete booking_update.update[key_additional]
+            })
         }
+        
+
+    })
+}
+
+function updateLocalBooking() {
+    let charterBooking = charterBookings.find( x => x.id == booking_update.id);
+    let displayedBooking =  bookingsToDisplay.find( x => x.booking.id == booking_update.id);
+
+    Object.keys(booking_update.update).forEach((key) => {
+        charterBooking[key] = booking_update.update[key];
+        displayedBooking.booking[key] = booking_update.update[key];
+    })
+}
+
+function closeBookingDetails() {
+    clearBookingDetails()
+    e("bookingDetails").classList.remove("open");
+    updateBooking(booking_update.id, booking_update.update).then(() => {
+        booking_update = { id: null, update: {} }
     })
 }
 
 e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
-    console.log(booking_update)
-})*/
+    updateLocalBooking();
+    let displayedBooking =  bookingsToDisplay.find( x => x.booking.id == booking_update.id).booking;
+    populateBookingDetails(displayedBooking);
+    disableBDFields();
+})
