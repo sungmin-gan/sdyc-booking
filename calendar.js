@@ -234,9 +234,7 @@ function extractTimeFormatted(dateTime) {
 }
 
 function displayBookings() {
-    console.log("displayBookings fired")
     bookingsToDisplay.forEach((booking, i) => {
-        console.log(i)
         // Render elements
         let bookingDiv = document.createElement("div");
         bookingDiv.classList.add("div-block-11");
@@ -255,11 +253,11 @@ function displayBookings() {
     })
 }
 
-function clearBookings(clearArray = true) {
+function clearBookings() {
     for (let i = 0; i < bookingsToDisplay.length; i++) {
         e(`booking_${i}`).remove();
     }
-    if (clearArray) { bookingsToDisplay = [] }
+    bookingsToDisplay = []
 }
 
 //// //// //// //// For Controlling Booking Details Form //// //// //// ////
@@ -533,8 +531,8 @@ function closeBookingDetails() {
     if (Object.keys(booking_update.update).length > 0) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
             if (booking_update.update.charterStart || booking_update.update.charterEnd) {
-                clearBookings(false);
-                console.log(bookingsToDisplay)
+                clearBookings();
+                extractBookings();
                 displayBookings()
             }
             booking_update = { id: null, update: {} }
