@@ -1,7 +1,5 @@
 //// //// //// //// Declarations //// //// //// ////
 
-const e = require("express");
-
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -472,5 +470,3 @@ e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
     console.log(booking_update)
 })
-
-
