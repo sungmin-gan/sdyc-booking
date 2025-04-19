@@ -449,7 +449,7 @@ function loadVesselSelections() {
 //// //// //// //// For Sending Booking Updates //// //// //// ////
 
 function setBookingUpdate() {
-    let booking = bookingsToDisplay.find(x => x.id == bookingsToDisplay.id);
+    let booking = bookingsToDisplay.find(x => x.id == booking_update.id);
     Object.keys(bdElements).forEach((key) => {
         console.log(booking_update[key])
         console.log(bdElements[key].value)
