@@ -54,7 +54,9 @@ function fillVesselLists() {
             displayName.innerHTML = vessel.displayName;
             slot.appendChild(name);
             slot.appendChild(displayName);
-            slot.addEventListener("click", () => { setVessel(slot) })
+            slot.addEventListener("click", () => { 
+                setVessel(slot)
+            })
             e(vesselList[vessel.class]).appendChild(slot)
         })
         resolve()
@@ -73,8 +75,6 @@ function setVessels(vesselsArr) {
 //// //// //// //// For Controlling the Vessel Form //// //// //// ////
 
 function setVessel(slot, initial = false) {
-    console.log('setVessel fired')
-    console.log(initial)
     const vid = slot.getAttribute("id");
     if (vid == currentVessel && !initial) { return null } else {
         if (!initial) { e(currentVessel).classList.remove("selected") }
