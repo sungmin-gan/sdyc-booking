@@ -531,9 +531,13 @@ function updateLocalBooking() {
 function closeBookingDetails() {
     clearBookingDetails()
     e("bookingDetails").classList.remove("open");
-    updateBooking(booking_update.id, booking_update.update).then(() => {
-        booking_update = { id: null, update: {} }
-    })
+    if (Object.keys(booking_update.update) > 0) {
+        updateBooking(booking_update.id, booking_update.update).then(() => {
+            booking_update = { id: null, update: {} }
+        })
+    } else {
+        booking_update.id = null
+    }
 }
 
 e("saveButton").addEventListener("click", () => {
