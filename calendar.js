@@ -234,7 +234,9 @@ function extractTimeFormatted(dateTime) {
 }
 
 function displayBookings() {
+    console.log("displayBookings fired")
     bookingsToDisplay.forEach((booking, i) => {
+        console.log(i)
         // Render elements
         let bookingDiv = document.createElement("div");
         bookingDiv.classList.add("div-block-11");
