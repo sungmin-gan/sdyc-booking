@@ -472,3 +472,5 @@ e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
     console.log(booking_update)
 })
+
+
