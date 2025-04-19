@@ -448,7 +448,7 @@ function loadVesselSelections() {
 
 //// //// //// //// For Sending Booking Updates //// //// //// ////
 
-function setBookingUpdate() {
+/*function setBookingUpdate() {
     let booking = bookingsToDisplay.find(x => x.booking.id == booking_update.id);
     console.log(booking)
     Object.keys(bdElements).forEach((key) => {
@@ -474,4 +474,4 @@ function setBookingUpdate() {
 e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
     console.log(booking_update)
-})
+})*/
