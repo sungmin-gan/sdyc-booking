@@ -535,6 +535,7 @@ function closeBookingDetails() {
         updateBooking(booking_update.id, booking_update.update).then(() => {
             if (booking_update.update.charterStart || booking_update.update.charterEnd) {
                 clearBookings(false);
+                console.log(bookingsToDisplay)
                 displayBookings()
             }
             booking_update = { id: null, update: {} }
