@@ -458,6 +458,8 @@ function setBookingUpdate() {
             return null
         } else {
             if (bdElements[key].value != booking[key]) {
+                console.log(booking_update[key])
+                console.log(bdElements[key].value)
                 booking_update[key] = bdElements[key].value
             } else {
                 delete booking_update[key]
