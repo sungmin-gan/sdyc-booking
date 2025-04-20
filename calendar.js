@@ -526,20 +526,25 @@ function updateLocalBooking() {
 }
 
 function closeBookingDetails() {
-    clearBookingDetails()
-    e("bookingDetails").classList.remove("open");
     if (Object.keys(booking_update.update).length > 0) {
+        clearBookingDetails();
+        e("bookingDetails").classList.remove("open");
         updateBooking(booking_update.id, booking_update.update).then(() => {
             if (booking_update.update.charterStart || booking_update.update.charterEnd) {
                 clearBookings();
                 extractBookings();
                 displayBookings()
             }
-            booking_update = { id: null, update: {} }
         })
     } else {
-        booking_update.id = null
+        setBookingUpdate();
+        if (Object.keys(booking_update.update).length > 0) {
+            e("confirmSaveBooking").classList.remove("hidden")
+        } else {
+            e("bookingDetails").classList.remove("open");
+        }
     }
+    booking_update = { id: null, update: {} }
 }
 
 e("saveButton").addEventListener("click", () => {
@@ -548,4 +553,21 @@ e("saveButton").addEventListener("click", () => {
     let displayedBooking =  bookingsToDisplay.find( x => x.booking.id == booking_update.id).booking;
     populateBookingDetails(displayedBooking);
     disableBDFields();
+})
+
+e("confirmSaveBooking_save").addEventListener("click", () => {
+    e("confirmSaveBooking").classList.add("hidden");
+    updateLocalBooking();
+    closeBookingDetails()
+})
+
+e("confirmSaveBooking_cancel").addEventListener("click", () => {
+    e("confirmSaveBooking").classList.add("hidden");
+})
+
+e("confirmSaveBooking_discard").addEventListener("click", () => {
+    e("confirmSaveBooking").classList.add("hidden");
+    clearBookingDetails();
+    e("bookingDetails").classList.remove("open");
+    booking_update = { id: null, update: {} }
 })
