@@ -74,17 +74,5 @@ function setVessels(vesselsArr) {
 
 //// //// //// //// For Controlling the Vessel Form //// //// //// ////
 
-function setVessel(slot, initial = false) {
-    const vid = slot.getAttribute("id");
-    if (vid == currentVessel && !initial) { return null } else {
-        if (!initial) { e(currentVessel).classList.remove("selected") }
-        e(vid).classList.add("selected");
-        let vessel = vessels.find((v) => v.id == vid);
-        e("vf_vesselName").value = vessel.name;
-        e("vf_vesselDisplayName").value = vessel.displayName;
-        e("vf_capacity").value = vessel.maxCapacity;
-        e("vf_class").value = vessel.class;
-        currentVessel = vid;
-    }
-}
+
 
