@@ -562,6 +562,7 @@ e("confirmSaveBooking_save").addEventListener("click", () => {
 })
 
 e("confirmSaveBooking_cancel").addEventListener("click", () => {
+    booking_update = { id: null, update: {} }
     e("confirmSaveBooking").classList.add("hidden");
 })
 
