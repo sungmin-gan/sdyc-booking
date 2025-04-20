@@ -543,7 +543,6 @@ function closeBookingDetails() {
             e("confirmSaveBooking").classList.remove("hidden")
         } else {
             e("bookingDetails").classList.remove("open");
-            booking_update = { id: null, update: {} }
         }
     }
 }
