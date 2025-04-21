@@ -1,8 +1,5 @@
 //// //// //// //// Declarations //// //// //// ////
 
-const { QueryPartition } = require("@google-cloud/firestore");
-const e = require("express");
-
 let vessels = [];
 
 let currentVessel = "7qc7aPDMLFWSvq7Js1Hg";
