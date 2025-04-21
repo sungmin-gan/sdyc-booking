@@ -50,7 +50,7 @@ function switchTabs(dest) {
     }
 }
 
-e("calendarTab").addEventListener("click", () => { switchTabs(tabs.calendar) })
+//e("calendarTab").addEventListener("click", () => { switchTabs(tabs.calendar) })
 e("yachtsTab").addEventListener("click", () => { switchTabs(tabs.yachts) })
 
 e('charterStartDate').setAttribute("type", "date");
