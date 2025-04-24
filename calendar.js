@@ -387,8 +387,8 @@ function disableBDFields() {
         e("lineCharterDatetimeInput").classList.add("hidden")
         e("lineCharterDatetimeText").classList.remove("hidden")
     }
-    check_sendOptions()
     dbFieldsDisabled = true;
+    check_sendOptions()
 }
 
 function enableBDFields() {
@@ -401,8 +401,8 @@ function enableBDFields() {
     e("linePassengersText").classList.add("hidden")
     e("lineCharterDatetimeInput").classList.remove("hidden")
     e("lineCharterDatetimeText").classList.add("hidden")
-    check_sendOptions()
     dbFieldsDisabled = false;
+    check_sendOptions()
 }
 
 function openBookingDetails() {
@@ -637,3 +637,6 @@ function setTemplate_sendOptions() {
 
     e("flow_sendOptions_msg").value = sendOptionsTemplate
 }
+
+
+
