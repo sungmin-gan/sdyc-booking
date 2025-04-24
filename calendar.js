@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -387,6 +389,7 @@ function disableBDFields() {
         e("lineCharterDatetimeInput").classList.add("hidden")
         e("lineCharterDatetimeText").classList.remove("hidden")
     }
+    check_sendOptions()
     dbFieldsDisabled = true;
 }
 
@@ -400,6 +403,7 @@ function enableBDFields() {
     e("linePassengersText").classList.add("hidden")
     e("lineCharterDatetimeInput").classList.remove("hidden")
     e("lineCharterDatetimeText").classList.add("hidden")
+    check_sendOptions()
     dbFieldsDisabled = false;
 }
 
@@ -584,3 +588,54 @@ e("confirmSaveBooking_discard").addEventListener("click", () => {
     e("bookingDetails").classList.remove("open");
     booking_update = { id: null, update: {} }
 })
+
+//// //// //// //// Flow: Send Options //// //// //// ////
+
+e("flow_sendOptions_cancel").addEventListener("click", () => {
+    e("tab_bookingDetails").click()
+})
+
+function check_sendOptions() {
+    if (dbFieldsDisabled) {
+        e("button_sendOptions").classList.remove("disabled");
+        e("button_icon_sendOptions").classList.remove("disabled")
+    } else {
+        e("button_sendOptions").classList.add("disabled");
+        e("button_icon_sendOptions").classList.add("disabled")
+    }
+}
+
+function goTo_sendOptions() {
+    if (dbFieldsDisabled) {
+        e("tab_sendOptions").click()
+    }
+}
+
+e("button_sendOptions").addEventListener("click", () => {
+    setTemplate_sendOptions();
+    goTo_sendOptions()
+})
+
+function makeDatePretty(dateTime_1) {
+    let day_1 = new Date(`${YEAR[parseInt(dateTime_1.substring(5, 7)) - 1]} ${dateTime_1.substring(8, 10)} ,${dateTime_1.substring(0, 4)}`);
+    day_1 = WEEKABBR[day_1.getDay()];
+    let date_1 = `${day_1} ${parseInt(dateTime_1.substring(5, 7))}/${parseInt(dateTime_1.substring(8, 10))}/${parseInt(dateTime_1.substring(0, 4))}`;
+   
+    return `${date_1}`
+}
+
+let occasionArticle = "a";
+
+function setTemplate_sendOptions() {
+    if (bdElements.occasion.value[0] == 'A' ||
+    bdElements.occasion.value[0] == 'E' ||
+    bdElements.occasion.value[0] == 'I' ||
+    bdElements.occasion.value[0] == 'O' ||
+    bdElements.occasion.value[0] == 'U') {
+        occasionArticle = "an"
+    }
+
+    let sendOptionsTemplate = `Hello ${bdElements.firstName.value},\n\nThank you for your inquiry for ${occasionArticle} ${bdElements.occasion.value} cruise on ${makeDatePretty(bdElements.charterStartDate.value)} for ${bdElements.passengers.value} passengers!\n\nHere are some of our most popular yachts for your party size.\n\n[Yachts]\n\nThe rates above include fuel and all captain and port fees. Also includes waters, sodas, and snacks.\n\nPlease use the QuickBooks link below to pay your deposit and secure your cruise! The deposit amounts to half of your total invoice - the remaining balance must be paid 14 days before your cruise.\n\n[QB Link]\n\nIf you would like to browse all the yachts in our fleet, please click on the link below:\n\nhttps://www.sdyachtcharters.com/\/browse\n\nFeel free to text or call at any time if you have any questions.\n\nCheers!\n--\n\nCaptain Kenne Melonas\nUS Navy SWCC (Retired)\nOwner of Elite Maritime Services/San Diego Yacht Charters\nhttps://www.sdyachtcharters.com\nEmail: sdyachtcharters@gmail.com`;
+
+    e("flow_sendOptions_msg").value = sendOptionsTemplate
+}
