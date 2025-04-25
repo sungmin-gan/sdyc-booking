@@ -319,6 +319,13 @@ e("internalNotes").addEventListener("input", () => {
     resizeTextarea(e("internalNotes"), e("internalNotesFieldSizing"))
 })
 
+function formatCurrency(amount=0) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  }
+
 let bdElements = {
     // Charter Info
     charterStartDate: e("charterStartDate"),
@@ -358,8 +365,8 @@ function populateBookingDetails(booking) {
     bdElements.alcohol.value = booking.alcohol || false;
     e("notes").innerHTML = booking.additionalInfo || "-";
     bdElements.internalNotes.value = booking.internalNotes || "";
-    resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"))
-    e("estimate").innerHTML = `Quote: $${booking.estimate}.00`
+    resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"));
+    e("estimate").innerHTML = `Quote: $${formatCurrency(booking.estimate)}`;
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
