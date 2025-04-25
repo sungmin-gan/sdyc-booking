@@ -540,6 +540,7 @@ function updateLocalBooking() {
 }
 
 function closeBookingDetails() {
+    console.log(booking_update)
     if (Object.keys(booking_update.update).length > 0) {
         clearBookingDetails();
         e("bookingDetails").classList.remove("open");
