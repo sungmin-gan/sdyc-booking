@@ -329,7 +329,6 @@ let bdElements = {
     vessel: e("vessel"),
     occasion: e("occasion"),
     alcohol: e("alcohol"),
-    notes: e("notes"),
     internalNotes: e("internalNotes"),
     // Customer Info
     firstName: e("firstName"),
@@ -357,9 +356,10 @@ function populateBookingDetails(booking) {
     bdElements.vessel.value = booking.vessel || "";
     bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
-    bdElements.notes.innerHTML = booking.additionalInfo || "-";
+    e("notes").innerHTML = booking.additionalInfo || "-";
     bdElements.internalNotes.value = booking.internalNotes || "";
     resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"))
+    e("estimate").innerHTML = `Quote: $${booking.estimate}.00`
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
