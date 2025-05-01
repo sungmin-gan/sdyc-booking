@@ -616,12 +616,12 @@ function check_sendOptions() {
 
 function goTo_sendOptions() {
     if (dbFieldsDisabled) {
+        setTemplate_sendOptions();
         e("tab_sendOptions").click()
     }
 }
 
 e("button_sendOptions").addEventListener("click", () => {
-    setTemplate_sendOptions();
     goTo_sendOptions()
 })
 
