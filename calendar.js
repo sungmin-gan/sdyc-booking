@@ -4,8 +4,7 @@ const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-let currentDate = new Date("March 1, 2025");
-//let currentDate = new Date();
+let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 let currentDay = currentDate.getDay();
@@ -18,7 +17,7 @@ let charterBookings = [];
 let bookingsToDisplay = [];
 
 let booking_update = {
-	id: null,
+    id: null,
     update: {}
 }
 
@@ -51,14 +50,14 @@ function switchTabs(dest) {
     }
 }
 
-e("calendarTab").addEventListener("click", () => { 
+e("calendarTab").addEventListener("click", () => {
     if (currentTab = tabs.yachts) {
         setVesselUpdate();
         if (Object.keys(vessel_update.update).length > 0) {
             e("confirmSaveVessel").classList.remove("hidden")
         } else {
             disableVfFields();
-            switchTabs(tabs.calendar) 
+            switchTabs(tabs.calendar)
         }
     }
 })
@@ -221,7 +220,7 @@ e("previousMonth").addEventListener("click", () => {
     fillCalendar()
     extractBookings()
     displayBookings()
-})       
+})
 
 //// //// //// //// For Filling the Calendar with Bookings //// //// //// ////
 
@@ -305,9 +304,9 @@ function makeDateSpanPretty(dateTime_1, dateTime_2) {
 }
 
 function segmentedDateTime(dateTime) {
-    const date = dateTime.substring(0,10);
-    const time = dateTime.substring(11,16);
-    return { date: date, time: time }    
+    const date = dateTime.substring(0, 10);
+    const time = dateTime.substring(11, 16);
+    return { date: date, time: time }
 }
 
 function resizeTextarea(textarea, fieldSizing) {
@@ -320,10 +319,10 @@ e("internalNotes").addEventListener("input", () => {
     resizeTextarea(e("internalNotes"), e("internalNotesFieldSizing"))
 })
 
-function formatCurrency(amount=0) {
+function formatCurrency(amount = 0) {
     return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+        style: 'currency',
+        currency: 'USD',
     }).format(amount);
 }
 
@@ -476,12 +475,12 @@ setTimeInput(e('charterStartTime'));
 setTimeInput(e('charterEndTime'));
 
 function loadVesselSelections() {
-	vessels.forEach((vessel) => {
-  	let option = document.createElement("option");
-    option.value = vessel.id;
-    option.innerHTML = vessel.name;
-    e("vessel").appendChild(option)
-  })
+    vessels.forEach((vessel) => {
+        let option = document.createElement("option");
+        option.value = vessel.id;
+        option.innerHTML = vessel.name;
+        e("vessel").appendChild(option)
+    })
 }
 
 //// //// //// //// For Sending Booking Updates //// //// //// ////
@@ -501,31 +500,31 @@ function setBookingUpdate() {
     let booking = bookingsToDisplay.find(x => x.booking.id == booking_update.id);
     booking = booking.booking;
     Object.keys(bdElements).forEach((key) => {
-        
+
         let value = bdElements[key].value;
         let additional = {};
 
         if (value == "true") { value = true }
         else if (value == "false") { value = false }
-        
+
         else if (key == "charterStartDate" || key == "charterStartTime") {
             value = `${bdElements.charterStartDate.value}T${bdElements.charterStartTime.value}:00-07:00`;
             key = "charterStart";
-            additional["charterStartTimestamp"] = convertToUnix(value.substring(0,19))
+            additional["charterStartTimestamp"] = convertToUnix(value.substring(0, 19))
         }
         else if (key == "charterEndDate" || key == "charterEndTime") {
-        	value = `${bdElements.charterEndDate.value}T${bdElements.charterEndTime.value}:00-07:00`;
+            value = `${bdElements.charterEndDate.value}T${bdElements.charterEndTime.value}:00-07:00`;
             key = "charterEnd";
-            additional["charterEndTimestamp"] = convertToUnix(value.substring(0,19))
+            additional["charterEndTimestamp"] = convertToUnix(value.substring(0, 19))
         }
         else if (key == "vessel") {
-            let vessel = ( value == "" ? { name: "", displayName: "" } : vessels.find( x => x.id == value))
+            let vessel = (value == "" ? { name: "", displayName: "" } : vessels.find(x => x.id == value))
             additional["vesselName"] = vessel.name;
             additional["vesselDisplayName"] = vessel.displayName;
         }
 
         let booking_value = booking[key];
-        
+
         if (value != booking_value) {
             booking_update.update[key] = value;
             Object.keys(additional).forEach((key_additional) => {
@@ -537,15 +536,15 @@ function setBookingUpdate() {
                 delete booking_update.update[key_additional]
             })
         }
-        
+
 
     })
 }
 
 function updateLocalBooking() {
     Object.keys(booking_update.update).forEach((key) => {
-        charterBookings.find( x => x.id == booking_update.id)[key] = booking_update.update[key];
-        bookingsToDisplay.find( x => x.booking.id == booking_update.id).booking[key] = booking_update.update[key];
+        charterBookings.find(x => x.id == booking_update.id)[key] = booking_update.update[key];
+        bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking[key] = booking_update.update[key];
     })
 }
 
@@ -575,7 +574,7 @@ function closeBookingDetails() {
 e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
     updateLocalBooking();
-    let displayedBooking =  bookingsToDisplay.find( x => x.booking.id == booking_update.id).booking;
+    let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
     populateBookingDetails(displayedBooking);
     disableBDFields();
 })
@@ -629,11 +628,20 @@ function makeDatePretty(dateTime_1) {
     let day_1 = new Date(`${YEAR[parseInt(dateTime_1.substring(5, 7)) - 1]} ${dateTime_1.substring(8, 10)} ,${dateTime_1.substring(0, 4)}`);
     day_1 = WEEKABBR[day_1.getDay()];
     let date_1 = `${day_1} ${parseInt(dateTime_1.substring(5, 7))}/${parseInt(dateTime_1.substring(8, 10))}/${parseInt(dateTime_1.substring(0, 4))}`;
-   
+
     return `${date_1}`
 }
 
 let occasionArticle = "a";
+
+function getIndex(s, c, o) {
+    let indicies = [];
+    for (let i=0; i<s.length; i++) {
+        if (s[i] == c) { indicies.push(i) }
+    }
+    if (indicies.length > 0) { return indicies[o-1] || -1 } 
+    else { return -1 }
+}
 
 function setTemplate_sendOptions() {
     if (bdElements.occasion.value[0] == 'A' ||
@@ -649,6 +657,3 @@ function setTemplate_sendOptions() {
     e("flow_sendOptions_to").value = e("email").value;
     e("flow_sendOptions_subject").value = `Charter Request for ${e("dateTimeText").innerHTML.substring(0, getIndex(e("dateTimeText").innerHTML, " ", 2))}`
 }
-
-
-
