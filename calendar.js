@@ -395,7 +395,8 @@ function disableBDFields() {
         e("lineCharterDatetimeText").classList.remove("hidden")
     }
     dbFieldsDisabled = true;
-    check_sendOptions()
+    check_sendOptions();
+    check_acceptBooking()
 }
 
 function enableBDFields() {
@@ -409,7 +410,8 @@ function enableBDFields() {
     e("lineCharterDatetimeInput").classList.remove("hidden")
     e("lineCharterDatetimeText").classList.add("hidden")
     dbFieldsDisabled = false;
-    check_sendOptions()
+    check_sendOptions();
+    check_acceptBooking()
 }
 
 function openBookingDetails() {
