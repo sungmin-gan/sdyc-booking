@@ -324,7 +324,7 @@ function formatCurrency(amount=0) {
       style: 'currency',
       currency: 'USD',
     }).format(amount);
-  }
+}
 
 let bdElements = {
     // Charter Info
@@ -366,7 +366,7 @@ function populateBookingDetails(booking) {
     e("notes").innerHTML = booking.additionalInfo || "-";
     bdElements.internalNotes.value = booking.internalNotes || "";
     resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"));
-    e("estimate").innerHTML = `Quote: $${formatCurrency(booking.estimate)}`;
+    e("estimate").innerHTML = `Quote: ${formatCurrency(booking.estimate)}`;
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
