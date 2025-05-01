@@ -4,7 +4,8 @@ const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-let currentDate = new Date();
+let currentDate = new Date("March 1, 2025");
+//let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 let currentDay = currentDate.getDay();
