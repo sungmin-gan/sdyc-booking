@@ -16,6 +16,7 @@ let calendarDates = [];
 
 let charterBookings = [];
 let bookingsToDisplay = [];
+let currentBooking = "";
 
 let booking_update = {
     id: null,
@@ -351,6 +352,7 @@ let bdElements = {
 }
 
 function populateBookingDetails(booking) {
+    currentBooking = booking.id;
     // Charter Info
     e("formWindowTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
     e("formTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
