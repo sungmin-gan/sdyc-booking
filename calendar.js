@@ -660,3 +660,170 @@ function setTemplate_sendOptions() {
     e("flow_sendOptions_to").value = e("email").value;
     e("flow_sendOptions_subject").value = `Charter Request for ${e("dateTimeText").innerHTML.substring(0, getIndex(e("dateTimeText").innerHTML, " ", 2))}`
 }
+
+//// //// //// //// Flow: Accept Booking //// //// //// ////
+
+e("flow_acceptBooking_invoiceDate").setAttribute("type", "date");
+e("flow_acceptBooking_dueDate").setAttribute("type", "date");
+e("flow_acceptBooking_sDate1").setAttribute("type", "date");
+e("flow_acceptBooking_sDate2").setAttribute("type", "date");
+e("flow_acceptBooking_sDate3").setAttribute("type", "date");
+e("flow_acceptBooking_sDate4").setAttribute("type", "date");
+e("flow_acceptBooking_sDate5").setAttribute("type", "date");
+
+e("flow_acceptBooking_cancel").addEventListener("click", () => {
+    e("tab_bookingDetails").click()
+})
+
+function check_acceptBooking() {
+    if (dbFieldsDisabled) {
+        e("button_acceptBooking").classList.remove("disabled");
+        e("button_icon_acceptBooking").classList.remove("disabled")
+    } else {
+        e("button_acceptBooking").classList.add("disabled");
+        e("button_icon_acceptBooking").classList.add("disabled")
+    }
+}
+
+function goTo_acceptBooking() {
+		console.log(currentBooking)
+    if (dbFieldsDisabled) {
+    		setTemplate_acceptBooking();
+        e("tab_acceptBooking").click();
+    }
+}
+
+e("button_acceptBooking").addEventListener("click", () => {
+    goTo_acceptBooking()
+})
+
+function todayDateInput() {
+	let month = (currentMonth+1 < 10 ? `0${currentMonth+1}` : `${currentMonth+1}`);
+  let day = (currentDate.getDate() < 10 ? `0${currentDate.getDate()}` : `${currentDate.getDate()}`);
+  return `${currentYear}-${month}-${day}`;
+}
+
+function getDuration(start, end) {
+	return (end - start)/3600
+}
+
+function setCharterLine() {
+	let booking = getCurrentBooking();
+  let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
+  let rate = (booking.estimate/duration).toFixed(2);
+  e("flow_acceptBooking_qty1").value = duration;
+	e("flow_acceptBooking_rate1").value = rate;
+  e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration*rate).toFixed(2))
+}
+
+for (let i=1; i<6; i++) {
+	e(`flow_acceptBooking_qty${i}`).addEventListener("input", () => {
+  	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+  	if (!rate || rate == "") { rate = 0 }
+    let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+    if (!qty || qty == "") { rate = 0 }
+    let amt = (rate*qty).toFixed(2);
+    e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
+    flow_acceptBooking_setTotal()
+  });
+  e(`flow_acceptBooking_rate${i}`).addEventListener("input", () => {
+  	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+  	if (!rate || rate == "") { rate = 0 }
+    let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+    if (!qty || qty == "") { rate = 0 }
+    let amt = (rate*qty).toFixed(2);
+    e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
+    flow_acceptBooking_setTotal()
+  })
+  e(`flow_acceptBooking_qty${i}`).addEventListener("change", () => {
+  	if (!e(`flow_acceptBooking_qty${i}`).value || e(`flow_acceptBooking_qty${i}`).value == "") {
+    	e(`flow_acceptBooking_qty${i}`).value = 0
+    }
+  })
+  e(`flow_acceptBooking_rate${i}`).addEventListener("change", () => {
+  	if (!e(`flow_acceptBooking_rate${i}`).value || e(`flow_acceptBooking_rate${i}`).value == "") {
+    	e(`flow_acceptBooking_rate${i}`).value = 0
+    }
+  })
+}
+
+function changeDate(d, days) {
+	let year = parseInt(d.substring(0,4));
+  let month = parseInt(d.substring(5,7))-1;
+  let day = parseInt(d.substring(8));
+  let date = new Date(year, month, day);
+  let newDate = new Date(date);
+  newDate.setDate(date.getDate() + days);
+  let newYear = newDate.getFullYear();
+  let newMonth = (newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth()+1}` : `${newDate.getMonth()}`)
+  let newDay = (newDate.getDate() < 10 ? `0${newDate.getDate()}` : `${newDate.getDate()}`)
+  return `${newYear}-${newMonth}-${newDay}`
+}
+
+function standardTime(time) {
+	let tod = "AM";
+	let hour = parseInt(time.substring(0,2));
+  if (hour > 11) { 
+    hour = hour - 12;
+    tod = "PM"; 
+  }
+  else if (hour == 0) { hour = 12 }
+  let minute = time.substring(3);
+  return `${hour}:${minute}${tod}`
+}
+
+function setDescription() {
+    let timeStart = standardTime(bdElements.charterStartTime.value);
+    let timeEnd = standardTime(bdElements.charterEndTime.value);
+    let vessel = vessels.find(x => x.id == bdElements.vessel.value);
+    let vesselDisplayName = vessel.displayName;
+    let maxPassengers = vessel.maxCapacity;
+    e("flow_acceptBooking_desc1").value = `${timeStart}-${timeEnd} San Diego Bay Cruise on ${vesselDisplayName} for up to ${maxPassengers} passengers.`;
+}
+
+function flow_acceptBooking_getTotal() {
+	let total = 0;
+  for (let i=1; i<6; i++) {
+  	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+    let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+    if (!rate || rate == "") { rate = 0 }
+    if (!qty || qty == "") { qty = 0 }
+  	total += (rate*qty);
+  }
+  return total.toFixed(2)
+}
+
+function flow_acceptBooking_setTotal() {
+  e("flow_acceptBooking_invoiceTotal").innerHTML = formatCurrency(flow_acceptBooking_getTotal());
+  flow_acceptBooking_setPaymentOptions()
+}
+
+function flow_acceptBooking_setPaymentOptions() {
+	let deposit = flow_acceptBooking_getTotal()/2;
+  let dueDate = e("flow_acceptBooking_dueDate").value;
+  2025-03-01
+  let dueMonth = YEAR[parseInt(dueDate.substring(5,7))-1];
+  let dueYear = dueDate.substring(0,4);
+  let dueDay = `${parseInt(dueDate.substring(8))}`;
+  let fullDate = `${dueMonth} ${dueDay}, ${dueYear}`;
+  e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to entire amount all at once.`
+}
+
+function flow_acceptBooking_setNote() {
+	let l1 = "Cancellation Policy:";
+  let l2 = "* 100% Refund for cancellations more than 14 days before scheduled booking. 50% Refund for cancellations more than 7 days before scheduled booking. No refunds for cancellations within 7 days.";
+  let l3 = "* If a charter is cancelled due to unsafe weather, 100% refunded or Charterer may reschedule.";
+  e("flow_acceptBooking_note").value = `${l1}\n${l2}\n${l3}`;
+}
+
+function setTemplate_acceptBooking() {
+	e("flow_acceptBooking_customerName").value = `${bdElements.firstName.value} ${bdElements.lastName.value}`;
+	e("flow_acceptBooking_customerEmail").value = bdElements.email.value;
+  e("flow_acceptBooking_invoiceDate").value = todayDateInput();
+  e("flow_acceptBooking_dueDate").value = changeDate(bdElements.charterStartDate.value, -14);
+  e("flow_acceptBooking_sDate1").value = bdElements.charterStartDate.value;
+  setCharterLine()
+  setDescription()
+  flow_acceptBooking_setTotal()
+  flow_acceptBooking_setNote()
+}
