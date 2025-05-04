@@ -654,13 +654,11 @@ function setTemplate_sendOptions() {
         bdElements.occasion.value[0] == 'U') {
         occasionArticle = "an"
     }
-    let sendOptionsTemplate = `Hello ${bdElements.firstName.value},\n\nThank you for your inquiry for ${occasionArticle} ${bdElements.occasion.value} cruise on ${makeDatePretty(bdElements.charterStartDate.value)} for ${bdElements.passengers.value} passengers!\n\nHere are some of our most popular yachts for your party size.\n\n[VESSELS]\n\nThe rates above include fuel and all captain and port fees. Also includes waters, sodas, and snacks.\n\nOnce you are ready to secure your cruise, we'll email you an invoice and you can pay half to reserve your cruise and half 14 days before the cruise. \n\nIf you would like to browse all the yachts in our fleet, please click on the link below:\n\nhttps://www.sdyachtcharters.com\/browse\n\nFeel free to text or call at any time if you have any questions.\n\nCheers!\n--\n\nCaptain Kenne Melonas\nUS Navy SWCC (Retired)\nOwner of Elite Maritime Services/San Diego Yacht Charters\nhttps://www.sdyachtcharters.com\nEmail: sdyachtcharters@gmail.com`;
+    let sendOptionsTemplate = `Hello ${bdElements.firstName.value},\n\nThank you for your inquiry for ${occasionArticle} ${bdElements.occasion.value} cruise on ${makeDatePretty(bdElements.charterStartDate.value)} for ${bdElements.passengers.value} passengers!\n\nHere are some of our most popular yachts for your party size.\n\n----\n\n----\nThe rates above include fuel and all captain and port fees. Also includes waters, sodas, and snacks.\n\nOnce you are ready to secure your cruise, we'll email you an invoice and you can pay half to reserve your cruise and half 14 days before the cruise. \n\nIf you would like to browse all the yachts in our fleet, please click on the link below:\n\nhttps://www.sdyachtcharters.com\/browse\n\nFeel free to text or call at any time if you have any questions.\n\nCheers!\n--\n\nCaptain Kenne Melonas\nUS Navy SWCC (Retired)\nOwner of Elite Maritime Services/San Diego Yacht Charters\nhttps://www.sdyachtcharters.com\nEmail: sdyachtcharters@gmail.com`;
     e("flow_sendOptions_msg").value = sendOptionsTemplate;
 
     e("flow_sendOptions_to").value = e("email").value;
     e("flow_sendOptions_subject").value = `Charter Request for ${e("dateTimeText").innerHTML.substring(0, getIndex(e("dateTimeText").innerHTML, " ", 2))}`
-
-    setVesselSelects()
 }
 
 //// //// //// //// Flow: Accept Booking //// //// //// ////
