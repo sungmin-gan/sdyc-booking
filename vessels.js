@@ -38,7 +38,9 @@ function getVessels() {
 }
 
 function updateVessel(id, data) {
-    return new Promise(async (resolve) => {
+    console.log(id)
+    console.log(data)
+    /*return new Promise(async (resolve) => {
         const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/updateVessel";
         try {
             const response = await fetch(url, {
@@ -55,7 +57,7 @@ function updateVessel(id, data) {
         } catch (error) {
             console.log(error.message)
         }
-    })
+    })*/
 }
 
 function fillVesselLists() {
