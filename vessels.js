@@ -108,6 +108,7 @@ let vfElements = {
     maxCapacity: e("vf_maxCapacity"),
     homePort: e("vf_homePort"),
     altPort: e("vf_altPort"),
+    pricing: e("vf_pricing"),
     // Company / Owner Info
     primaryName: e("vf_primaryName"),
     primaryPhone: e("vf_primaryPhone"),
