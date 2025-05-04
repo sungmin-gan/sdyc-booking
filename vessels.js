@@ -38,9 +38,7 @@ function getVessels() {
 }
 
 function updateVessel(id, data) {
-    console.log(id)
-    console.log(data)
-    /*return new Promise(async (resolve) => {
+    return new Promise(async (resolve) => {
         const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/updateVessel";
         try {
             const response = await fetch(url, {
@@ -57,7 +55,7 @@ function updateVessel(id, data) {
         } catch (error) {
             console.log(error.message)
         }
-    })*/
+    })
 }
 
 function fillVesselLists() {
@@ -145,21 +143,17 @@ function disableVfFields() {
 
 function setVessel(slot, initial = false) {
     if (!initial) { setVesselUpdate() }
-    if (Object.keys(vessel_update.update).length > 0 && !initial) {
-        e("confirmSaveVessel").classList.remove("hidden")
-    } else {
-        disableVfFields()
-        const vid = slot.getAttribute("id");
-        if (vid == currentVessel && !initial) { return null } else {
-            if (!initial) { e(currentVessel).classList.remove("selected") }
-            e(vid).classList.add("selected");
-            let vessel = vessels.find((v) => v.id == vid);
-            
-            Object.keys(vfElements).forEach((key) => {
-                vfElements[key].value = vessel[key] || "";
-            })
-            currentVessel = vid;
-        }
+    disableVfFields()
+    const vid = slot.getAttribute("id");
+    if (vid == currentVessel && !initial) { return null } else {
+        if (!initial) { e(currentVessel).classList.remove("selected") }
+        e(vid).classList.add("selected");
+        let vessel = vessels.find((v) => v.id == vid);
+        
+        Object.keys(vfElements).forEach((key) => {
+            vfElements[key].value = vessel[key] || "";
+        })
+        currentVessel = vid;
     }
 }
 
@@ -203,7 +197,6 @@ e("saveButton_vf").addEventListener("click", () => {
     disableVfFields(); 
     setVesselUpdate();
     if (Object.keys(vessel_update.update).length > 0) {
-        setVessel(e(vessel_update.id));
         updateVessel(vessel_update.id, vessel_update.update).then(() => {
             updateLocalVessel();
         });
