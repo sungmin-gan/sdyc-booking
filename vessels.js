@@ -154,7 +154,7 @@ function setVessel(slot, initial = false) {
         Object.keys(vfElements).forEach((key) => {
             vfElements[key].value = vessel[key] || "";
         })
-        e("vf_vesselURL").setAttribute("href", vfElements.sdycURL)
+        e("vf_vesselURL").setAttribute("href", vfElements.sdycURL.value)
         currentVessel = vid;
     }
 }
@@ -201,6 +201,7 @@ e("saveButton_vf").addEventListener("click", () => {
     if (Object.keys(vessel_update.update).length > 0) {
         updateVessel(vessel_update.id, vessel_update.update).then(() => {
             updateLocalVessel();
+            setVessel();
         });
     }
 })
