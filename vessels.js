@@ -154,6 +154,7 @@ function setVessel(slot, initial = false) {
         Object.keys(vfElements).forEach((key) => {
             vfElements[key].value = vessel[key] || "";
         })
+        e("vf_vesselURL").setAttribute("href", vfElements.sdycURL)
         currentVessel = vid;
     }
 }
