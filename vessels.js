@@ -203,9 +203,10 @@ e("saveButton_vf").addEventListener("click", () => {
     disableVfFields(); 
     setVesselUpdate();
     if (Object.keys(vessel_update.update).length > 0) {
-        updateLocalVessel();
         setVessel(e(vessel_update.id));
-        updateVessel(vessel_update.id, vessel_update.update);
+        updateVessel(vessel_update.id, vessel_update.update).then(() => {
+            updateLocalVessel();
+        });
     }
 })
 
