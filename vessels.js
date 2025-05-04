@@ -106,6 +106,7 @@ let vfElements = {
     displayName: e("vf_displayName"),
     class: e("vf_class"),
     maxCapacity: e("vf_maxCapacity"),
+    sdycURL: e("vf_sdycURL"),
     homePort: e("vf_homePort"),
     altPort: e("vf_altPort"),
     pricing: e("vf_pricing"),
