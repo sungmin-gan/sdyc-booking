@@ -659,6 +659,7 @@ function setTemplate_sendOptions() {
 
     e("flow_sendOptions_to").value = e("email").value;
     e("flow_sendOptions_subject").value = `Charter Request for ${e("dateTimeText").innerHTML.substring(0, getIndex(e("dateTimeText").innerHTML, " ", 2))}`
+    setVesselSelects()
 }
 
 //// //// //// //// Flow: Accept Booking //// //// //// ////
