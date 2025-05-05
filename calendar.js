@@ -720,18 +720,18 @@ function setCharterLine() {
 for (let i=1; i<6; i++) {
 	e(`flow_acceptBooking_qty${i}`).addEventListener("input", () => {
   	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-  	if (!rate || rate == "") { rate = 0 }
+  	if (!isNumber(rate)) { rate = 0 }
     let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-    if (!qty || qty == "") { rate = 0 }
+    if (!isNumber( qty)) { qty = 0 }
     let amt = (rate*qty).toFixed(2);
     e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
     flow_acceptBooking_setTotal()
   });
   e(`flow_acceptBooking_rate${i}`).addEventListener("input", () => {
   	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-  	if (!rate || rate == "") { rate = 0 }
+  	if (!isNumber(rate)) { rate = 0 }
     let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-    if (!qty || qty == "") { rate = 0 }
+    if (!isNumber( qty)) { qty = 0 }
     let amt = (rate*qty).toFixed(2);
     e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
     flow_acceptBooking_setTotal()
