@@ -293,7 +293,7 @@ function flow_acceptBooking_setPaymentOptions() {
   let dueYear = dueDate.substring(0,4);
   let dueDay = `${parseInt(dueDate.substring(8))}`;
   let fullDate = `${dueMonth} ${dueDay}, ${dueYear}`;
-  e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to entire amount all at once.`
+  e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to pay the entire amount all at once.`
 }
 
 function flow_acceptBooking_setNote() {
