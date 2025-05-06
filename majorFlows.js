@@ -37,10 +37,10 @@ let occasionArticle = "a";
 
 function getIndex(s, c, o) {
     let indicies = [];
-    for (let i=0; i<s.length; i++) {
+    for (let i = 0; i < s.length; i++) {
         if (s[i] == c) { indicies.push(i) }
     }
-    if (indicies.length > 0) { return indicies[o-1] || -1 } 
+    if (indicies.length > 0) { return indicies[o - 1] || -1 }
     else { return -1 }
 }
 
@@ -62,91 +62,101 @@ function setTemplate_sendOptions() {
 
 function removeElement(arr, item) {
     let newArr = arr.filter(x => x != item);
-      return newArr
-  }
-  
-  let selectedVesselOptions = [];
-  
-  function setVesselSelects() {
-      let toDisplay = vessels.filter(x => x.id != "7qc7aPDMLFWSvq7Js1Hg");
+    return newArr
+}
+
+let selectedVesselOptions = [];
+
+function setVesselSelects() {
+    let toDisplay = vessels.filter(x => x.id != "7qc7aPDMLFWSvq7Js1Hg");
     toDisplay.forEach((v) => {
         let slot = document.createElement("div");
-      slot.setAttribute("id", `option_${v.id}`);
-      slot.classList.add("div-block-60");
-      
-      let c1 = document.createElement("div");
-      c1.classList.add("div-block-59");
-      slot.appendChild(c1);
-      
-      let label = document.createElement("label");
-      label.classList.add("w-checkbox");
-      label.classList.add("checkbox-field");
-      c1.appendChild(label)
-      
-      let cBox = document.createElement("input");
-      cBox.setAttribute("type", "checkbox");
-      cBox.setAttribute("id", `checkbox_${v.id}`);
-      cBox.classList.add("w-checkbox-input");
-      cBox.classList.add("checkbox");
-      label.appendChild(cBox)
-      
+        slot.setAttribute("id", `option_${v.id}`);
+        slot.classList.add("div-block-60");
+
+        let c1 = document.createElement("div");
+        c1.classList.add("div-block-59");
+        slot.appendChild(c1);
+
+        let label = document.createElement("label");
+        label.classList.add("w-checkbox");
+        label.classList.add("checkbox-field");
+        c1.appendChild(label)
+
+        let cBox = document.createElement("input");
+        cBox.setAttribute("type", "checkbox");
+        cBox.setAttribute("id", `checkbox_${v.id}`);
+        cBox.classList.add("w-checkbox-input");
+        cBox.classList.add("checkbox");
+        label.appendChild(cBox)
+
         let c2 = document.createElement("div");
-      c2.classList.add("div-block-61");
-      slot.appendChild(c2);
-      
-      let vName = document.createElement("div");
-      vName.classList.add("text-block-22");
-      vName.innerHTML = v.name;
-      c2.appendChild(vName)
-      
-      let vDisplayName = document.createElement("div");
-      vDisplayName.classList.add("text-block-23");
-      vDisplayName.innerHTML = v.displayName;
-      c2.appendChild(vDisplayName)
-      
-      let passengers = document.createElement("div");
-      passengers.classList.add("text-block-23");
-      passengers.innerHTML = `${v.maxCapacity} Passengers Max`;
-      c2.appendChild(passengers)
-    
-      e("vesselOptionsPane").appendChild(slot)
-      
-      cBox.addEventListener("change", () => {
-          if (cBox.checked) {
-            selectedVesselOptions.push(v.id)
-        } else {
-            selectedVesselOptions = removeElement(selectedVesselOptions, v.id)
-        }
-        setOptionsText()
-      })
+        c2.classList.add("div-block-61");
+        slot.appendChild(c2);
+
+        let vName = document.createElement("div");
+        vName.classList.add("text-block-22");
+        vName.innerHTML = v.name;
+        c2.appendChild(vName)
+
+        let vDisplayName = document.createElement("div");
+        vDisplayName.classList.add("text-block-23");
+        vDisplayName.innerHTML = v.displayName;
+        c2.appendChild(vDisplayName)
+
+        let passengers = document.createElement("div");
+        passengers.classList.add("text-block-23");
+        passengers.innerHTML = `${v.maxCapacity} Passengers Max`;
+        c2.appendChild(passengers)
+
+        e("vesselOptionsPane").appendChild(slot)
+
+        cBox.addEventListener("change", () => {
+            if (cBox.checked) {
+                selectedVesselOptions.push(v.id)
+            } else {
+                selectedVesselOptions = removeElement(selectedVesselOptions, v.id)
+            }
+            setOptionsText()
+        })
     })
-  }
-  
-  e("checkbox_7qc7aPDMLFWSvq7Js1Hg").addEventListener("change", () => {
-      if (e("checkbox_7qc7aPDMLFWSvq7Js1Hg").checked) {
-          selectedVesselOptions.push("7qc7aPDMLFWSvq7Js1Hg")
-      } else {
-          selectedVesselOptions = removeElement(selectedVesselOptions, "7qc7aPDMLFWSvq7Js1Hg")
-      }
-      setOptionsText()
-  })
-  
-  function replaceBetweenDashes(text, replacement) {
+}
+
+e("checkbox_7qc7aPDMLFWSvq7Js1Hg").addEventListener("change", () => {
+    if (e("checkbox_7qc7aPDMLFWSvq7Js1Hg").checked) {
+        selectedVesselOptions.push("7qc7aPDMLFWSvq7Js1Hg")
+    } else {
+        selectedVesselOptions = removeElement(selectedVesselOptions, "7qc7aPDMLFWSvq7Js1Hg")
+    }
+    setOptionsText()
+})
+
+function replaceBetweenDashes(text, replacement) {
     return text.replace(/----.*?----/gs, `----${replacement}----`);
-  }
-  
-  function setOptionsText() {
-      let optionsPortion = "";
+}
+
+function setOptionsText() {
+    let optionsPortion = "";
     selectedVesselOptions.forEach((vid, i) => {
-        let endSpacer = (i == selectedVesselOptions.length-1 ? "\n" : "\n");
+        let endSpacer = (i == selectedVesselOptions.length - 1 ? "\n" : "\n");
         let v = vessels.find(x => x.id == vid);
-      optionsPortion += `\n🛥️ ${v.displayName}\n`;
-      optionsPortion += `· For up to ${v.maxCapacity} passengers\n`;
-      optionsPortion += `· ${v.sdycURL}\n\n`;
-      optionsPortion += `${v.pricing}${endSpacer}`;
+        optionsPortion += `\n🛥️ ${v.displayName}\n`;
+        optionsPortion += `· For up to ${v.maxCapacity} passengers\n`;
+        optionsPortion += `· ${v.sdycURL}\n\n`;
+        optionsPortion += `${v.pricing}${endSpacer}`;
     })
     e("flow_sendOptions_msg").value = replaceBetweenDashes(e("flow_sendOptions_msg").value, optionsPortion)
-  }
+}
+
+function clearSendOptions() {
+    e("flow_sendOptions_msg").value = "";
+    e("flow_sendOptions_to").value = "";
+    e("flow_sendOptions_subject").value = "";
+    selectedVesselOptions.forEach((vid) => {
+        e(`checkbox_${vid}`).selected = false
+    })
+    selectedVesselOptions = [];
+}
 
 //// //// //// //// Flow: Accept Booking //// //// //// ////
 
@@ -181,6 +191,7 @@ e("flow_acceptBooking_sDate4").setAttribute("type", "date");
 e("flow_acceptBooking_sDate5").setAttribute("type", "date");
 
 e("flow_acceptBooking_cancel").addEventListener("click", () => {
+    e("flow_acceptBooking_createInvoiceTab").click()
     e("tab_bookingDetails").click()
 })
 
@@ -195,9 +206,9 @@ function check_acceptBooking() {
 }
 
 function goTo_acceptBooking() {
-	e("flow_acceptBooking_create").classList.remove("hidden")
+    e("flow_acceptBooking_create").classList.remove("hidden")
     if (dbFieldsDisabled) {
-    		setTemplate_acceptBooking();
+        setTemplate_acceptBooking();
         e("tab_acceptBooking").click();
     }
 }
@@ -207,78 +218,78 @@ e("button_acceptBooking").addEventListener("click", () => {
 })
 
 function todayDateInput() {
-	let month = (currentMonth+1 < 10 ? `0${currentMonth+1}` : `${currentMonth+1}`);
-  let day = (currentDate.getDate() < 10 ? `0${currentDate.getDate()}` : `${currentDate.getDate()}`);
-  return `${currentYear}-${month}-${day}`;
+    let month = (currentMonth + 1 < 10 ? `0${currentMonth + 1}` : `${currentMonth + 1}`);
+    let day = (currentDate.getDate() < 10 ? `0${currentDate.getDate()}` : `${currentDate.getDate()}`);
+    return `${currentYear}-${month}-${day}`;
 }
 
 function getDuration(start, end) {
-	return (end - start)/3600
+    return (end - start) / 3600
 }
 
 function setCharterLine() {
-	let booking = getCurrentBooking();
-  let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
-  let rate = (booking.estimate/duration).toFixed(2);
-  e("flow_acceptBooking_qty1").value = duration;
-	e("flow_acceptBooking_rate1").value = rate;
-  e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration*rate).toFixed(2))
+    let booking = getCurrentBooking();
+    let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
+    let rate = (booking.estimate / duration).toFixed(2);
+    e("flow_acceptBooking_qty1").value = duration;
+    e("flow_acceptBooking_rate1").value = rate;
+    e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration * rate).toFixed(2))
 }
 
-for (let i=1; i<6; i++) {
-	e(`flow_acceptBooking_qty${i}`).addEventListener("input", () => {
-  	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-  	if (rate || rate == "") { rate = 0 }
-    let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-    if (!qty || qty == "") { qty = 0 }
-    let amt = (rate*qty).toFixed(2);
-    e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
-    flow_acceptBooking_setTotal()
-  });
-  e(`flow_acceptBooking_rate${i}`).addEventListener("input", () => {
-  	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-  	if (!rate || rate == "") { rate = 0 }
-    let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-    if (!qty || qty == "") { qty = 0 }
-    let amt = (rate*qty).toFixed(2);
-    e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
-    flow_acceptBooking_setTotal()
-  })
-  e(`flow_acceptBooking_qty${i}`).addEventListener("change", () => {
-  	if (!e(`flow_acceptBooking_qty${i}`).value || e(`flow_acceptBooking_qty${i}`).value == "") {
-    	e(`flow_acceptBooking_qty${i}`).value = 0
-    }
-  })
-  e(`flow_acceptBooking_rate${i}`).addEventListener("change", () => {
-  	if (!e(`flow_acceptBooking_rate${i}`).value || e(`flow_acceptBooking_rate${i}`).value == "") {
-    	e(`flow_acceptBooking_rate${i}`).value = 0
-    }
-  })
+for (let i = 1; i < 6; i++) {
+    e(`flow_acceptBooking_qty${i}`).addEventListener("input", () => {
+        let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+        if (rate || rate == "") { rate = 0 }
+        let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+        if (!qty || qty == "") { qty = 0 }
+        let amt = (rate * qty).toFixed(2);
+        e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
+        flow_acceptBooking_setTotal()
+    });
+    e(`flow_acceptBooking_rate${i}`).addEventListener("input", () => {
+        let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+        if (!rate || rate == "") { rate = 0 }
+        let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+        if (!qty || qty == "") { qty = 0 }
+        let amt = (rate * qty).toFixed(2);
+        e(`flow_acceptBooking_amt${i}`).innerHTML = formatCurrency(amt);
+        flow_acceptBooking_setTotal()
+    })
+    e(`flow_acceptBooking_qty${i}`).addEventListener("change", () => {
+        if (!e(`flow_acceptBooking_qty${i}`).value || e(`flow_acceptBooking_qty${i}`).value == "") {
+            e(`flow_acceptBooking_qty${i}`).value = 0
+        }
+    })
+    e(`flow_acceptBooking_rate${i}`).addEventListener("change", () => {
+        if (!e(`flow_acceptBooking_rate${i}`).value || e(`flow_acceptBooking_rate${i}`).value == "") {
+            e(`flow_acceptBooking_rate${i}`).value = 0
+        }
+    })
 }
 
 function changeDate(d, days) {
-	let year = parseInt(d.substring(0,4));
-  let month = parseInt(d.substring(5,7))-1;
-  let day = parseInt(d.substring(8));
-  let date = new Date(year, month, day);
-  let newDate = new Date(date);
-  newDate.setDate(date.getDate() + days);
-  let newYear = newDate.getFullYear();
-  let newMonth = (newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth()+1}` : `${newDate.getMonth()}`)
-  let newDay = (newDate.getDate() < 10 ? `0${newDate.getDate()}` : `${newDate.getDate()}`)
-  return `${newYear}-${newMonth}-${newDay}`
+    let year = parseInt(d.substring(0, 4));
+    let month = parseInt(d.substring(5, 7)) - 1;
+    let day = parseInt(d.substring(8));
+    let date = new Date(year, month, day);
+    let newDate = new Date(date);
+    newDate.setDate(date.getDate() + days);
+    let newYear = newDate.getFullYear();
+    let newMonth = (newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth()}`)
+    let newDay = (newDate.getDate() < 10 ? `0${newDate.getDate()}` : `${newDate.getDate()}`)
+    return `${newYear}-${newMonth}-${newDay}`
 }
 
 function standardTime(time) {
-	let tod = "AM";
-	let hour = parseInt(time.substring(0,2));
-  if (hour > 11) { 
-    hour = hour - 12;
-    tod = "PM"; 
-  }
-  else if (hour == 0) { hour = 12 }
-  let minute = time.substring(3);
-  return `${hour}:${minute}${tod}`
+    let tod = "AM";
+    let hour = parseInt(time.substring(0, 2));
+    if (hour > 11) {
+        hour = hour - 12;
+        tod = "PM";
+    }
+    else if (hour == 0) { hour = 12 }
+    let minute = time.substring(3);
+    return `${hour}:${minute}${tod}`
 }
 
 function setDescription() {
@@ -291,48 +302,82 @@ function setDescription() {
 }
 
 function flow_acceptBooking_getTotal() {
-	let total = 0;
-  for (let i=1; i<6; i++) {
-  	let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-    let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-    if (!rate || rate == "") { rate = 0 }
-    if (!qty || qty == "") { qty = 0 }
-  	total += (rate*qty);
-  }
-  return total.toFixed(2)
+    let total = 0;
+    for (let i = 1; i < 6; i++) {
+        let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+        let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+        if (!rate || rate == "") { rate = 0 }
+        if (!qty || qty == "") { qty = 0 }
+        total += (rate * qty);
+    }
+    return total.toFixed(2)
 }
 
 function flow_acceptBooking_setTotal() {
-  e("flow_acceptBooking_invoiceTotal").innerHTML = formatCurrency(flow_acceptBooking_getTotal());
-  flow_acceptBooking_setPaymentOptions()
+    e("flow_acceptBooking_invoiceTotal").innerHTML = formatCurrency(flow_acceptBooking_getTotal());
+    flow_acceptBooking_setPaymentOptions()
 }
 
 function flow_acceptBooking_setPaymentOptions() {
-	let deposit = flow_acceptBooking_getTotal()/2;
-  let dueDate = e("flow_acceptBooking_dueDate").value;
-  2025-03-01
-  let dueMonth = YEAR[parseInt(dueDate.substring(5,7))-1];
-  let dueYear = dueDate.substring(0,4);
-  let dueDay = `${parseInt(dueDate.substring(8))}`;
-  let fullDate = `${dueMonth} ${dueDay}, ${dueYear}`;
-  e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to pay the entire amount all at once.`
+    let deposit = flow_acceptBooking_getTotal() / 2;
+    let dueDate = e("flow_acceptBooking_dueDate").value;
+    2025 - 03 - 01
+    let dueMonth = YEAR[parseInt(dueDate.substring(5, 7)) - 1];
+    let dueYear = dueDate.substring(0, 4);
+    let dueDay = `${parseInt(dueDate.substring(8))}`;
+    let fullDate = `${dueMonth} ${dueDay}, ${dueYear}`;
+    e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to pay the entire amount all at once.`
 }
 
 function flow_acceptBooking_setNote() {
-	let l1 = "Cancellation Policy:";
-  let l2 = "* 100% Refund for cancellations more than 14 days before scheduled booking. 50% Refund for cancellations more than 7 days before scheduled booking. No refunds for cancellations within 7 days.";
-  let l3 = "* If a charter is cancelled due to unsafe weather, 100% refunded or Charterer may reschedule.";
-  e("flow_acceptBooking_note").value = `${l1}\n${l2}\n${l3}`;
+    let l1 = "Cancellation Policy:";
+    let l2 = "* 100% Refund for cancellations more than 14 days before scheduled booking. 50% Refund for cancellations more than 7 days before scheduled booking. No refunds for cancellations within 7 days.";
+    let l3 = "* If a charter is cancelled due to unsafe weather, 100% refunded or Charterer may reschedule.";
+    e("flow_acceptBooking_note").value = `${l1}\n${l2}\n${l3}`;
 }
 
 function setTemplate_acceptBooking() {
-	e("flow_acceptBooking_customerName").value = `${bdElements.firstName.value} ${bdElements.lastName.value}`;
-	e("flow_acceptBooking_customerEmail").value = bdElements.email.value;
-  e("flow_acceptBooking_invoiceDate").value = todayDateInput();
-  e("flow_acceptBooking_dueDate").value = changeDate(bdElements.charterStartDate.value, -14);
-  e("flow_acceptBooking_sDate1").value = bdElements.charterStartDate.value;
-  setCharterLine()
-  setDescription()
-  flow_acceptBooking_setTotal()
-  flow_acceptBooking_setNote()
+    e("flow_acceptBooking_customerName").value = `${bdElements.firstName.value} ${bdElements.lastName.value}`;
+    e("flow_acceptBooking_customerEmail").value = bdElements.email.value;
+    e("flow_acceptBooking_invoiceDate").value = todayDateInput();
+    e("flow_acceptBooking_dueDate").value = changeDate(bdElements.charterStartDate.value, -14);
+    e("flow_acceptBooking_sDate1").value = bdElements.charterStartDate.value;
+    setCharterLine()
+    setDescription()
+    flow_acceptBooking_setTotal()
+    flow_acceptBooking_setNote()
+}
+
+for (let i = 1; i < 6; i++) {
+    e(`flow_acceptBooking_clear${i}`).addEventListener("click", () => {
+        e(`flow_acceptBooking_sDate${i}`).value = "";
+        e(`flow_acceptBooking_service${i}`).value = "";
+        e(`flow_acceptBooking_desc${i}`).value = "";
+        e(`flow_acceptBooking_qty${i}`).value = "";
+        e(`flow_acceptBooking_rate${i}`).value = "";
+        e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
+    })
+}
+
+e("flow_acceptBooking_invoiceErr_ok").addEventListener("click", () => {
+    e("flow_acceptBooking_invoiceErr").classList.add("hidden")
+})
+
+function flow_acceptBooking_clearForm() {
+    for (let i = 1; i < 6; i++) {
+        e(`flow_acceptBooking_sDate${i}`).value = "";
+        e(`flow_acceptBooking_service${i}`).value = "";
+        e(`flow_acceptBooking_desc${i}`).value = "";
+        e(`flow_acceptBooking_qty${i}`).value = "";
+        e(`flow_acceptBooking_rate${i}`).value = "";
+        e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
+    }
+    e("flow_acceptBooking_customerName").value = "";
+    e("flow_acceptBooking_customerEmail").value = "";
+    e("flow_acceptBooking_invoiceDate").value = "";
+    e("flow_acceptBooking_dueDate").value = "";
+    e("flow_acceptBooking_invoiceTotal").innerHTML = "$0.00";
+    e("flow_acceptBooking_paymentOptions").value = "";
+    e("flow_acceptBooking_note").value = "";
+    e("flow_acceptBooking_memo").value = "";
 }
