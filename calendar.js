@@ -380,7 +380,7 @@ function populateBookingDetails(booking) {
 }
 
 function clearBookingDetails(booking) {
-    clearSendOptions();
+    flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].value = ""
