@@ -148,7 +148,7 @@ function setOptionsText() {
     e("flow_sendOptions_msg").value = replaceBetweenDashes(e("flow_sendOptions_msg").value, optionsPortion)
 }
 
-function clearSendOptions() {
+function flow_sendOptions_clearForm() {
     e("flow_sendOptions_msg").value = "";
     e("flow_sendOptions_to").value = "";
     e("flow_sendOptions_subject").value = "";
@@ -381,3 +381,6 @@ function flow_acceptBooking_clearForm() {
     e("flow_acceptBooking_note").value = "";
     e("flow_acceptBooking_memo").value = "";
 }
+
+
+
