@@ -380,6 +380,8 @@ function populateBookingDetails(booking) {
 }
 
 function clearBookingDetails(booking) {
+    clearSendOptions();
+    flow_acceptBooking_clearForm();
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].value = ""
     })
@@ -552,7 +554,6 @@ function updateLocalBooking() {
 }
 
 function closeBookingDetails() {
-    console.log(booking_update)
     if (Object.keys(booking_update.update).length > 0) {
         clearBookingDetails();
         e("bookingDetails").classList.remove("open");
