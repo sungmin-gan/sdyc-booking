@@ -52,7 +52,7 @@ function setTemplate_sendOptions() {
         bdElements.occasion.value[0] == 'U') {
         occasionArticle = "an"
     }
-    let sendOptionsTemplate = `Hello ${bdElements.firstName.value},\n\nThank you for your inquiry for ${occasionArticle} ${bdElements.occasion.value} cruise on ${makeDatePretty(bdElements.charterStartDate.value)} for ${bdElements.passengers.value} passengers!\n\nHere are some of our most popular yachts for your party size.\n----\n\n----\nThe rates above include fuel and all captain and port fees. Also includes waters, sodas, and snacks.\n\nOnce you are ready to secure your cruise, we'll email you an invoice and you can pay half to reserve your cruise and half 14 days before the cruise. \n\nIf you would like to browse all the yachts in our fleet, please click on the link below:\n\nhttps://www.sdyachtcharters.com\/browse\n\nFeel free to text or call at any time if you have any questions.\n\nCheers!\n--\n\nCaptain Kenne Melonas\nUS Navy SWCC (Retired)\nOwner of Elite Maritime Services/San Diego Yacht Charters\nhttps://www.sdyachtcharters.com\nEmail: sdyachtcharters@gmail.com`;
+    let sendOptionsTemplate = `Hello ${bdElements.firstName.value},\n\nThank you for your inquiry for ${occasionArticle} ${bdElements.occasion.value} cruise on ${makeDatePretty(bdElements.charterStartDate.value)} for ${bdElements.passengers.value} passengers!\n\nHere are some of our most popular yachts for your party size.\n----\n\n----\nThe rates above include fuel and all captain and port fees. Also includes waters, sodas, and snacks.\n\nOnce you are ready to secure your cruise, we'll email you an invoice and you can pay half to reserve your cruise and half 14 days before the cruise. \n\nIf you would like to browse all the yachts in our fleet, please click on the link below:\n\nhttps://www.sdyachtcharters.com\/browse\n\nFeel free to text or call at any time if you have any questions.\n\nCheers!\n--\n\nCaptain Kenne Melonas\nUS Navy SWCC (Retired)\nOwner of Elite Maritime Services/San Diego Yacht Charters\nhttps://www.sdyachtcharters.com\nEmail: sdyachtcharters@gmail.com\nPhone: (619) 307-9534`;
     e("flow_sendOptions_msg").value = sendOptionsTemplate;
 
     e("flow_sendOptions_to").value = e("email").value;
@@ -150,6 +150,28 @@ function removeElement(arr, item) {
 
 //// //// //// //// Flow: Accept Booking //// //// //// ////
 
+function createQbInvoice(data) {
+    return new Promise(async (resolve) => {
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/createQbInvoice";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: data }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                const json = await response.json();
+                resolve(json.result);
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    })
+}
+
 e("flow_acceptBooking_invoiceDate").setAttribute("type", "date");
 e("flow_acceptBooking_dueDate").setAttribute("type", "date");
 e("flow_acceptBooking_sDate1").setAttribute("type", "date");
@@ -173,7 +195,7 @@ function check_acceptBooking() {
 }
 
 function goTo_acceptBooking() {
-		console.log(currentBooking)
+	e("flow_acceptBooking_create").classList.remove("hidden")
     if (dbFieldsDisabled) {
     		setTemplate_acceptBooking();
         e("tab_acceptBooking").click();
