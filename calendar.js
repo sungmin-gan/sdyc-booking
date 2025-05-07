@@ -16,11 +16,17 @@ let calendarDates = [];
 
 let charterBookings = [];
 let bookingsToDisplay = [];
-let currentBooking = "";
 
 let booking_update = {
     id: null,
     update: {}
+}
+
+let currentBooking = "";
+
+function getCurrentBooking() {
+	let booking = charterBookings.find(x => x.id == currentBooking);
+  return booking
 }
 
 //// //// //// //// Tabs Control //// //// //// ////
