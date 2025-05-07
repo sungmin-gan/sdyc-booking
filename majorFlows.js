@@ -149,6 +149,7 @@ function setOptionsText() {
 }
 
 function flow_sendOptions_clearForm() {
+    console.log("flow_sendOptions_clearForm fired")
     e("flow_sendOptions_msg").value = "";
     e("flow_sendOptions_to").value = "";
     e("flow_sendOptions_subject").value = "";
@@ -364,6 +365,7 @@ e("flow_acceptBooking_invoiceErr_ok").addEventListener("click", () => {
 })
 
 function flow_acceptBooking_clearForm() {
+    console.log("flow_acceptBooking_clearForm fired")
     for (let i = 1; i < 6; i++) {
         e(`flow_acceptBooking_sDate${i}`).value = "";
         e(`flow_acceptBooking_service${i}`).value = "";
