@@ -1,6 +1,5 @@
 //// //// //// //// Flow: Send Options //// //// //// ////
 
-
 e("flow_sendOptions_cancel").addEventListener("click", () => {
     e("tab_bookingDetails").click()
 })
@@ -230,7 +229,7 @@ function getDuration(start, end) {
 
 function setCharterLine() {
     let booking = getCurrentBooking();
-    if(booking.estimate) {
+    if(booking.estimate && booking.estimate != 0 && booking.estimate != "") {
         let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
         let rate = (booking.estimate / duration).toFixed(2);
         e("flow_acceptBooking_qty1").value = duration;
