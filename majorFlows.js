@@ -149,7 +149,6 @@ function setOptionsText() {
 }
 
 function flow_sendOptions_clearForm() {
-    console.log("flow_sendOptions_clearForm fired")
     e("flow_sendOptions_msg").value = "";
     e("flow_sendOptions_to").value = "";
     e("flow_sendOptions_subject").value = "";
@@ -382,4 +381,5 @@ function flow_acceptBooking_clearForm() {
     e("flow_acceptBooking_paymentOptions").value = "";
     e("flow_acceptBooking_note").value = "";
     e("flow_acceptBooking_memo").value = "";
+    ("flow_acceptBooking_createInvoiceTab").click()
 }
