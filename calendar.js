@@ -382,6 +382,7 @@ function populateBookingDetails(booking) {
 function clearBookingDetails() {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
+    e("tab_bookingDetails").click();
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].value = ""
     })
