@@ -196,7 +196,7 @@ e("flow_acceptBooking_cancel").addEventListener("click", () => {
 })
 
 function check_acceptBooking() {
-    if (dbFieldsDisabled) {
+    if (dbFieldsDisabled && bdElements.vessel.value && bdElements.vessel.value != "") {
         e("button_acceptBooking").classList.remove("disabled");
         e("button_icon_acceptBooking").classList.remove("disabled")
     } else {
@@ -207,7 +207,7 @@ function check_acceptBooking() {
 
 function goTo_acceptBooking() {
     e("flow_acceptBooking_create").classList.remove("hidden")
-    if (dbFieldsDisabled) {
+    if (dbFieldsDisabled && bdElements.vessel.value && bdElements.vessel.value != "") {
         setTemplate_acceptBooking();
         e("tab_acceptBooking").click();
     }
@@ -229,11 +229,13 @@ function getDuration(start, end) {
 
 function setCharterLine() {
     let booking = getCurrentBooking();
-    let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
-    let rate = (booking.estimate / duration).toFixed(2);
-    e("flow_acceptBooking_qty1").value = duration;
-    e("flow_acceptBooking_rate1").value = rate;
-    e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration * rate).toFixed(2))
+    if(booking.estimate) {
+        let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
+        let rate = (booking.estimate / duration).toFixed(2);
+        e("flow_acceptBooking_qty1").value = duration;
+        e("flow_acceptBooking_rate1").value = rate;
+        e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration * rate).toFixed(2))
+    }
 }
 
 for (let i = 1; i < 6; i++) {
