@@ -154,7 +154,7 @@ function flow_sendOptions_clearForm() {
     e("flow_sendOptions_to").value = "";
     e("flow_sendOptions_subject").value = "";
     selectedVesselOptions.forEach((vid) => {
-        e(`checkbox_${vid}`).selected = false
+        e(`checkbox_${vid}`).checked = false
     })
     selectedVesselOptions = [];
 }
