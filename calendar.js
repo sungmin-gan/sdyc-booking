@@ -379,37 +379,6 @@ function populateBookingDetails(booking) {
     bdElements.textOptIn.value = booking.textOptIn;
 }
 
-function flow_sendOptions_clearForm() {
-    console.log("flow_sendOptions_clearForm fired")
-    e("flow_sendOptions_msg").value = "";
-    e("flow_sendOptions_to").value = "";
-    e("flow_sendOptions_subject").value = "";
-    selectedVesselOptions.forEach((vid) => {
-        e(`checkbox_${vid}`).selected = false
-    })
-    selectedVesselOptions = [];
-}
-
-function flow_acceptBooking_clearForm() {
-    console.log("flow_acceptBooking_clearForm fired")
-    for (let i = 1; i < 6; i++) {
-        e(`flow_acceptBooking_sDate${i}`).value = "";
-        e(`flow_acceptBooking_service${i}`).value = "";
-        e(`flow_acceptBooking_desc${i}`).value = "";
-        e(`flow_acceptBooking_qty${i}`).value = "";
-        e(`flow_acceptBooking_rate${i}`).value = "";
-        e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
-    }
-    e("flow_acceptBooking_customerName").value = "";
-    e("flow_acceptBooking_customerEmail").value = "";
-    e("flow_acceptBooking_invoiceDate").value = "";
-    e("flow_acceptBooking_dueDate").value = "";
-    e("flow_acceptBooking_invoiceTotal").innerHTML = "$0.00";
-    e("flow_acceptBooking_paymentOptions").value = "";
-    e("flow_acceptBooking_note").value = "";
-    e("flow_acceptBooking_memo").value = "";
-}
-
 function clearBookingDetails() {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
