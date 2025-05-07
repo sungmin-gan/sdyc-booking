@@ -570,6 +570,7 @@ function closeBookingDetails() {
         if (Object.keys(booking_update.update).length > 0) {
             e("confirmSaveBooking").classList.remove("hidden")
         } else {
+            clearBookingDetails();
             e("bookingDetails").classList.remove("open");
         }
     }
