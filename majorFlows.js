@@ -381,5 +381,5 @@ function flow_acceptBooking_clearForm() {
     e("flow_acceptBooking_paymentOptions").value = "";
     e("flow_acceptBooking_note").value = "";
     e("flow_acceptBooking_memo").value = "";
-    ("flow_acceptBooking_createInvoiceTab").click()
+    e("flow_acceptBooking_createInvoiceTab").click()
 }
