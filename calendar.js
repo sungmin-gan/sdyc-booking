@@ -45,9 +45,10 @@ const tabs = {
 }
 
 let currentTab = tabs.calendar;
+let goToTab = null;
 
 function switchTabs(dest) {
-    if (dest == currentTab) { console.log("null"); return null } else {
+    if (dest != currentTab) {
         currentTab.tab.classList.remove("selected");
         currentTab.section.classList.add("hidden");
         currentTab.icon.classList.remove("selected")
@@ -55,6 +56,7 @@ function switchTabs(dest) {
         dest.section.classList.remove("hidden");
         dest.icon.classList.add("selected")
         currentTab = dest;
+        goToTab = null;
     }
 }
 
@@ -62,7 +64,8 @@ e("calendarTab").addEventListener("click", () => {
     if (currentTab = tabs.yachts) {
         setVesselUpdate();
         if (Object.keys(vessel_update.update).length > 0) {
-            e("confirmSaveVessel").classList.remove("hidden")
+            e("confirmSaveVessel").classList.remove("hidden");
+            goToTab = tabs.calendar;
         } else {
             disableVfFields();
             switchTabs(tabs.calendar)
