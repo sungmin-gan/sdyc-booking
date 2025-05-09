@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -357,6 +359,7 @@ let bdElements = {
     charterStartTime: e("charterStartTime"),
     charterEndDate: e("charterEndDate"),
     charterEndTime: e("charterEndTime"),
+    status: e("status"),
     passengers: e("passengers"),
     vessel: e("vessel"),
     occasion: e("occasion"),
@@ -393,6 +396,7 @@ function populateBookingDetails(booking) {
     bdElements.internalNotes.value = booking.internalNotes || "";
     resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"));
     e("estimate").innerHTML = `Quote: ${formatCurrency(booking.estimate)}`;
+    if (Object.keys(statusClass).includes(booking.status)) { bdElements.status.value = booking.status }
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
@@ -552,6 +556,9 @@ function setBookingUpdate() {
             let vessel = (value == "" ? { name: "", displayName: "" } : vessels.find(x => x.id == value))
             additional["vesselName"] = vessel.name;
             additional["vesselDisplayName"] = vessel.displayName;
+        }
+        else if (key == "status") {
+            if (!Object.keys(statusClass).contains(value)) { value = "" }
         }
 
         let booking_value = booking[key];
