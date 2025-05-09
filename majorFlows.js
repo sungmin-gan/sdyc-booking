@@ -591,6 +591,15 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 e("flow_acceptBooking_successTab").click();
+                let update = {
+                    invoiceId: response.invoiceId,
+                    invoiceNumber: response.invoiceNumber,
+                    invoiceLink: response.invoiceLink,
+                    // Amount Paid?
+                    // Status?
+                }
+                updateLocalBooking();
+                updateBooking(currentBooking, update)
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
                 e("flow_acceptBooking_gmailErrorTab_msg").innerHTML = response.err;
