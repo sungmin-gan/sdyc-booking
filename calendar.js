@@ -432,11 +432,11 @@ function populateBookingDetails(booking) {
             link.appendChild(w2);
             let invoiceDate = document.createElement("div");
             invoiceDate.classList.add("text-block-49");
-            invoiceDate.innerHTML = `Created ${humanDate(invoice.invoiceDate)}`;
+            invoiceDate.innerHTML = `Created: ${humanDate(invoice.invoiceDate)}`;
             w2.appendChild(invoiceDate);
             let invoiceDueDate = document.createElement("div");
             invoiceDueDate.classList.add("text-block-49");
-            invoiceDueDate.innerHTML = `Due ${humanDate(invoice.invoiceDueDate)}`;
+            invoiceDueDate.innerHTML = `Due: ${humanDate(invoice.invoiceDueDate)}`;
             w2.appendChild(invoiceDueDate);
             let paid = document.createElement("div");
             paid.classList.add("text-block-49");
@@ -453,7 +453,7 @@ function populateBookingDetails(booking) {
 }
 
 function clearInvoiceList() {
-    let booking = getCurrentBooking().booking;
+    let booking = getCurrentBooking();
     if (booking.qbInvoices && Object.keys(booking.qbInvoices).length > 0) {
         Object.keys(booking.qbInvoices).forEach((iid) => {
             e(`qbLink_${iid}`).remove()
