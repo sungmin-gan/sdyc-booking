@@ -188,6 +188,10 @@ e("flow_sendOptions_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 e("flow_sendOptions_successTab").click();
+                booking_update.id = currentBooking;
+                booking_update.update["status"] = "Options Sent";
+                updateLocalBooking();
+                updateBooking(booking_update.id, booking_update.update)
             } else {
                 e("flow_sendOptions_errorTab").click();
                 e("flow_sendOptions_errorTab_msg").innerHTML = response.err;
@@ -531,7 +535,6 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                 e("flow_acceptBooking_emailInvoiceTab").click()
                 flow_acceptBooking_setSendInvoice(response.invoiceLink)
                 booking_update.id = currentBooking;
-                booking_update.update["status"] = "Request Accepted";
                 let qbFieldName = `qbInvoices.${response.invoiceId}`;
                 booking_update.update[qbFieldName] = {
                     invoiceId: response.invoiceId,
@@ -602,6 +605,10 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 e("flow_acceptBooking_successTab").click();
+                booking_update.id = currentBooking;
+                booking_update.update["status"] = "Request Accepted";
+                updateLocalBooking();
+                updateBooking(booking_update.id, booking_update.update)
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
                 e("flow_acceptBooking_gmailErrorTab_msg").innerHTML = response.err;
