@@ -411,7 +411,7 @@ function populateBookingDetails(booking) {
     bdElements.phone.value = booking.phone;
     bdElements.textOptIn.value = booking.textOptIn;
     // List Invoices
-    if (Object.keys(booking.qbInvoices).length > 0) {
+    if (booking.qbInvoices && Object.keys(booking.qbInvoices).length > 0) {
         Object.keys(booking.qbInvoices).forEach((iid) => {
             let invoice = booking.qbInvoices[iid];
             let link = document.createElement("a");
@@ -452,6 +452,15 @@ function populateBookingDetails(booking) {
     }
 }
 
+function clearInvoiceList() {
+    let booking = getCurrentBooking().booking;
+    if (booking.qbInvoices && Object.keys(booking.qbInvoices).length > 0) {
+        Object.keys(booking.qbInvoices).forEach((iid) => {
+            e(`qbLink_${iid}`).remove()
+        })
+    }
+}
+
 function clearBookingDetails() {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
@@ -459,6 +468,7 @@ function clearBookingDetails() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].value = ""
     })
+    clearInvoiceList()
     currentBooking = "";
 }
 
