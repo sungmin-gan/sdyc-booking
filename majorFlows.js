@@ -1,7 +1,5 @@
 //// //// //// //// Flow: Send Options //// //// //// ////
 
-const e = require("express");
-
 e("flow_sendOptions_cancel").addEventListener("click", () => {
     e("tab_bookingDetails").click()
 })
