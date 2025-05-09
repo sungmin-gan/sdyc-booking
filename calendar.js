@@ -378,7 +378,7 @@ let bdElements = {
 
 function humanDate(date) {
     let year = date.substring(0,4);
-    let month = YEARABBR[parseInt(date.substring(5,7))];
+    let month = YEARABBR[parseInt(date.substring(5,7))-1];
     let day = date.substring(8);
     return `${month} ${day}, ${year}`
 }
