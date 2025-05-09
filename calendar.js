@@ -278,7 +278,7 @@ function displayBookings() {
         bookingBadge.classList.add("text-block-6");
         bookingBadge.setAttribute("id", `booking_${i}`)
         bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)}  ${booking.booking.firstName} ${booking.booking.lastName}`;
-        if (statusClass[booking.status]) { bookingBadge.classList.add(statusClass[booking.status]) }
+        if (statusClass[booking.booking.status]) { bookingBadge.classList.add(statusClass[booking.booking.status]) }
         bookingDiv.appendChild(bookingBadge);
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
         // Set event listener
