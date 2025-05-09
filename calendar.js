@@ -258,6 +258,17 @@ function extractTimeFormatted(dateTime) {
     return `${hour}${restOfTime}${suffix}`
 }
 
+let statusClass = {
+    "Send Options": "sendOptions",
+    "Options Sent": "optionsSent",
+    "Vessel Request": "vesselRequest",
+    "Request Accepted": "requestAccepted",
+    "Deposit Paid": "depositPaid",
+    "Fully Paid": "fullyPaid",
+    "Referred Out": "referredOut",
+    "Cancelled": "cancelled"
+}
+
 function displayBookings() {
     bookingsToDisplay.forEach((booking, i) => {
         // Render elements
@@ -267,6 +278,8 @@ function displayBookings() {
         bookingBadge.classList.add("text-block-6");
         bookingBadge.setAttribute("id", `booking_${i}`)
         bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)}  ${booking.booking.firstName} ${booking.booking.lastName}`;
+        let statusClass = statusClass[booking.status];
+        if (statusClass) { bookingBadge.classList.add(statusClass) }
         bookingDiv.appendChild(bookingBadge);
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
         // Set event listener
