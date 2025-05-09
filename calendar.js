@@ -269,7 +269,7 @@ function displayBookings() {
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
         // Set event listener
         bookingBadge.addEventListener("click", () => {
-            booking_update.id = booking.booking.id;
+            currentBooking = booking.booking.id;
             populateBookingDetails(booking.booking)
             openBookingDetails()
         })
@@ -512,8 +512,9 @@ function convertToUnix(isoString) {
 }
 
 function setBookingUpdate() {
-    let booking = bookingsToDisplay.find(x => x.booking.id == booking_update.id);
+    let booking = bookingsToDisplay.find(x => x.booking.id == currentBooking);
     booking = booking.booking;
+    booking_update.id = currentBooking;
     Object.keys(bdElements).forEach((key) => {
 
         let value = bdElements[key].value;
@@ -582,6 +583,7 @@ function closeBookingDetails() {
         } else {
             clearBookingDetails();
             e("bookingDetails").classList.remove("open");
+            booking_update = { id: null, update: {} }
         }
     }
 }
@@ -589,8 +591,8 @@ function closeBookingDetails() {
 e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
     updateLocalBooking();
-    let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
-    populateBookingDetails(displayedBooking);
+    //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
+    //populateBookingDetails(displayedBooking);
     disableBDFields();
 })
 
@@ -601,13 +603,11 @@ e("confirmSaveBooking_save").addEventListener("click", () => {
 })
 
 e("confirmSaveBooking_cancel").addEventListener("click", () => {
-    booking_update.update = {};
     e("confirmSaveBooking").classList.add("hidden");
 })
 
 e("confirmSaveBooking_discard").addEventListener("click", () => {
     e("confirmSaveBooking").classList.add("hidden");
-    clearBookingDetails();
     e("bookingDetails").classList.remove("open");
     booking_update = { id: null, update: {} }
 })
