@@ -79,7 +79,7 @@ e("yachtsTab").addEventListener("click", () => { switchTabs(tabs.yachts) })
 e('charterStartDate').setAttribute("type", "date");
 e('charterEndDate').setAttribute("type", "date");
 
-//// //// //// //// For Making the Basic Calendar //// //// //// ////
+//// //// //// //// API Calls //// //// //// ////
 
 function getBookings(dateStart, dateEnd) {
     return new Promise(async (resolve) => {
@@ -123,6 +123,8 @@ function updateBooking(id, data) {
         }
     })
 }
+
+//// //// //// //// For Making the Basic Calendar //// //// //// ////
 
 function getCalendarDates() {
     //Get Previous Month's
@@ -395,6 +397,7 @@ function clearBookingDetails() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].value = ""
     })
+    currentBooking = "";
 }
 
 function disableBDFields() {
