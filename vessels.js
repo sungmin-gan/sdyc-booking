@@ -142,6 +142,9 @@ function disableVfFields() {
     e("editButton_vf").classList.remove("hidden")
 }
 
+
+let vesselTo = "";
+
 function setVessel(slot) {
     disableVfFields()
     const vid = slot.getAttribute("id");
@@ -155,12 +158,19 @@ function setVessel(slot) {
     })
     e("vf_vesselURL").setAttribute("href", vfElements.sdycURL.value)
     currentVessel = vid;
-    
+    vesselTo = "";
+    vessel_update = { id: vid, update: {} }
 }
 
 function changeVessel(slot) {
     if (slot.getAttribute("id") != currentVessel) {
-        setVessel(slot)
+        setVesselUpdate();
+        if (Object.keys(vessel_update.update).length > 0) {
+            e("confirmSaveVessel").classList.remove("hidden");
+            vesselTo = slot.getAttribute("id")
+        } else {
+            setVessel(slot)
+        }
     }
 }
 
@@ -182,7 +192,6 @@ function enableVfFields() {
 e("editButton_vf").addEventListener("click", () => { enableVfFields() })
 
 function setVesselUpdate() {
-    vessel_update.id = currentVessel;
     let vessel = vessels.find(x => x.id == currentVessel);
     Object.keys(vfElements).forEach((key) => {
         let value = (key == "maxCapacity" ? parseInt(vfElements[key].value) : vfElements[key].value)
@@ -212,17 +221,18 @@ e("saveButton_vf").addEventListener("click", () => {
 
 e("confirmSaveVessel_save").addEventListener("click", () => {
     e("confirmSaveVessel").classList.add("hidden");
-    updateLocalVessel();
-    setVessel(e(vessel_update.id), true);
-    updateVessel(vessel_update.id, vessel_update.update);
+    disableVfFields();
+    updateVessel(vessel_update.id, vessel_update.update).then(() => {
+        updateLocalVessel();
+        if (vesselTo) { changeVessel(vesselTo) }
+    });
 })
 
 e("confirmSaveVessel_cancel").addEventListener("click", () => {
-    vessel_update.update = {};
     e("confirmSaveVessel").classList.add("hidden");
 })
 
 e("confirmSaveVessel_discard").addEventListener("click", () => {
     e("confirmSaveVessel").classList.add("hidden");
-    setVessel(e(vessel_update.id), true);
+    setVessel(e(vessel_update.id));
 })
