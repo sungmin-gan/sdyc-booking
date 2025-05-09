@@ -526,13 +526,14 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
     } else {
         e("loadingScreen").classList.remove("hidden")
         createQbInvoice(flow_acceptBooking_packageInvoice()).then((response) => {
-            console.log(response)
             e("loadingScreen").classList.add("hidden")
             if (response.success == "true") {
                 e("flow_acceptBooking_emailInvoiceTab").click()
                 flow_acceptBooking_setSendInvoice(response.invoiceLink)
                 booking_update.id = currentBooking;
-                booking_update.update = {
+                booking_update.update["status"] = "Request Accepted";
+                let qbFieldName = `qbInvoices.${data.invoiceId}`;
+                booking_update.update[qbFieldName] = {
                     invoiceId: response.invoiceId,
                     invoiceNumber: response.invoiceNumber,
                     invoiceLink: response.invoiceLink,
@@ -540,7 +541,7 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                     // Status?
                 }
                 updateLocalBooking();
-                updateBooking(currentBooking, update)
+                updateBooking(booking_update.id, booking_update.update)
             } else {
                 e("flow_acceptBooking_invoiceErrorTab").click();
                 e("flow_acceptBooking_invoiceErrorTab_msg").innerHTML = response.err;
