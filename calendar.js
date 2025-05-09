@@ -45,7 +45,6 @@ const tabs = {
 }
 
 let currentTab = tabs.calendar;
-let goToTab = null;
 
 function switchTabs(dest) {
     if (dest != currentTab) {
@@ -56,7 +55,6 @@ function switchTabs(dest) {
         dest.section.classList.remove("hidden");
         dest.icon.classList.add("selected")
         currentTab = dest;
-        goToTab = null;
     }
 }
 
@@ -65,7 +63,6 @@ e("calendarTab").addEventListener("click", () => {
         setVesselUpdate();
         if (Object.keys(vessel_update.update).length > 0) {
             e("confirmSaveVessel").classList.remove("hidden");
-            goToTab = tabs.calendar;
         } else {
             disableVfFields();
             switchTabs(tabs.calendar)
