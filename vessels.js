@@ -81,7 +81,7 @@ function fillVesselLists() {
             slot.appendChild(name);
             slot.appendChild(displayName);
             slot.addEventListener("click", () => { 
-                setVessel(slot)
+                changeVessel(slot)
             })
             e(vesselList[vessel.class]).appendChild(slot)
         })
@@ -142,20 +142,25 @@ function disableVfFields() {
     e("editButton_vf").classList.remove("hidden")
 }
 
-function setVessel(slot, initial = false) {
-    if (!initial) { setVesselUpdate() }
+function setVessel(slot) {
     disableVfFields()
     const vid = slot.getAttribute("id");
-    if (vid == currentVessel && !initial) { return null } else {
-        if (!initial) { e(currentVessel).classList.remove("selected") }
-        e(vid).classList.add("selected");
-        let vessel = vessels.find((v) => v.id == vid);
-        
-        Object.keys(vfElements).forEach((key) => {
-            vfElements[key].value = vessel[key] || "";
-        })
-        e("vf_vesselURL").setAttribute("href", vfElements.sdycURL.value)
-        currentVessel = vid;
+    
+    e(currentVessel).classList.remove("selected");
+    slot.classList.add("selected");
+    let vessel = vessels.find((v) => v.id == vid);
+    
+    Object.keys(vfElements).forEach((key) => {
+        vfElements[key].value = vessel[key] || "";
+    })
+    e("vf_vesselURL").setAttribute("href", vfElements.sdycURL.value)
+    currentVessel = vid;
+    
+}
+
+function changeVessel(slot) {
+    if (vid != currentVessel) {
+        setVessel(slot)
     }
 }
 
