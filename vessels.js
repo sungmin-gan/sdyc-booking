@@ -225,7 +225,7 @@ e("confirmSaveVessel_save").addEventListener("click", () => {
     updateVessel(vessel_update.id, vessel_update.update).then(() => {
         updateLocalVessel();
         if (vesselTo) { changeVessel(e(vesselTo)) }
-        else if (goToTab) { switchTabs(toToTab) }
+        else if (goToTab) { switchTabs(goToTab) }
     });
 })
 
@@ -236,5 +236,5 @@ e("confirmSaveVessel_cancel").addEventListener("click", () => {
 e("confirmSaveVessel_discard").addEventListener("click", () => {
     e("confirmSaveVessel").classList.add("hidden");
     if (vesselTo) { setVessel(e(vesselTo)) }
-    else if (goToTab) { switchTabs(toToTab) }
+    else if (goToTab) { switchTabs(goToTab) }
 })
