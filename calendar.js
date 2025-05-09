@@ -259,13 +259,13 @@ function extractTimeFormatted(dateTime) {
 }
 
 let statusClass = {
-    "Send Options": "sendOptions",
-    "Options Sent": "optionsSent",
-    "Vessel Request": "vesselRequest",
-    "Request Accepted": "requestAccepted",
-    "Deposit Paid": "depositPaid",
-    "Fully Paid": "fullyPaid",
-    "Referred Out": "referredOut",
+    "Send Options": "sendoptions",
+    "Options Sent": "optionssent",
+    "Vessel Request": "vesselrequest",
+    "Request Accepted": "requestaccepted",
+    "Deposit Paid": "depositpaid",
+    "Fully Paid": "fullypaid",
+    "Referred Out": "referredout",
     "Cancelled": "cancelled"
 }
 
@@ -278,8 +278,6 @@ function displayBookings() {
         bookingBadge.classList.add("text-block-6");
         bookingBadge.setAttribute("id", `booking_${i}`)
         bookingBadge.innerHTML = `${extractTimeFormatted(booking.booking.charterStart)}  ${booking.booking.firstName} ${booking.booking.lastName}`;
-        console.log(booking.booking.status)
-        console.log(statusClass[booking.booking.status])
         if (statusClass[booking.booking.status]) { bookingBadge.classList.add(statusClass[booking.booking.status]) }
         bookingDiv.appendChild(bookingBadge);
         e(`datebox_${booking.position}`).appendChild(bookingDiv)
