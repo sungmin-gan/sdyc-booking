@@ -159,7 +159,7 @@ function setVessel(slot) {
 }
 
 function changeVessel(slot) {
-    if (vid != currentVessel) {
+    if (slot.getAttribute("id") != currentVessel) {
         setVessel(slot)
     }
 }
