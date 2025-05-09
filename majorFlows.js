@@ -531,6 +531,16 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
             if (response.success == "true") {
                 e("flow_acceptBooking_emailInvoiceTab").click()
                 flow_acceptBooking_setSendInvoice(response.invoiceLink)
+                booking_update.id = currentBooking;
+                booking_update.update = {
+                    invoiceId: response.invoiceId,
+                    invoiceNumber: response.invoiceNumber,
+                    invoiceLink: response.invoiceLink,
+                    // Amount Paid?
+                    // Status?
+                }
+                updateLocalBooking();
+                updateBooking(currentBooking, update)
             } else {
                 e("flow_acceptBooking_invoiceErrorTab").click();
                 e("flow_acceptBooking_invoiceErrorTab_msg").innerHTML = response.err;
@@ -591,15 +601,6 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 e("flow_acceptBooking_successTab").click();
-                let update = {
-                    invoiceId: response.invoiceId,
-                    invoiceNumber: response.invoiceNumber,
-                    invoiceLink: response.invoiceLink,
-                    // Amount Paid?
-                    // Status?
-                }
-                updateLocalBooking();
-                updateBooking(currentBooking, update)
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
                 e("flow_acceptBooking_gmailErrorTab_msg").innerHTML = response.err;
