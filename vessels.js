@@ -224,7 +224,7 @@ e("confirmSaveVessel_save").addEventListener("click", () => {
     disableVfFields();
     updateVessel(vessel_update.id, vessel_update.update).then(() => {
         updateLocalVessel();
-        if (vesselTo) { changeVessel(vesselTo) }
+        if (vesselTo) { changeVessel(e(vesselTo)) }
     });
 })
 
