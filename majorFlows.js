@@ -540,8 +540,10 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                     invoiceId: response.invoiceId,
                     invoiceNumber: response.invoiceNumber,
                     invoiceLink: response.invoiceLink,
-                    // Amount Paid?
-                    // Status?
+                    invoiceDueDate: response.invoiceDueDate,
+                    invoiceDate: response.invoiceDate,
+                    invoiceBalance: response.invoiceBalance,
+                    invoiceTotal: response.invoiceTotal
                 }
                 updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update)
