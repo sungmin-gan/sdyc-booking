@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -402,6 +404,41 @@ function populateBookingDetails(booking) {
     bdElements.email.value = booking.email;
     bdElements.phone.value = booking.phone;
     bdElements.textOptIn.value = booking.textOptIn;
+    // List Invoices
+    if (Object.keys(booking.qbInvoices).length > 0) {
+        Object.keys(booking.qbInvoices).forEach((iid) => {
+            let invoice = booking.qbInvoices[iid];
+            let link = document.createElement("a");
+            link.classList.add("link-block", "qblink", "w-inline-block");
+            link.setAttribute("href", `https://qbo.intuit.com/app/invoice?txnId=${invoice.invoiceId}`);
+            link.setAttribute("id", `qbLink_${invoice.invoiceId}`)
+            e("bookingDetails_qbInvoices").appendChild(link);
+            let w1 = document.createElement("div");
+            w1.classList.add("div-block-87");
+            link.appendChild(w1);
+            let invoiceNo = document.createElement("div");
+            invoiceNo.classList.add("text-block-48");
+            invoiceNo.innerHTML = `${invoice.invoiceNumber}`;
+            w1.appendChild(invoiceNo);
+            let w2 = document.createElement("div");
+            w2.classList.add("div-block-88");
+            link.appendChild(w2);
+            let invoiceDate = document.createElement("div");
+            invoiceDate.classList.add("text-block-49");
+            invoiceDate.innerHTML = invoice.invoiceDate;
+            w2.appendChild(invoiceDate);
+            let invoiceDueDate = document.createElement("div");
+            invoiceDueDate.classList.add("text-block-49");
+            invoiceDueDate.innerHTML = invoice.invoiceDueDate;
+            w2.appendChild(invoiceDueDate);
+
+            let invoiceBalance = document.createElement("div");
+            invoiceBalance.classList.add("text-block-49", "last");
+            invoiceBalance.innerHTML = `${formatCurrency(parseFloat(invoice.invoiceBalance).toFixed(2))}/${formatCurrency(parseFloat(invoice.invoiceTotal).toFixed(2))} remaining`
+            w2.appendChild(invoiceBalance);
+
+        })
+    }
 }
 
 function clearBookingDetails() {
