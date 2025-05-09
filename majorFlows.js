@@ -1,5 +1,7 @@
 //// //// //// //// Flow: Send Options //// //// //// ////
 
+const e = require("express");
+
 e("flow_sendOptions_cancel").addEventListener("click", () => {
     e("tab_bookingDetails").click()
 })
@@ -156,9 +158,68 @@ function flow_sendOptions_clearForm() {
         e(`checkbox_${vid}`).checked = false
     })
     selectedVesselOptions = [];
+    e("flow_sendOptions_defaultTab").click()
 }
 
+e("flow_sendOptions_send").addEventListener("click", () => {
+    let check = false;
+    let to_check = false;
+    let subject_check = false;
+    let msg_check = false;
+    let option_check = false;
+
+    if (e("flow_sendOptions_to").value != "") { to_check = true };
+    if (e("flow_sendOptions_subject").value != "") { subject_check = true }
+    if (e("flow_sendOptions_msg").value != "") { msg_check = true }
+
+    vessels.forEach((v) => {
+        let box = e(`checkbox_${v.id}`);
+        if (box.checked == true) { option_check = true }
+    })
+
+    check = to_check && subject_check && msg_check && option_check;
+
+    if (check) {
+        e("loadingScreen").classList.remove("hidden")
+        let data = {
+            to: e("flow_sendOptions_to").value,
+            subject: e("flow_sendOptions_subject").value,
+            message: e("flow_sendOptions_msg").value
+        }
+        gmailOptions(data).then((response) => {
+            e("loadingScreen").classList.add("hidden");
+            if (response.success == "true") {
+                e("flow_sendOptions_successTab").click();
+            } else {
+                e("flow_sendOptions_errorTab").click();
+                e("flow_sendOptions_errorTab_msg").innerHTML = response.err;
+            }
+        })
+    } else {
+        e("flow_sendOptions_err").classList.remove("hidden")
+    }
+
+})
+
+e("flow_sendOptions_err_ok").addEventListener("click", () => {
+    e("flow_sendOptions_err").classList.add("hidden")
+})
+
+e("flow_sendOptions_errorTab_ok").addEventListener("click", () => {
+    flow_sendOptions_clearForm();
+    flow_acceptBooking_clearForm();
+    e("tab_bookingDetails").click();
+})
+
+e("flow_sendOptions_successTab_ok").addEventListener("click", () => {
+    flow_sendOptions_clearForm();
+    flow_acceptBooking_clearForm();
+    e("tab_bookingDetails").click();
+})
+
 //// //// //// //// Flow: Accept Booking //// //// //// ////
+
+let qbInvoiceLink = "";
 
 function createQbInvoice(data) {
     return new Promise(async (resolve) => {
@@ -229,7 +290,7 @@ function getDuration(start, end) {
 
 function setCharterLine() {
     let booking = getCurrentBooking();
-    if(booking.estimate && booking.estimate != 0 && booking.estimate != "") {
+    if (booking.estimate && booking.estimate != 0 && booking.estimate != "") {
         let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
         let rate = (booking.estimate / duration).toFixed(2);
         e("flow_acceptBooking_qty1").value = duration;
@@ -366,7 +427,6 @@ e("flow_acceptBooking_invoiceErr_ok").addEventListener("click", () => {
 })
 
 function flow_acceptBooking_clearForm() {
-    console.log("flow_acceptBooking_clearForm fired")
     for (let i = 1; i < 6; i++) {
         e(`flow_acceptBooking_sDate${i}`).value = "";
         e(`flow_acceptBooking_service${i}`).value = "";
@@ -383,5 +443,179 @@ function flow_acceptBooking_clearForm() {
     e("flow_acceptBooking_paymentOptions").value = "";
     e("flow_acceptBooking_note").value = "";
     e("flow_acceptBooking_memo").value = "";
-    e("flow_acceptBooking_createInvoiceTab").click()
+    e("flow_acceptBooking_createInvoiceTab").click();
+    qbInvoiceLink = "";
 }
+
+function flow_acceptBooking_packageInvoice() {
+    let data = {
+        customerName: e("flow_acceptBooking_customerName").value,
+        customerEmail: e("flow_acceptBooking_customerEmail").value,
+        terms: e("flow_acceptBooking_terms").value,
+        invoiceDate: e("flow_acceptBooking_invoiceDate").value,
+        dueDate: e("flow_acceptBooking_dueDate").value,
+        paymentOptions: e("flow_acceptBooking_paymentOptions").value,
+        note: e("flow_acceptBooking_note").value,
+        memo: e("flow_acceptBooking_memo").value,
+        rows: {
+            r1: null,
+            r2: null,
+            r3: null,
+            r4: null,
+            r5: null
+        }
+    }
+    for (let i = 1; i < 6; i++) {
+        if (e(`flow_acceptBooking_sDate${i}`).value) {
+            data.rows[`r${i}`] = {
+                serviceDate: e(`flow_acceptBooking_sDate${i}`).value,
+                serviceName: e(`flow_acceptBooking_service${i}`).value,
+                description: e(`flow_acceptBooking_desc${i}`).value,
+                quantity: e(`flow_acceptBooking_qty${i}`).value,
+                rate: e(`flow_acceptBooking_rate${i}`).value
+            }
+        }
+    }
+    return data
+}
+
+e("flow_acceptBooking_create").addEventListener("click", () => {
+    let pass = false;
+    let rowsCheck = false;
+    let essentialsCheck = true;
+
+    let rows = {
+        r1: false,
+        r2: false,
+        r3: false,
+        r4: false,
+        r5: false
+    }
+    for (let i = 1; i < 6; i++) {
+        if (
+            (e(`flow_acceptBooking_sDate${i}`).value == "" &&
+                e(`flow_acceptBooking_service${i}`).value == "" &&
+                e(`flow_acceptBooking_desc${i}`).value == "" &&
+                e(`flow_acceptBooking_qty${i}`).value == "" &&
+                e(`flow_acceptBooking_rate${i}`).value == "") ||
+            (e(`flow_acceptBooking_sDate${i}`).value != "" &&
+                e(`flow_acceptBooking_service${i}`).value != "" &&
+                e(`flow_acceptBooking_desc${i}`).value != "" &&
+                e(`flow_acceptBooking_qty${i}`).value != "" &&
+                e(`flow_acceptBooking_rate${i}`).value != "")
+        ) {
+            rows[`r${i}`] = true
+        }
+    }
+    rowsCheck = rows.r1 && rows.r2 && rows.r3 && rows.r4 && rows.r5;
+
+    let essentials = {
+        customerName: e("flow_acceptBooking_customerName").value != "",
+        customerEmail: e("flow_acceptBooking_customerEmail").value != "",
+        terms: e("flow_acceptBooking_terms").value != "",
+        invoiceDate: e("flow_acceptBooking_invoiceDate").value != "",
+        dueDate: e("flow_acceptBooking_dueDate").value != "",
+        row1: e("flow_acceptBooking_sDate1").value != ""
+    }
+    Object.keys(essentials).forEach((key) => {
+        if (!essentials[key]) { essentialsCheck = false }
+    })
+
+    pass = rowsCheck && essentialsCheck;
+
+    if (!pass) {
+        e("flow_acceptBooking_invoiceErr").classList.remove("hidden")
+    } else {
+        e("loadingScreen").classList.remove("hidden")
+        createQbInvoice(flow_acceptBooking_packageInvoice()).then((response) => {
+            console.log(response)
+            e("loadingScreen").classList.add("hidden")
+            if (response.success == "true") {
+                e("flow_acceptBooking_emailInvoiceTab").click()
+                flow_acceptBooking_setSendInvoice(response.invoiceLink)
+            } else {
+                e("flow_acceptBooking_invoiceErrorTab").click();
+                e("flow_acceptBooking_invoiceErrorTab_msg").innerHTML = response.err;
+            }
+        })
+    }
+})
+
+e("flow_acceptBooking_invoiceErrorTab_ok").addEventListener("click", () => {
+    flow_sendOptions_clearForm();
+    flow_acceptBooking_clearForm();
+    e("tab_bookingDetails").click();
+})
+
+function flow_acceptBooking_getSubject() {
+    let timeStart = standardTime(bdElements.charterStartTime.value);
+    let timeEnd = standardTime(bdElements.charterEndTime.value);
+    let vessel = vessels.find(x => x.id == bdElements.vessel.value);
+    let vesselDisplayName = vessel.displayName;
+    let maxPassengers = vessel.maxCapacity;
+    return `[ACCEPTED] San Diego Bay Cruise for ${e("dateTimeText").innerHTML}`;
+}
+
+function flow_acceptBooking_setSendInvoice(invoiceLink) {
+    qbInvoiceLink = invoiceLink;
+    e("flow_acceptBooking_create").classList.add("hidden")
+    e("flow_acceptBooking_to").value = bdElements.email.value;
+    e("flow_acceptBooking_subject").value = flow_acceptBooking_getSubject();
+    let s1 = `Hello ${bdElements.firstName.value},\n\n`;
+    let s2 = `Your charter for ${e("dateTimeText").innerHTML} for ${bdElements.passengers.value} passengers has been accepted!\n\n`;
+    let s3 = `${flow_acceptBooking_paymentOptions.value} Please use the link below to pay your invoice:\n\n`;
+    let s4 = `${invoiceLink}\n\n`;
+    let s5 = "Feel free to text or call at any time if you have any questions.\n\nCheers!\n--\n\nCaptain Kenne Melonas\nUS Navy SWCC (Retired)\nOwner of Elite Maritime Services/San Diego Yacht Charters\nhttps://www.sdyachtcharters.com\nEmail: sdyachtcharters@gmail.com\nPhone: (619) 307-9534";
+    e("flow_acceptBooking_msg").value = s1 + s2 + s3 + s4 + s5
+}
+
+e("flow_acceptBooking_send").addEventListener("click", () => {
+    let check = false;
+    let to_check = false;
+    let subject_check = false;
+    let msg_check = false;
+
+    if (e("flow_acceptBooking_to").value != "") { to_check = true };
+    if (e("flow_acceptBooking_subject").value != "") { subject_check = true }
+    if (e("flow_acceptBooking_msg").value != "") { msg_check = true }
+
+    check = to_check && subject_check && msg_check;
+
+    if (check) {
+        e("loadingScreen").classList.remove("hidden")
+        let data = {
+            to: e("flow_acceptBooking_to").value,
+            subject: e("flow_acceptBooking_subject").value,
+            message: e("flow_acceptBooking_msg").value,
+            qbInvoiceLink: qbInvoiceLink
+        }
+        gmailQbInvoice(data).then((response) => {
+            e("loadingScreen").classList.add("hidden");
+            if (response.success == "true") {
+                e("flow_acceptBooking_successTab").click();
+            } else {
+                e("flow_acceptBooking_gmailErrorTab").click();
+                e("flow_acceptBooking_gmailErrorTab_msg").innerHTML = response.err;
+            }
+        })
+    } else {
+        e("flow_acceptBooking_sendErr").classList.remove("hidden")
+    }
+
+})
+
+e("flow_acceptBooking_sendErr_ok").addEventListener("click", () => {
+    e("flow_acceptBooking_sendErr").classList.add("hidden")
+})
+
+e("flow_acceptBooking_gmailErrorTab_ok").addEventListener("click", () => {
+    flow_sendOptions_clearForm();
+    flow_acceptBooking_clearForm();
+    e("tab_bookingDetails").click();
+})
+
+e("flow_acceptBooking_successTab_ok").addEventListener("click", () => {
+    flow_sendOptions_clearForm();
+    flow_acceptBooking_clearForm();
+    e("tab_bookingDetails").click();
+});
