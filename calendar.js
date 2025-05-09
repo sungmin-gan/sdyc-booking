@@ -3,6 +3,7 @@
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const YEARABBR = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 let currentDate = new Date("March 1, 2025");
 //let currentDate = new Date();
@@ -375,6 +376,13 @@ let bdElements = {
     //invoiced: e("invoiced"),
 }
 
+function humanDate(date) {
+    let year = date.substring(0,4);
+    let month = YEARABBR[parseInt(date.substring(5,7))];
+    let day = date.substring(8);
+    return `${month} ${day}, ${year}`
+}
+
 function populateBookingDetails(booking) {
     currentBooking = booking.id;
     // Charter Info
@@ -409,6 +417,7 @@ function populateBookingDetails(booking) {
             let link = document.createElement("a");
             link.classList.add("link-block", "qblink", "w-inline-block");
             link.setAttribute("href", `https://qbo.intuit.com/app/invoice?txnId=${invoice.invoiceId}`);
+            link.setAttribute("target", "_blank");
             link.setAttribute("id", `qbLink_${invoice.invoiceId}`)
             e("bookingDetails_qbInvoices").appendChild(link);
             let w1 = document.createElement("div");
@@ -423,16 +432,20 @@ function populateBookingDetails(booking) {
             link.appendChild(w2);
             let invoiceDate = document.createElement("div");
             invoiceDate.classList.add("text-block-49");
-            invoiceDate.innerHTML = invoice.invoiceDate;
+            invoiceDate.innerHTML = `Created ${humanDate(invoice.invoiceDate)}`;
             w2.appendChild(invoiceDate);
             let invoiceDueDate = document.createElement("div");
             invoiceDueDate.classList.add("text-block-49");
-            invoiceDueDate.innerHTML = invoice.invoiceDueDate;
+            invoiceDueDate.innerHTML = `Due ${humanDate(invoice.invoiceDueDate)}`;
             w2.appendChild(invoiceDueDate);
-
+            let paid = document.createElement("div");
+            paid.classList.add("text-block-49");
+            let paidAmt = formatCurrency((parseFloat(invoice.invoiceTotal) - parseFloat(invoice.invoiceBalance)).toFixed(2));
+            paid.innerHTML = `${paidAmt} / ${formatCurrency(parseFloat(invoice.invoiceTotal).toFixed(2))} paid`;
+            w2.appendChild(paid);
             let invoiceBalance = document.createElement("div");
             invoiceBalance.classList.add("text-block-49", "last");
-            invoiceBalance.innerHTML = `${formatCurrency(parseFloat(invoice.invoiceBalance).toFixed(2))}/${formatCurrency(parseFloat(invoice.invoiceTotal).toFixed(2))} remaining`
+            invoiceBalance.innerHTML = `${formatCurrency(parseFloat(invoice.invoiceBalance).toFixed(2))} remaining`
             w2.appendChild(invoiceBalance);
 
         })
