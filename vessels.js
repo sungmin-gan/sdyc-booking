@@ -234,5 +234,5 @@ e("confirmSaveVessel_cancel").addEventListener("click", () => {
 
 e("confirmSaveVessel_discard").addEventListener("click", () => {
     e("confirmSaveVessel").classList.add("hidden");
-    setVessel(e(vessel_update.id));
+    setVessel(e(vesselTo));
 })
