@@ -646,7 +646,7 @@ function closeBookingDetails() {
         clearBookingDetails();
         e("bookingDetails").classList.remove("open");
         updateBooking(booking_update.id, booking_update.update).then(() => {
-            if (booking_update.update.charterStart || booking_update.update.charterEnd) {
+            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
                 clearBookings();
                 extractBookings();
                 displayBookings()
