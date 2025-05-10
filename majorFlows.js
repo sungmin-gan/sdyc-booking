@@ -536,8 +536,7 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                 e("flow_acceptBooking_emailInvoiceTab").click()
                 flow_acceptBooking_setSendInvoice(response.invoiceLink)
                 booking_update.id = currentBooking;
-                let qbFieldName = `qbInvoices.${response.invoiceId}`;
-                booking_update.update[qbFieldName] = {
+                booking_update.update["qbInvoices"][response.invoiceId] = {                  
                     invoiceId: response.invoiceId,
                     invoiceNumber: response.invoiceNumber,
                     invoiceLink: response.invoiceLink,
