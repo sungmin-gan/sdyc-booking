@@ -547,8 +547,6 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                     invoiceBalance: response.invoiceBalance,
                     invoiceTotal: response.invoiceTotal
                 }
-                updateLocalBooking();
-                populateBookingDetails(getCurrentBooking())
                 updateBooking(booking_update.id, booking_update.update)
             } else {
                 e("flow_acceptBooking_invoiceErrorTab").click();
@@ -612,8 +610,6 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
                 e("flow_acceptBooking_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Request Accepted";
-                populateBookingDetails(getCurrentBooking())
-                updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update)
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
@@ -627,17 +623,21 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
 })
 
 e("flow_acceptBooking_sendErr_ok").addEventListener("click", () => {
-    e("flow_acceptBooking_sendErr").classList.add("hidden")
+    e("flow_acceptBooking_sendErr").classList.add("hidden");
 })
 
 e("flow_acceptBooking_gmailErrorTab_ok").addEventListener("click", () => {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
+    populateBookingDetails(getCurrentBooking())
+    updateLocalBooking();
     e("tab_bookingDetails").click();
 })
 
 e("flow_acceptBooking_successTab_ok").addEventListener("click", () => {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
+    populateBookingDetails(getCurrentBooking())
+    updateLocalBooking();
     e("tab_bookingDetails").click();
 });
