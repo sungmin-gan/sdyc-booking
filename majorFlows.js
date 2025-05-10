@@ -629,15 +629,15 @@ e("flow_acceptBooking_sendErr_ok").addEventListener("click", () => {
 e("flow_acceptBooking_gmailErrorTab_ok").addEventListener("click", () => {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
-    populateBookingDetails(getCurrentBooking())
     updateLocalBooking();
+    populateBookingDetails(getCurrentBooking())
     e("tab_bookingDetails").click();
 })
 
 e("flow_acceptBooking_successTab_ok").addEventListener("click", () => {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
-    populateBookingDetails(getCurrentBooking())
     updateLocalBooking();
+    populateBookingDetails(getCurrentBooking())
     e("tab_bookingDetails").click();
 });
