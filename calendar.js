@@ -384,7 +384,6 @@ function humanDate(date) {
 }
 
 function populateBookingDetails(booking) {
-    console.log(booking)
     currentBooking = booking.id;
     // Charter Info
     e("formWindowTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
