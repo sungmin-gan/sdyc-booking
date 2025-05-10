@@ -484,6 +484,8 @@ function disableBDFields() {
         e("lineCharterDatetimeInput").classList.add("hidden")
         e("lineCharterDatetimeText").classList.remove("hidden")
     }
+    e("dateTimeText").innerHTML = makeDateSpanPretty(getCurrentBooking().charterStart, getCurrentBooking().charterEnd);
+    e("passengersText").innerHTML = `${getCurrentBooking().passengers} Passengers`;
     dbFieldsDisabled = true;
     check_sendOptions();
     check_acceptBooking()
