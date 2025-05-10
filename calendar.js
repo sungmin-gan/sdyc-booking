@@ -384,6 +384,7 @@ function humanDate(date) {
 }
 
 function populateBookingDetails(booking) {
+    console.log(booking)
     currentBooking = booking.id;
     // Charter Info
     e("formWindowTitle").innerHTML = `Yacht Charter for ${booking.firstName} ${booking.lastName}`;
@@ -637,9 +638,7 @@ function setBookingUpdate() {
 function updateLocalBooking() {
     Object.keys(booking_update.update).forEach((key) => {
         charterBookings.find(x => x.id == booking_update.id)[key] = booking_update.update[key];
-        console.log(charterBookings)
         bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking[key] = booking_update.update[key];
-        console.log(bookingsToDisplay)
     })
 }
 
