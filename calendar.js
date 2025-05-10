@@ -688,3 +688,4 @@ e("confirmSaveBooking_discard").addEventListener("click", () => {
     e("bookingDetails").classList.remove("open");
     booking_update = { id: null, update: {} }
 })
+
