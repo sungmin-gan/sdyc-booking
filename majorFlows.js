@@ -1,3 +1,96 @@
+//// //// //// //// API Calls //// //// //// ////
+
+let qbInvoiceLink = "";
+
+function createQbInvoice(data) {
+    return new Promise(async (resolve) => {
+        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/createQbInvoice";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: data }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                const json = await response.json();
+                resolve(json);
+            }
+        } catch (error) {
+            console.log(error.message)
+        }*/
+        resolve({
+        	success: "true",
+          invoiceId: "5508",
+          invoiceLink: "https://connect.intuit.com/portal/app/CommerceNetwork/view/scs-v1-0bf19313ca114a23b14fd9945a6699ae8d33a1a9bb3f4188b5cca9071b7a531541f805231e2b4ad4be071682da6effca?locale=en_US&cta=v3invoicelink",
+          invoiceNumber: "76",
+          invoiceDate: "2025-03-01",
+          invoiceDueDate: "2025-02-26",
+          invoiceBalance: "2000",
+          invoiceTotal: "2000"
+        })
+        /*resolve({
+        	success: "false",
+          err: "Zapier could not create the invoice."
+        })*/
+    })
+}
+
+function gmailQbInvoice(data) {
+    return new Promise(async (resolve) => {
+        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/gmailQbInvoice";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: data }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                const json = await response.json();
+                resolve(json);
+            }
+        } catch (error) {
+            console.log(error.message)
+        }*/
+        resolve({
+        	success: "true"
+        })
+        /*resolve({
+        	success: "false",
+          err: "Zapier could not email the invoice."
+        })*/
+    })
+}
+
+function gmailOptions(data) {
+    return new Promise(async (resolve) => {
+        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/gmailOptions";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: data }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                const json = await response.json();
+                resolve(json);
+            }
+        } catch (error) {
+            console.log(error.message)
+        }*/
+        resolve({ success: "true" })
+        //resolve({ success: "false", err: "Zapier could not send the email." })
+    })
+}
+
 //// //// //// //// Flow: Send Options //// //// //// ////
 
 e("flow_sendOptions_cancel").addEventListener("click", () => {
@@ -221,30 +314,6 @@ e("flow_sendOptions_successTab_ok").addEventListener("click", () => {
 })
 
 //// //// //// //// Flow: Accept Booking //// //// //// ////
-
-let qbInvoiceLink = "";
-
-function createQbInvoice(data) {
-    return new Promise(async (resolve) => {
-        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/createQbInvoice";
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: data }),
-            });
-            console.log(response)
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            } else {
-                const json = await response.json();
-                resolve(json.result);
-            }
-        } catch (error) {
-            console.log(error.message)
-        }
-    })
-}
 
 e("flow_acceptBooking_invoiceDate").setAttribute("type", "date");
 e("flow_acceptBooking_dueDate").setAttribute("type", "date");
