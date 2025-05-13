@@ -1,7 +1,5 @@
 //// //// //// //// Declarations //// //// //// ////
 
-const e = require("express");
-
 let vessels = [];
 
 let currentVessel = "7qc7aPDMLFWSvq7Js1Hg";
