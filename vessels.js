@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 let vessels = [];
 
 let currentVessel = "7qc7aPDMLFWSvq7Js1Hg";
@@ -116,6 +118,7 @@ let vfElements = {
     primaryEmail: e("vf_primaryEmail"),
     website: e("vf_website"),
     qbid: e("vf_qbid"),
+    forwardRequestsTo: e("vf_forwardRequestsTo"),
     secondaryName: e("vf_secondaryName"),
     secondaryPhone: e("vf_secondaryPhone"),
     secondaryEmail: e("vf_secondaryEmail"),
