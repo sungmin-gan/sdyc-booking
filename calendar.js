@@ -683,7 +683,7 @@ e("saveButton").addEventListener("click", () => {
     setBookingUpdate();
     if (Object.keys(booking_update.update).length > 0) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
-            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
+            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
                 clearBookings();
                 extractBookings();
                 displayBookings()
@@ -702,7 +702,7 @@ e("saveButton").addEventListener("click", () => {
 
 e("confirmSaveBooking_save").addEventListener("click", () => {
     updateBooking(booking_update.id, booking_update.update).then(() => {
-        if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
+        if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
             clearBookings();
             extractBookings();
             displayBookings()
