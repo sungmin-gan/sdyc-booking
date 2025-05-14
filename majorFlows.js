@@ -91,6 +91,30 @@ function gmailOptions(data) {
     })
 }
 
+function sendGmail(data) {
+    return new Promise(async (resolve) => {
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/sendGmail";
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: data }),
+            });
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } else {
+                const json = await response.json();
+                resolve(json);
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+        //resolve({ success: true })
+        //resolve({ success: false, err: "This is the send email error." })
+    })
+}
+
 //// //// //// //// Flow: Send Options //// //// //// ////
 
 e("flow_sendOptions_cancel").addEventListener("click", () => {
@@ -710,3 +734,153 @@ e("flow_acceptBooking_successTab_ok").addEventListener("click", () => {
     populateBookingDetails(getCurrentBooking())
     e("tab_bookingDetails").click();
 });
+
+//// //// //// //// Flow: Accept Booking //// //// //// ////
+
+function flow_sendEmail_getSubject(status) {
+    let timeStart = standardTime(bdElements.charterStartTime.value);
+    let timeEnd = standardTime(bdElements.charterEndTime.value);
+    let vessel = vessels.find(x => x.id == bdElements.vessel.value);
+    let vesselDisplayName = vessel.displayName;
+    let maxPassengers = vessel.maxCapacity;
+    return `[${status}] San Diego Bay Cruise for ${e("dateTimeText").innerHTML}`;
+}
+
+let sendEmailData = {
+	to: "",
+  subject: "",
+  message: ""
+}
+
+let sendEmailStatus = "";
+
+function check_decline() {
+	if ( dbFieldsDisabled &&
+  	(!(bdElements.status.value == "Send Options" ||
+    bdElements.status.value == "Vessel Request"))
+  ) {
+  	e("button_decline").classList.add("disabled");
+    e("button_decline_icon").classList.add("disabled");
+  }
+}
+
+e("button_decline").addEventListener("click", () => {
+	if ( dbFieldsDisabled &&
+  	(bdElements.status.value == "Send Options" ||
+    bdElements.status.value == "Vessel Request"))
+  {
+  	e("tab_sendEmail").click();
+    e("flow_sendEmail_to").value = bdElements.email.value;
+    e("flow_sendEmail_subject").value = flow_sendEmail_getSubject("DECLINED");
+    e("flow_sendEmail_msg").value = `Hello ${bdElements.firstName.value},\n\n`;
+    sendEmailStatus = "Declined"
+  }
+})
+
+function check_cancelBooking() {
+	if ( dbFieldsDisabled &&
+  	(!(bdElements.status.value == "Request Accepted" ||
+    bdElements.status.value == "Deposit Paid" ||
+    bdElements.status.value == "Fully Paid"))
+  ) {
+  	e("button_cancelBooking").classList.add("disabled");
+    e("button_cancelBooking_icon").classList.add("disabled");
+  }
+}
+
+e("button_cancelBooking").addEventListener("click", () => {
+	if ( dbFieldsDisabled &&
+    (bdElements.status.value == "Request Accepted" ||
+    bdElements.status.value == "Deposit Paid" ||
+    bdElements.status.value == "Fully Paid"))
+	{
+  	e("tab_sendEmail").click();
+    e("flow_sendEmail_to").value = bdElements.email.value;
+    e("flow_sendEmail_subject").value = flow_sendEmail_getSubject("CANCELLED");
+    e("flow_sendEmail_msg").value = `Hello ${bdElements.firstName.value},\n\n`;
+    sendEmailStatus = "Cancelled"
+  }
+})
+
+function check_forward() {
+	if ( dbFieldsDisabled &&
+  	(!(bdElements.status.value == "Vessel Request" &&
+    bdElements.vessel.value &&
+    bdElements.vessel.value != ""))
+  ) {
+  	e("button_forward").classList.add("disabled");
+    e("button_forward_icon").classList.add("disabled");
+  }
+}
+
+e("button_forward").addEventListener("click", () => {
+	if ( dbFieldsDisabled &&
+  	(bdElements.status.value == "Vessel Request" &&
+    bdElements.vessel.value &&
+    bdElements.vessel.value != "")
+  ) {
+  	e("tab_sendEmail").click();
+    e("flow_sendEmail_to").value = vfElements.forwardRequestsTo.value;
+    e("flow_sendEmail_subject").value = flow_sendEmail_getSubject("FWD");
+    e("flow_sendEmail_msg").value = `Hello ${vfElements.primaryName.value},\n\n`;
+    sendEmailStatus = "Forwarded Out"
+  }
+})
+
+e("flow_sendEmail_cancel").addEventListener("click", () => {
+	clearSendEmailForm();
+	e("tab_bookingDetails").click()
+})
+
+function checkSendEmail() {
+  let toPass = (e("flow_sendEmail_to").value == "" ? false : true);
+  let subjectPass = (e("flow_sendEmail_subject").value == "" ? false : true);
+  let msgPass = (e("flow_sendEmail_msg").value == "" ? false : true);
+  return toPass && subjectPass && msgPass
+}
+
+e("flow_sendEmail_send").addEventListener("click", () => {
+	if (checkSendEmail()) {
+  	e("loadingScreen").classList.remove("hidden")
+  	sendEmailData.to = e("flow_sendEmail_to").value;
+    sendEmailData.subject = e("flow_sendEmail_subject").value;
+    sendEmailData.message = e("flow_sendEmail_msg").value;
+    sendGmail(sendEmailData).then((response) => {
+    	e("loadingScreen").classList.add("hidden")
+      if (response.success && response.success != "false") {
+        e("flow_sendEmail_successTab").click()
+      } else {
+        e("flow_sendEmail_errorTab").click();
+        e("flow_sendEmail_errorTab_msg").innerHTML = response.err
+      }
+    })
+  } else {
+  	e("flow_sendEmail_err").classList.remove("hidden")
+  }
+})
+
+e("flow_sendEmail_err_ok").addEventListener("click", () => {
+	e("flow_sendEmail_err").classList.add("hidden")
+})
+
+function clearSendEmailForm() {
+	e("flow_sendEmail_to").value = "";
+  e("flow_sendEmail_subject").value = "";
+  e("flow_sendEmail_msg").value = "";
+  sendEmailData.to = "";
+  sendEmailData.subject = "";
+  sendEmailData.message = "";
+  sendEmailStatus = "";
+}
+
+e("flow_sendEmail_errorTab_ok").addEventListener("click", () => {
+	e("flow_sendEmail_defaultTab").click();
+  e("tab_bookingDetails").click();
+  clearSendEmailForm()
+})
+
+e("flow_sendEmail_successTab_ok").addEventListener("click", () => {
+	e("flow_sendEmail_defaultTab").click();
+  e("tab_bookingDetails").click();
+  clearSendEmailForm()
+})
