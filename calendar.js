@@ -488,7 +488,10 @@ function disableBDFields() {
     e("passengersText").innerHTML = `${getCurrentBooking().passengers} Passengers`;
     dbFieldsDisabled = true;
     check_sendOptions();
-    check_acceptBooking()
+    check_acceptBooking();
+    check_decline();
+    check_cancelBooking();
+    check_forward();
 }
 
 function enableBDFields() {
@@ -503,7 +506,10 @@ function enableBDFields() {
     e("lineCharterDatetimeText").classList.add("hidden")
     dbFieldsDisabled = false;
     check_sendOptions();
-    check_acceptBooking()
+    check_acceptBooking();
+    check_decline();
+    check_cancelBooking();
+    check_forward();
 }
 
 function openBookingDetails() {
@@ -688,4 +694,3 @@ e("confirmSaveBooking_discard").addEventListener("click", () => {
     e("bookingDetails").classList.remove("open");
     booking_update = { id: null, update: {} }
 })
-
