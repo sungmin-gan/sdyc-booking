@@ -648,7 +648,15 @@ function updateLocalBooking() {
 }
 
 function closeBookingDetails() {
+    setBookingUpdate();
     if (Object.keys(booking_update.update).length > 0) {
+        e("confirmSaveBooking").classList.remove("hidden")
+    } else {
+        clearBookingDetails();
+        e("bookingDetails").classList.remove("open");
+        booking_update = { id: null, update: {} }
+    }
+    /*if (Object.keys(booking_update.update).length > 0) {
         clearBookingDetails();
         e("bookingDetails").classList.remove("open");
         updateBooking(booking_update.id, booking_update.update).then(() => {
@@ -668,21 +676,44 @@ function closeBookingDetails() {
             e("bookingDetails").classList.remove("open");
             booking_update = { id: null, update: {} }
         }
-    }
+    }*/
 }
 
 e("saveButton").addEventListener("click", () => {
-    setBookingUpdate();
-    updateLocalBooking();
-    //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
-    //populateBookingDetails(displayedBooking);
-    disableBDFields();
+    updateBooking(booking_update.id, booking_update.update).then(() => {
+        if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
+            clearBookings();
+            extractBookings();
+            displayBookings()
+        }
+        updateLocalBooking();
+        disableBDFields();
+        booking_update = { id: null, update: {} }
+    })
+    //setBookingUpdate();
+    //updateLocalBooking();
+    // //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
+    // //populateBookingDetails(displayedBooking);
+    //disableBDFields();
 })
 
 e("confirmSaveBooking_save").addEventListener("click", () => {
-    e("confirmSaveBooking").classList.add("hidden");
-    updateLocalBooking();
-    closeBookingDetails()
+    updateBooking(booking_update.id, booking_update.update).then(() => {
+        if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
+            clearBookings();
+            extractBookings();
+            displayBookings()
+        }
+        updateLocalBooking();
+        disableBDFields();
+        e("confirmSaveBooking").classList.add("hidden");
+        updateLocalBooking();
+        closeBookingDetails()
+        booking_update = { id: null, update: {} }
+    })
+    //e("confirmSaveBooking").classList.add("hidden");
+    //updateLocalBooking();
+    //closeBookingDetails()
 })
 
 e("confirmSaveBooking_cancel").addEventListener("click", () => {
