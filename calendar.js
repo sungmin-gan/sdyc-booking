@@ -680,21 +680,24 @@ function closeBookingDetails() {
 }
 
 e("saveButton").addEventListener("click", () => {
-    updateBooking(booking_update.id, booking_update.update).then(() => {
-        if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
-            clearBookings();
-            extractBookings();
-            displayBookings()
-        }
-        updateLocalBooking();
-        disableBDFields();
-        booking_update = { id: null, update: {} }
-    })
-    //setBookingUpdate();
-    //updateLocalBooking();
-    // //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
-    // //populateBookingDetails(displayedBooking);
-    //disableBDFields();
+    setBookingUpdate();
+    if (Object.keys(booking_update.update).length > 0) {
+        updateBooking(booking_update.id, booking_update.update).then(() => {
+            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status) {
+                clearBookings();
+                extractBookings();
+                displayBookings()
+            }
+            updateLocalBooking();
+            disableBDFields();
+            booking_update = { id: null, update: {} }
+        })
+        //setBookingUpdate();
+        //updateLocalBooking();
+        // //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
+        // //populateBookingDetails(displayedBooking);
+        //disableBDFields();
+    }
 })
 
 e("confirmSaveBooking_save").addEventListener("click", () => {
