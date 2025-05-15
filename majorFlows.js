@@ -4,7 +4,7 @@ let qbInvoiceLink = "";
 
 function createQbInvoice(data) {
     return new Promise(async (resolve) => {
-        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/createQbInvoice";
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/createQbInvoice";
         try {
             const response = await fetch(url, {
                 method: "POST",
@@ -20,8 +20,8 @@ function createQbInvoice(data) {
             }
         } catch (error) {
             console.log(error.message)
-        }*/
-        resolve({
+        }
+        /*resolve({
         	success: "true",
           invoiceId: "5508",
           invoiceLink: "https://connect.intuit.com/portal/app/CommerceNetwork/view/scs-v1-0bf19313ca114a23b14fd9945a6699ae8d33a1a9bb3f4188b5cca9071b7a531541f805231e2b4ad4be071682da6effca?locale=en_US&cta=v3invoicelink",
@@ -30,7 +30,7 @@ function createQbInvoice(data) {
           invoiceDueDate: "2025-02-26",
           invoiceBalance: "2000",
           invoiceTotal: "2000"
-        })
+        })*/
         /*resolve({
         	success: "false",
           err: "Zapier could not create the invoice."
@@ -40,7 +40,7 @@ function createQbInvoice(data) {
 
 function gmailQbInvoice(data) {
     return new Promise(async (resolve) => {
-        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/gmailQbInvoice";
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/gmailQbInvoice";
         try {
             const response = await fetch(url, {
                 method: "POST",
@@ -56,10 +56,10 @@ function gmailQbInvoice(data) {
             }
         } catch (error) {
             console.log(error.message)
-        }*/
-        resolve({
+        }
+        /*resolve({
         	success: "true"
-        })
+        })*/
         /*resolve({
         	success: "false",
           err: "Zapier could not email the invoice."
@@ -69,7 +69,7 @@ function gmailQbInvoice(data) {
 
 function gmailOptions(data) {
     return new Promise(async (resolve) => {
-        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/gmailOptions";
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/gmailOptions";
         try {
             const response = await fetch(url, {
                 method: "POST",
@@ -85,8 +85,8 @@ function gmailOptions(data) {
             }
         } catch (error) {
             console.log(error.message)
-        }*/
-        resolve({ success: "true" })
+        }
+        //resolve({ success: "true" })
         //resolve({ success: "false", err: "Zapier could not send the email." })
     })
 }
