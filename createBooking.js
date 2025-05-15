@@ -2,7 +2,7 @@
 
 function addBooking(data) {
     return new Promise(async (resolve) => {
-        /*const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/addBooking";
+        const url = "https://sdyc-api-2-8c0da59c5ac4.herokuapp.com/addBooking";
         try {
             const response = await fetch(url, {
                 method: "POST",
@@ -18,9 +18,9 @@ function addBooking(data) {
             }
         } catch (error) {
             console.log(error.message)
-        }*/
+        }
         //resolve({ success: false, err: "This is the create booking error." })
-        resolve({ success: true, id: "ABCD1234" })
+        //resolve({ success: true, id: "ABCD1234" })
     })
 }
 
@@ -79,7 +79,7 @@ let ncElements = {
 }
 
 let ncForm = {
-	alcohol: false,
+  alcohol: false,
   charterEnd: "",
   charterEndTimestamp: "",
   charterLength: 0,
