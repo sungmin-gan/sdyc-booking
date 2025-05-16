@@ -648,6 +648,7 @@ function updateLocalBooking() {
 }
 
 function closeBookingDetails() {
+    console.log(booking_update)
     setBookingUpdate();
     if (Object.keys(booking_update.update).length > 0) {
         e("confirmSaveBooking").classList.remove("hidden")
