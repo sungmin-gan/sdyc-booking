@@ -598,6 +598,9 @@ function setBookingUpdate() {
     let booking = bookingsToDisplay.find(x => x.booking.id == currentBooking);
     booking = booking.booking;
     booking_update.id = currentBooking;
+    console.log("In Set Booking Update")
+    console.log(booking_update)
+    console.log(booking)
     Object.keys(bdElements).forEach((key) => {
 
         let value = bdElements[key].value;
@@ -648,7 +651,9 @@ function updateLocalBooking() {
 }
 
 function closeBookingDetails() {
+    console.log("In Close Booking Details")
     console.log(booking_update)
+    console.log(getCurrentBooking())
     setBookingUpdate();
     if (Object.keys(booking_update.update).length > 0) {
         e("confirmSaveBooking").classList.remove("hidden")
