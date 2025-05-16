@@ -640,7 +640,10 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                     invoiceBalance: response.invoiceBalance,
                     invoiceTotal: response.invoiceTotal
                 }
-                updateBooking(booking_update.id, booking_update.update)
+                updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = null;
+                    booking_update.update = {};
+                })
             } else {
                 e("flow_acceptBooking_invoiceErrorTab").click();
                 e("flow_acceptBooking_invoiceErrorTab_msg").innerHTML = response.err;
@@ -703,7 +706,11 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
                 e("flow_acceptBooking_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Request Accepted";
-                updateBooking(booking_update.id, booking_update.update)
+                updateLocalBooking();
+                updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = null;
+                    booking_update.update = {};
+                })
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
                 e("flow_acceptBooking_gmailErrorTab_msg").innerHTML = response.err;
@@ -722,8 +729,6 @@ e("flow_acceptBooking_sendErr_ok").addEventListener("click", () => {
 e("flow_acceptBooking_gmailErrorTab_ok").addEventListener("click", () => {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
-    updateLocalBooking();
-    setBookingUpdate()
     populateBookingDetails(getCurrentBooking())
     e("tab_bookingDetails").click();
 })
@@ -731,8 +736,6 @@ e("flow_acceptBooking_gmailErrorTab_ok").addEventListener("click", () => {
 e("flow_acceptBooking_successTab_ok").addEventListener("click", () => {
     flow_sendOptions_clearForm();
     flow_acceptBooking_clearForm();
-    updateLocalBooking();
-    setBookingUpdate()
     populateBookingDetails(getCurrentBooking())
     e("tab_bookingDetails").click();
 });
