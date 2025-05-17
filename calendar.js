@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -403,6 +405,9 @@ function populateBookingDetails(booking) {
     resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"));
     e("estimate").innerHTML = `Quote: ${formatCurrency(booking.estimate)}`;
     if (Object.keys(statusClass).includes(booking.status)) { bdElements.status.value = booking.status }
+    if (booking.originalForm && booking.originalForm != "") {
+        e("originalForm").innerHTML = booking.originalForm.replace("\n", "<br>")
+    }
     // Customer Info
     bdElements.firstName.value = booking.firstName;
     bdElements.lastName.value = booking.lastName;
