@@ -404,7 +404,7 @@ function populateBookingDetails(booking) {
     e("estimate").innerHTML = `Quote: ${formatCurrency(booking.estimate)}`;
     if (Object.keys(statusClass).includes(booking.status)) { bdElements.status.value = booking.status }
     if (booking.originalForm && booking.originalForm != "") {
-        e("originalForm").innerHTML = booking.originalForm.replace("\n", "<br>")
+        e("originalForm").innerHTML = booking.originalForm.replaceAll("\n", "<br>")
     }
     // Customer Info
     bdElements.firstName.value = booking.firstName;
