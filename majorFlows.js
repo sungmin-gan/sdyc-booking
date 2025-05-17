@@ -309,7 +309,10 @@ e("flow_sendOptions_send").addEventListener("click", () => {
                 booking_update.update["status"] = "Options Sent";
                 updateLocalBooking();
                 populateBookingDetails(getCurrentBooking())
-                updateBooking(booking_update.id, booking_update.update)
+                updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = null;
+                    booking_update.update = {};
+                })
             } else {
                 e("flow_sendOptions_errorTab").click();
                 e("flow_sendOptions_errorTab_msg").innerHTML = response.err;
@@ -640,6 +643,7 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
                     invoiceBalance: response.invoiceBalance,
                     invoiceTotal: response.invoiceTotal
                 }
+                updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
                     booking_update.update = {};
