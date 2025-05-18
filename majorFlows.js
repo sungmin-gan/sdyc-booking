@@ -492,10 +492,11 @@ function flow_acceptBooking_setPaymentOptions() {
 }
 
 function flow_acceptBooking_setNote() {
-    let l1 = "Cancellation Policy:";
-    let l2 = "* 100% Refund for cancellations more than 14 days before scheduled booking. 50% Refund for cancellations more than 7 days before scheduled booking. No refunds for cancellations within 7 days.";
-    let l3 = "* If a charter is cancelled due to unsafe weather, 100% refunded or Charterer may reschedule.";
-    e("flow_acceptBooking_note").value = `${l1}\n${l2}\n${l3}`;
+    let l1 = "Payment & Cancellation Terms:";
+    let l2 = "* 50% deposit secures booking; balance due 14 days prior or deposit may be forfeited. Full payment also accepted.";
+    let l3 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
+    let l4 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
+    e("flow_acceptBooking_note").value = `${l1}\n${l2}\n${l3}\n${l4}`;
 }
 
 function setTemplate_acceptBooking() {
