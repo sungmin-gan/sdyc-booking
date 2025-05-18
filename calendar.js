@@ -789,6 +789,7 @@ e("confirmSaveBooking_save").addEventListener("click", () => {
 })
 
 e("flow_saveBooking_err_ok").addEventListener("click", () => {
+    e("confirmSaveBooking").classList.add("hidden");
     e("flow_saveBooking_err").classList.add("hidden");
 })
 
