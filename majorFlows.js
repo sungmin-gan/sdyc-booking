@@ -483,7 +483,6 @@ function flow_acceptBooking_setTotal() {
 function flow_acceptBooking_setPaymentOptions() {
     let deposit = flow_acceptBooking_getTotal() / 2;
     let dueDate = e("flow_acceptBooking_dueDate").value;
-    2025 - 03 - 01
     let dueMonth = YEAR[parseInt(dueDate.substring(5, 7)) - 1];
     let dueYear = dueDate.substring(0, 4);
     let dueDay = `${parseInt(dueDate.substring(8))}`;
@@ -504,6 +503,9 @@ function setTemplate_acceptBooking() {
     e("flow_acceptBooking_customerEmail").value = bdElements.email.value;
     e("flow_acceptBooking_invoiceDate").value = todayDateInput();
     e("flow_acceptBooking_dueDate").value = changeDate(bdElements.charterStartDate.value, -14);
+    let today = new Date(todayDateInput());
+    let dueDate = new Date(e("flow_acceptBooking_dueDate").value);
+    if (dueDate < today) { e("flow_acceptBooking_dueDate").value = todayDateInput() }
     e("flow_acceptBooking_sDate1").value = bdElements.charterStartDate.value;
     setCharterLine()
     setDescription()
