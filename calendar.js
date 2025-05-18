@@ -26,8 +26,8 @@ let booking_update = {
 let currentBooking = "";
 
 function getCurrentBooking() {
-	let booking = charterBookings.find(x => x.id == currentBooking);
-  return booking
+    let booking = charterBookings.find(x => x.id == currentBooking);
+    return booking
 }
 
 //// //// //// //// Tabs Control //// //// //// ////
@@ -377,8 +377,8 @@ let bdElements = {
 }
 
 function humanDate(date) {
-    let year = date.substring(0,4);
-    let month = YEARABBR[parseInt(date.substring(5,7))-1];
+    let year = date.substring(0, 4);
+    let month = YEARABBR[parseInt(date.substring(5, 7)) - 1];
     let day = date.substring(8);
     return `${month} ${day}, ${year}`
 }
@@ -688,9 +688,84 @@ function closeBookingDetails() {
     }*/
 }
 
+function checkSave() {
+    let errsList = [];
+    let errsMsg = "Please review the following errors:<br><br>";
+    if (!bdElements.charterStartDate.value || bdElements.charterStartDate.value == "") {
+        errsList.push("Charter start date is not specified.")
+    }
+    if (!bdElements.charterStartTime.value || bdElements.charterStartTime.value == "") {
+        errsList.push("Charter start time is not specified.")
+    }
+    if (!bdElements.charterEndDate.value || bdElements.charterEndDate.value == "") {
+        errsList.push("Charter end date is not specified.")
+    }
+    if (!bdElements.charterEndTime.value || bdElements.charterEndTime.value == "") {
+        errsList.push("Charter end time is not specified.")
+    }
+    if (!bdElements.firstName.value || bdElements.firstName.value == "") {
+        errsList.push("Customer's first name is not specified.")
+    }
+    if (!bdElements.lastName.value || bdElements.lastName.value == "") {
+        errsList.push("Customer's last name is not specified.")
+    }
+    if (!bdElements.email.value || bdElements.email.value == "") {
+        errsList.push("Customer's email is not specified.")
+    }
+    if (!bdElements.phone.value || bdElements.phone.value == "") {
+        errsList.push("Customer's phone number is not specified.")
+    }
+    if (
+        bdElements.charterStartDate.value && bdElements.charterStartDate.value != "" &&
+        bdElements.charterStartTime.value && bdElements.charterStartTime.value != "" &&
+        bdElements.charterEndDate.value && bdElements.charterEndDate.value != "" &&
+        bdElements.charterEndTime.value && bdElements.charterEndTime.value != ""
+    ) {
+        let start = convertToUnix(`${bdElements.charterStartDate.value}T${bdElements.charterStartTime.value}:00-07:00`);
+        let end = convertToUnix(`${bdElements.charterEndDate.value}T${bdElements.charterEndTime.value}:00-07:00`);
+        if (!(end > start)) {
+            errsList.push("Charter end date/time must be later than charter start end date/time.")
+        }
+    }
+    errsList.forEach((msg, i) => {
+        let suffix = (i == errsList.length - 1 ? "" : "<br>");
+        errsMsg += `${msg}${suffix}`
+    })
+    if (errsList.length > 0) {
+        return { pass: false, err: errsMsg }
+    } else { return { pass: true } }
+}
+
 e("saveButton").addEventListener("click", () => {
-    setBookingUpdate();
-    if (Object.keys(booking_update.update).length > 0) {
+    let check = checkSave();
+    if (check.pass) {
+        setBookingUpdate();
+        if (Object.keys(booking_update.update).length > 0) {
+            updateBooking(booking_update.id, booking_update.update).then(() => {
+                if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
+                    clearBookings();
+                    extractBookings();
+                    displayBookings()
+                }
+                updateLocalBooking();
+                disableBDFields();
+                booking_update = { id: null, update: {} }
+            })
+            //setBookingUpdate();
+            //updateLocalBooking();
+            // //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
+            // //populateBookingDetails(displayedBooking);
+            //disableBDFields();
+        }
+    } else {
+        e("flow_saveBooking_err").classList.remove("hidden");
+        e("flow_saveBooking_err_msg").innerHTML = check.err;
+    }
+})
+
+e("confirmSaveBooking_save").addEventListener("click", () => {
+    let check = checkSave();
+    if (check.pass) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
             if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
                 clearBookings();
@@ -699,33 +774,18 @@ e("saveButton").addEventListener("click", () => {
             }
             updateLocalBooking();
             disableBDFields();
+            e("confirmSaveBooking").classList.add("hidden");
+            updateLocalBooking();
+            closeBookingDetails()
             booking_update = { id: null, update: {} }
         })
-        //setBookingUpdate();
+        //e("confirmSaveBooking").classList.add("hidden");
         //updateLocalBooking();
-        // //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
-        // //populateBookingDetails(displayedBooking);
-        //disableBDFields();
-    }
-})
-
-e("confirmSaveBooking_save").addEventListener("click", () => {
-    updateBooking(booking_update.id, booking_update.update).then(() => {
-        if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
-            clearBookings();
-            extractBookings();
-            displayBookings()
-        }
-        updateLocalBooking();
-        disableBDFields();
-        e("confirmSaveBooking").classList.add("hidden");
-        updateLocalBooking();
-        closeBookingDetails()
-        booking_update = { id: null, update: {} }
-    })
-    //e("confirmSaveBooking").classList.add("hidden");
-    //updateLocalBooking();
-    //closeBookingDetails()
+        //closeBookingDetails()
+    } else {
+        e("flow_saveBooking_err").classList.remove("hidden");
+        e("flow_saveBooking_err_msg").innerHTML = check.err;
+    } 
 })
 
 e("confirmSaveBooking_cancel").addEventListener("click", () => {
