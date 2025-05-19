@@ -30,6 +30,10 @@ e("createBookingButton").addEventListener("click", () => {
 	e("newCharterForm").classList.add("open")
 })
 
+e("createBookingButton_mobile").addEventListener("click", () => {
+	e("newCharterForm").classList.add("open")
+})
+
 e("newCharter_cancel").addEventListener("click", () => {
 	clearNcElements();
 	e("newCharterForm").classList.remove("open")
