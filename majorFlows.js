@@ -710,14 +710,16 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
 
         rowsCheck = rows.r1 && rows.r2 && rows.r3;
     }
-
+    let r1 = null;
+    if (device == "desktop") { r1 = e("flow_acceptBooking_sDate1").value != "" }
+    else { r1 = e("flow_acceptBooking_sDate1_mobile").value != "" }
     let essentials = {
         customerName: e("flow_acceptBooking_customerName").value != "",
         customerEmail: e("flow_acceptBooking_customerEmail").value != "",
         terms: e("flow_acceptBooking_terms").value != "",
         invoiceDate: e("flow_acceptBooking_invoiceDate").value != "",
         dueDate: e("flow_acceptBooking_dueDate").value != "",
-        row1: e("flow_acceptBooking_sDate1").value != ""
+        row1: r1
     }
     Object.keys(essentials).forEach((key) => {
         if (!essentials[key]) { essentialsCheck = false }
