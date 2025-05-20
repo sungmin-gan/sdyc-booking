@@ -35,12 +35,12 @@ for (let i = 1; i < 4; i++) {
         flow_acceptBooking_setTotal()
     })
     e(`flow_acceptBooking_qty${i}_mobile`).addEventListener("change", () => {
-        if (!e(`flow_acceptBooking_qty${i}_mobile`).value || e(`flow_acceptBooking_qty${i}`).value == "") {
+        if (!e(`flow_acceptBooking_qty${i}_mobile`).value || e(`flow_acceptBooking_qty${i}_mobile`).value == "") {
             e(`flow_acceptBooking_qty${i}_mobile`).value = 0
         }
     })
     e(`flow_acceptBooking_rate${i}_mobile`).addEventListener("change", () => {
-        if (!e(`flow_acceptBooking_rate${i}_mobile`).value || e(`flow_acceptBooking_rate${i}`).value == "") {
+        if (!e(`flow_acceptBooking_rate${i}_mobile`).value || e(`flow_acceptBooking_rate${i}_mobile`).value == "") {
             e(`flow_acceptBooking_rate${i}_mobile`).value = 0
         }
     })
