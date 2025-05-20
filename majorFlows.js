@@ -281,7 +281,7 @@ function formatPhone(phone) {
     phone = phone.replaceAll(")", "");
     phone = phone.replaceAll("-", "");
     phone = phone.replaceAll(" ", "");
-    if (phone.length == 11") {
+    if (phone.length == 11) {
         return `+${phone}`
     } else {
         return `+1${phone}`
