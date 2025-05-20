@@ -465,22 +465,12 @@ function setDescription() {
 
 function flow_acceptBooking_getTotal() {
     let total = 0;
-    if (device == "desktop") {
-        for (let i = 1; i < 6; i++) {
-            let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-            let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-            if (!rate || rate == "") { rate = 0 }
-            if (!qty || qty == "") { qty = 0 }
-            total += (rate * qty);
-        }
-    } else {
-        for (let i = 1; i < 4; i++) {
-            let rate = parseFloat(e(`flow_acceptBooking_rate${i}_mobile`).value);
-            let qty = parseFloat(e(`flow_acceptBooking_qty${i}_mobile`).value);
-            if (!rate || rate == "") { rate = 0 }
-            if (!qty || qty == "") { qty = 0 }
-            total += (rate * qty);
-        }
+    for (let i = 1; i < 6; i++) {
+        let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+        let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+        if (!rate || rate == "") { rate = 0 }
+        if (!qty || qty == "") { qty = 0 }
+        total += (rate * qty);
     }
     return total.toFixed(2)
 }
@@ -491,34 +481,21 @@ function flow_acceptBooking_setTotal() {
 }
 
 function flow_acceptBooking_setPaymentOptions() {
-    if (e("flow_acceptBooking_dueDate").value == e("flow_acceptBooking_invoiceDate").value) {
-        e("flow_acceptBooking_paymentOptions").value = `The full amount of ${formatCurrency(flow_acceptBooking_getTotal())} is due immediately to secure your cruise. Your reservation is not confirmed until payment is received.`;
-    } else {
-        let deposit = flow_acceptBooking_getTotal() / 2;
-        let dueDate = e("flow_acceptBooking_dueDate").value;
-        let dueMonth = YEAR[parseInt(dueDate.substring(5, 7)) - 1];
-        let dueYear = dueDate.substring(0, 4);
-        let dueDay = `${parseInt(dueDate.substring(8))}`;
-        let fullDate = `${dueMonth} ${dueDay}, ${dueYear}`;
-        e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to pay the entire amount all at once.`
-    }
+    let deposit = flow_acceptBooking_getTotal() / 2;
+    let dueDate = e("flow_acceptBooking_dueDate").value;
+    let dueMonth = YEAR[parseInt(dueDate.substring(5, 7)) - 1];
+    let dueYear = dueDate.substring(0, 4);
+    let dueDay = `${parseInt(dueDate.substring(8))}`;
+    let fullDate = `${dueMonth} ${dueDay}, ${dueYear}`;
+    e("flow_acceptBooking_paymentOptions").value = `A deposit of ${formatCurrency(deposit)} is due up front to secure your cruise and the remaining half is due ${fullDate}. You are welcome to pay the entire amount all at once.`
 }
 
 function flow_acceptBooking_setNote() {
-    let text = "";
-    if (e("flow_acceptBooking_dueDate").value == e("flow_acceptBooking_invoiceDate").value) {
-        let l1 = "Payment & Cancellation Terms:";
-        let l2 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
-        let l3 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
-        text = `${l1}\n${l2}\n${l3}`;
-    } else {
-        let l1 = "Payment & Cancellation Terms:";
-        let l2 = "* 50% deposit secures booking; balance due 14 days prior or deposit may be forfeited. Full payment also accepted.";
-        let l3 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
-        let l4 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
-        text = `${l1}\n${l2}\n${l3}\n${l4}`;
-    }
-    e("flow_acceptBooking_note").value = text;
+    let l1 = "Payment & Cancellation Terms:";
+    let l2 = "* 50% deposit secures booking; balance due 14 days prior or deposit may be forfeited. Full payment also accepted.";
+    let l3 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
+    let l4 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
+    e("flow_acceptBooking_note").value = `${l1}\n${l2}\n${l3}\n${l4}`;
 }
 
 function setTemplate_acceptBooking() {
@@ -552,24 +529,13 @@ e("flow_acceptBooking_invoiceErr_ok").addEventListener("click", () => {
 })
 
 function flow_acceptBooking_clearForm() {
-    if (device == "desktop") {
-        for (let i = 1; i < 6; i++) {
-            e(`flow_acceptBooking_sDate${i}`).value = "";
-            e(`flow_acceptBooking_service${i}`).value = "";
-            e(`flow_acceptBooking_desc${i}`).value = "";
-            e(`flow_acceptBooking_qty${i}`).value = "";
-            e(`flow_acceptBooking_rate${i}`).value = "";
-            e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
-        }
-    } else {
-        for (let i = 1; i < 4; i++) {
-            e(`flow_acceptBooking_sDate${i}_mobile`).value = "";
-            e(`flow_acceptBooking_service${i}_mobile`).value = "";
-            e(`flow_acceptBooking_desc${i}_mobile`).value = "";
-            e(`flow_acceptBooking_qty${i}_mobile`).value = "";
-            e(`flow_acceptBooking_rate${i}_mobile`).value = "";
-            e(`flow_acceptBooking_amt${i}_mobile`).innerHTML = "$0.00"
-        }
+    for (let i = 1; i < 6; i++) {
+        e(`flow_acceptBooking_sDate${i}`).value = "";
+        e(`flow_acceptBooking_service${i}`).value = "";
+        e(`flow_acceptBooking_desc${i}`).value = "";
+        e(`flow_acceptBooking_qty${i}`).value = "";
+        e(`flow_acceptBooking_rate${i}`).value = "";
+        e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
     }
     e("flow_acceptBooking_customerName").value = "";
     e("flow_acceptBooking_customerEmail").value = "";
@@ -601,32 +567,17 @@ function flow_acceptBooking_packageInvoice() {
             r5: null
         }
     }
-    if (device == "desktop") {
-        for (let i = 1; i < 6; i++) {
-            if (e(`flow_acceptBooking_sDate${i}`).value) {
-                data.rows[`r${i}`] = {
-                    serviceDate: e(`flow_acceptBooking_sDate${i}`).value,
-                    serviceName: e(`flow_acceptBooking_service${i}`).value,
-                    description: e(`flow_acceptBooking_desc${i}`).value,
-                    quantity: e(`flow_acceptBooking_qty${i}`).value,
-                    rate: e(`flow_acceptBooking_rate${i}`).value
-                }
-            }
-        }
-    } else {
-        for (let i = 1; i < 4; i++) {
-            if (e(`flow_acceptBooking_sDate${i}_mobile`).value) {
-                data.rows[`r${i}`] = {
-                    serviceDate: e(`flow_acceptBooking_sDate${i}_mobile`).value,
-                    serviceName: e(`flow_acceptBooking_service${i}_mobile`).value,
-                    description: e(`flow_acceptBooking_desc${i}_mobile`).value,
-                    quantity: e(`flow_acceptBooking_qty${i}_mobile`).value,
-                    rate: e(`flow_acceptBooking_rate${i}_mobile`).value
-                }
+    for (let i = 1; i < 6; i++) {
+        if (e(`flow_acceptBooking_sDate${i}`).value) {
+            data.rows[`r${i}`] = {
+                serviceDate: e(`flow_acceptBooking_sDate${i}`).value,
+                serviceName: e(`flow_acceptBooking_service${i}`).value,
+                description: e(`flow_acceptBooking_desc${i}`).value,
+                quantity: e(`flow_acceptBooking_qty${i}`).value,
+                rate: e(`flow_acceptBooking_rate${i}`).value
             }
         }
     }
-
     return data
 }
 
@@ -634,59 +585,31 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
     let pass = false;
     let rowsCheck = false;
     let essentialsCheck = true;
-    let rows = {};
 
-    if (device == "desktop") {
-        rows = {
-            r1: false,
-            r2: false,
-            r3: false,
-            r4: false,
-            r5: false
-        }
-        for (let i = 1; i < 6; i++) {
-            if (
-                (e(`flow_acceptBooking_sDate${i}`).value == "" &&
-                    e(`flow_acceptBooking_service${i}`).value == "" &&
-                    e(`flow_acceptBooking_desc${i}`).value == "" &&
-                    e(`flow_acceptBooking_qty${i}`).value == "" &&
-                    e(`flow_acceptBooking_rate${i}`).value == "") ||
-                (e(`flow_acceptBooking_sDate${i}`).value != "" &&
-                    e(`flow_acceptBooking_service${i}`).value != "" &&
-                    e(`flow_acceptBooking_desc${i}`).value != "" &&
-                    e(`flow_acceptBooking_qty${i}`).value != "" &&
-                    e(`flow_acceptBooking_rate${i}`).value != "")
-            ) {
-                rows[`r${i}`] = true
-            }
-        }
-
-        rowsCheck = rows.r1 && rows.r2 && rows.r3 && rows.r4 && rows.r5;
-    } else {
-        rows = {
-            r1: false,
-            r2: false,
-            r3: false
-        }
-        for (let i = 1; i < 4; i++) {
-            if (
-                (e(`flow_acceptBooking_sDate${i}_mobile`).value == "" &&
-                    e(`flow_acceptBooking_service${i}_mobile`).value == "" &&
-                    e(`flow_acceptBooking_desc${i}_mobile`).value == "" &&
-                    e(`flow_acceptBooking_qty${i}_mobile`).value == "" &&
-                    e(`flow_acceptBooking_rate${i}_mobile`).value == "") ||
-                (e(`flow_acceptBooking_sDate${i}_mobile`).value != "" &&
-                    e(`flow_acceptBooking_service${i}_mobile`).value != "" &&
-                    e(`flow_acceptBooking_desc${i}_mobile`).value != "" &&
-                    e(`flow_acceptBooking_qty${i}_mobile`).value != "" &&
-                    e(`flow_acceptBooking_rate${i}_mobile`).value != "")
-            ) {
-                rows[`r${i}`] = true
-            }
-        }
-
-        rowsCheck = rows.r1 && rows.r2 && rows.r3;
+    let rows = {
+        r1: false,
+        r2: false,
+        r3: false,
+        r4: false,
+        r5: false
     }
+    for (let i = 1; i < 6; i++) {
+        if (
+            (e(`flow_acceptBooking_sDate${i}`).value == "" &&
+                e(`flow_acceptBooking_service${i}`).value == "" &&
+                e(`flow_acceptBooking_desc${i}`).value == "" &&
+                e(`flow_acceptBooking_qty${i}`).value == "" &&
+                e(`flow_acceptBooking_rate${i}`).value == "") ||
+            (e(`flow_acceptBooking_sDate${i}`).value != "" &&
+                e(`flow_acceptBooking_service${i}`).value != "" &&
+                e(`flow_acceptBooking_desc${i}`).value != "" &&
+                e(`flow_acceptBooking_qty${i}`).value != "" &&
+                e(`flow_acceptBooking_rate${i}`).value != "")
+        ) {
+            rows[`r${i}`] = true
+        }
+    }
+    rowsCheck = rows.r1 && rows.r2 && rows.r3 && rows.r4 && rows.r5;
 
     let essentials = {
         customerName: e("flow_acceptBooking_customerName").value != "",
@@ -794,6 +717,9 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
                     booking_update.update = {};
+                    clearBookings();
+                    extractBookings();
+                    displayBookings()
                 })
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
@@ -935,7 +861,18 @@ e("flow_sendEmail_send").addEventListener("click", () => {
         sendGmail(sendEmailData).then((response) => {
             e("loadingScreen").classList.add("hidden")
             if (response.success && response.success != "false") {
-                e("flow_sendEmail_successTab").click()
+                e("flow_sendEmail_successTab").click();
+                booking_update.id = currentBooking;
+                booking_update.update["status"] = sendEmailStatus;
+                updateLocalBooking();
+                updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = null;
+                    booking_update.update = {};
+                    sendEmailStatus = "";
+                    clearBookings();
+                    extractBookings();
+                    displayBookings()
+                })
             } else {
                 e("flow_sendEmail_errorTab").click();
                 e("flow_sendEmail_errorTab_msg").innerHTML = response.err
