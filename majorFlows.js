@@ -308,10 +308,19 @@ e("flow_sendOptions_send").addEventListener("click", () => {
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Options Sent";
                 updateLocalBooking();
-                populateBookingDetails(getCurrentBooking())
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
                     booking_update.update = {};
+                    if (device == "desktop") {
+                        clearBookings();
+                        extractBookings();
+                        displayBookings()
+                    } else {
+                        clearBookingsList()
+                        getCalendarDatesStrict();
+                        extractBookings();
+                        fillBookingsList();
+                    }
                 })
             } else {
                 e("flow_sendOptions_errorTab").click();
@@ -800,9 +809,16 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
                     booking_update.update = {};
-                    clearBookings();
-                    extractBookings();
-                    displayBookings()
+                    if (device == "desktop") {
+                        clearBookings();
+                        extractBookings();
+                        displayBookings()
+                    } else {
+                        clearBookingsList()
+                        getCalendarDatesStrict();
+                        extractBookings();
+                        fillBookingsList();
+                    }
                 })
             } else {
                 e("flow_acceptBooking_gmailErrorTab").click();
@@ -952,9 +968,16 @@ e("flow_sendEmail_send").addEventListener("click", () => {
                     booking_update.id = null;
                     booking_update.update = {};
                     sendEmailStatus = "";
-                    clearBookings();
-                    extractBookings();
-                    displayBookings()
+                    if (device == "desktop") {
+                        clearBookings();
+                        extractBookings();
+                        displayBookings()
+                    } else {
+                        clearBookingsList()
+                        getCalendarDatesStrict();
+                        extractBookings();
+                        fillBookingsList();
+                    }
                 })
             } else {
                 e("flow_sendEmail_errorTab").click();
