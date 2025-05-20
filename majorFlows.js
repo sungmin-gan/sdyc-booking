@@ -508,15 +508,15 @@ function flow_acceptBooking_setNote() {
     let text = "";
     if (e("flow_acceptBooking_dueDate").value == e("flow_acceptBooking_invoiceDate").value) {
         let l1 = "Payment & Cancellation Terms:";
+        let l2 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
+        let l3 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
+        text = `${l1}\n${l2}\n${l3}`;
+    } else {
+        let l1 = "Payment & Cancellation Terms:";
         let l2 = "* 50% deposit secures booking; balance due 14 days prior or deposit may be forfeited. Full payment also accepted.";
         let l3 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
         let l4 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
         text = `${l1}\n${l2}\n${l3}\n${l4}`;
-    } else {
-        let l1 = "Payment & Cancellation Terms:";
-        let l2 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
-        let l3 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
-        text = `${l1}\n${l2}\n${l3}`;
     }
     e("flow_acceptBooking_note").value = text;
 }
