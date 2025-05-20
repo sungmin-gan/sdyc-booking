@@ -466,22 +466,23 @@ function setDescription() {
 function flow_acceptBooking_getTotal() {
     let total = 0;
     if (device == "desktop") {
-      for (let i = 1; i < 6; i++) {
-        let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
-        let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
-        if (!rate || rate == "") { rate = 0 }
-        if (!qty || qty == "") { qty = 0 }
-        total += (rate * qty);
-      }
+        for (let i = 1; i < 6; i++) {
+            let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
+            let qty = parseFloat(e(`flow_acceptBooking_qty${i}`).value);
+            if (!rate || rate == "") { rate = 0 }
+            if (!qty || qty == "") { qty = 0 }
+            total += (rate * qty);
+        }
     } else {
-      for (let i = 1; i < 4; i++) {
-        let rate = parseFloat(e(`flow_acceptBooking_rate${i}_mobile`).value);
-        let qty = parseFloat(e(`flow_acceptBooking_qty${i}_mobile`).value);
-        if (!rate || rate == "") { rate = 0 }
-        if (!qty || qty == "") { qty = 0 }
-        total += (rate * qty);
+        for (let i = 1; i < 4; i++) {
+            let rate = parseFloat(e(`flow_acceptBooking_rate${i}_mobile`).value);
+            let qty = parseFloat(e(`flow_acceptBooking_qty${i}_mobile`).value);
+            if (!rate || rate == "") { rate = 0 }
+            if (!qty || qty == "") { qty = 0 }
+            total += (rate * qty);
+        }
+        return total.toFixed(2)
     }
-    return total.toFixed(2)
 }
 
 function flow_acceptBooking_setTotal() {
@@ -539,23 +540,23 @@ e("flow_acceptBooking_invoiceErr_ok").addEventListener("click", () => {
 
 function flow_acceptBooking_clearForm() {
     if (device == "desktop") {
-      for (let i = 1; i < 6; i++) {
-        e(`flow_acceptBooking_sDate${i}`).value = "";
-        e(`flow_acceptBooking_service${i}`).value = "";
-        e(`flow_acceptBooking_desc${i}`).value = "";
-        e(`flow_acceptBooking_qty${i}`).value = "";
-        e(`flow_acceptBooking_rate${i}`).value = "";
-        e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
-      }
+        for (let i = 1; i < 6; i++) {
+            e(`flow_acceptBooking_sDate${i}`).value = "";
+            e(`flow_acceptBooking_service${i}`).value = "";
+            e(`flow_acceptBooking_desc${i}`).value = "";
+            e(`flow_acceptBooking_qty${i}`).value = "";
+            e(`flow_acceptBooking_rate${i}`).value = "";
+            e(`flow_acceptBooking_amt${i}`).innerHTML = "$0.00"
+        }
     } else {
-      for (let i = 1; i < 4; i++) {
-        e(`flow_acceptBooking_sDate${i}_mobile`).value = "";
-        e(`flow_acceptBooking_service${i}_mobile`).value = "";
-        e(`flow_acceptBooking_desc${i}_mobile`).value = "";
-        e(`flow_acceptBooking_qty${i}_mobile`).value = "";
-        e(`flow_acceptBooking_rate${i}_mobile`).value = "";
-        e(`flow_acceptBooking_amt${i}_mobile`).innerHTML = "$0.00"
-      }
+        for (let i = 1; i < 4; i++) {
+            e(`flow_acceptBooking_sDate${i}_mobile`).value = "";
+            e(`flow_acceptBooking_service${i}_mobile`).value = "";
+            e(`flow_acceptBooking_desc${i}_mobile`).value = "";
+            e(`flow_acceptBooking_qty${i}_mobile`).value = "";
+            e(`flow_acceptBooking_rate${i}_mobile`).value = "";
+            e(`flow_acceptBooking_amt${i}_mobile`).innerHTML = "$0.00"
+        }
     }
     e("flow_acceptBooking_customerName").value = "";
     e("flow_acceptBooking_customerEmail").value = "";
@@ -588,31 +589,31 @@ function flow_acceptBooking_packageInvoice() {
         }
     }
     if (device == "desktop") {
-      for (let i = 1; i < 6; i++) {
-        if (e(`flow_acceptBooking_sDate${i}`).value) {
-            data.rows[`r${i}`] = {
-                serviceDate: e(`flow_acceptBooking_sDate${i}`).value,
-                serviceName: e(`flow_acceptBooking_service${i}`).value,
-                description: e(`flow_acceptBooking_desc${i}`).value,
-                quantity: e(`flow_acceptBooking_qty${i}`).value,
-                rate: e(`flow_acceptBooking_rate${i}`).value
+        for (let i = 1; i < 6; i++) {
+            if (e(`flow_acceptBooking_sDate${i}`).value) {
+                data.rows[`r${i}`] = {
+                    serviceDate: e(`flow_acceptBooking_sDate${i}`).value,
+                    serviceName: e(`flow_acceptBooking_service${i}`).value,
+                    description: e(`flow_acceptBooking_desc${i}`).value,
+                    quantity: e(`flow_acceptBooking_qty${i}`).value,
+                    rate: e(`flow_acceptBooking_rate${i}`).value
+                }
             }
         }
-      }  
     } else {
-      for (let i = 1; i < 4; i++) {
-        if (e(`flow_acceptBooking_sDate${i}_mobile`).value) {
-            data.rows[`r${i}`] = {
-                serviceDate: e(`flow_acceptBooking_sDate${i}_mobile`).value,
-                serviceName: e(`flow_acceptBooking_service${i}_mobile`).value,
-                description: e(`flow_acceptBooking_desc${i}_mobile`).value,
-                quantity: e(`flow_acceptBooking_qty${i}_mobile`).value,
-                rate: e(`flow_acceptBooking_rate${i}_mobile`).value
+        for (let i = 1; i < 4; i++) {
+            if (e(`flow_acceptBooking_sDate${i}_mobile`).value) {
+                data.rows[`r${i}`] = {
+                    serviceDate: e(`flow_acceptBooking_sDate${i}_mobile`).value,
+                    serviceName: e(`flow_acceptBooking_service${i}_mobile`).value,
+                    description: e(`flow_acceptBooking_desc${i}_mobile`).value,
+                    quantity: e(`flow_acceptBooking_qty${i}_mobile`).value,
+                    rate: e(`flow_acceptBooking_rate${i}_mobile`).value
+                }
             }
         }
-      }  
     }
-    
+
     return data
 }
 
@@ -623,55 +624,55 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
     let rows = {};
 
     if (device == "desktop") {
-      rows = {
-        r1: false,
-        r2: false,
-        r3: false,
-        r4: false,
-        r5: false
-      }
-      for (let i = 1; i < 6; i++) {
-        if (
-            (e(`flow_acceptBooking_sDate${i}`).value == "" &&
-                e(`flow_acceptBooking_service${i}`).value == "" &&
-                e(`flow_acceptBooking_desc${i}`).value == "" &&
-                e(`flow_acceptBooking_qty${i}`).value == "" &&
-                e(`flow_acceptBooking_rate${i}`).value == "") ||
-            (e(`flow_acceptBooking_sDate${i}`).value != "" &&
-                e(`flow_acceptBooking_service${i}`).value != "" &&
-                e(`flow_acceptBooking_desc${i}`).value != "" &&
-                e(`flow_acceptBooking_qty${i}`).value != "" &&
-                e(`flow_acceptBooking_rate${i}`).value != "")
-        ) {
-            rows[`r${i}`] = true
+        rows = {
+            r1: false,
+            r2: false,
+            r3: false,
+            r4: false,
+            r5: false
         }
-      }
+        for (let i = 1; i < 6; i++) {
+            if (
+                (e(`flow_acceptBooking_sDate${i}`).value == "" &&
+                    e(`flow_acceptBooking_service${i}`).value == "" &&
+                    e(`flow_acceptBooking_desc${i}`).value == "" &&
+                    e(`flow_acceptBooking_qty${i}`).value == "" &&
+                    e(`flow_acceptBooking_rate${i}`).value == "") ||
+                (e(`flow_acceptBooking_sDate${i}`).value != "" &&
+                    e(`flow_acceptBooking_service${i}`).value != "" &&
+                    e(`flow_acceptBooking_desc${i}`).value != "" &&
+                    e(`flow_acceptBooking_qty${i}`).value != "" &&
+                    e(`flow_acceptBooking_rate${i}`).value != "")
+            ) {
+                rows[`r${i}`] = true
+            }
+        }
 
-      rowsCheck = rows.r1 && rows.r2 && rows.r3 && rows.r4 && rows.r5;
+        rowsCheck = rows.r1 && rows.r2 && rows.r3 && rows.r4 && rows.r5;
     } else {
-      rows = {
-        r1: false,
-        r2: false,
-        r3: false
-      }
-       for (let i = 1; i < 4; i++) {
-        if (
-            (e(`flow_acceptBooking_sDate${i}_mobile`).value == "" &&
-                e(`flow_acceptBooking_service${i}_mobile`).value == "" &&
-                e(`flow_acceptBooking_desc${i}_mobile`).value == "" &&
-                e(`flow_acceptBooking_qty${i}_mobile`).value == "" &&
-                e(`flow_acceptBooking_rate${i}_mobile`).value == "") ||
-            (e(`flow_acceptBooking_sDate${i}_mobile`).value != "" &&
-                e(`flow_acceptBooking_service${i}_mobile`).value != "" &&
-                e(`flow_acceptBooking_desc${i}_mobile`).value != "" &&
-                e(`flow_acceptBooking_qty${i}_mobile`).value != "" &&
-                e(`flow_acceptBooking_rate${i}_mobile`).value != "")
-        ) {
-            rows[`r${i}`] = true
+        rows = {
+            r1: false,
+            r2: false,
+            r3: false
         }
-      }
-      
-      rowsCheck = rows.r1 && rows.r2 && rows.r3;
+        for (let i = 1; i < 4; i++) {
+            if (
+                (e(`flow_acceptBooking_sDate${i}_mobile`).value == "" &&
+                    e(`flow_acceptBooking_service${i}_mobile`).value == "" &&
+                    e(`flow_acceptBooking_desc${i}_mobile`).value == "" &&
+                    e(`flow_acceptBooking_qty${i}_mobile`).value == "" &&
+                    e(`flow_acceptBooking_rate${i}_mobile`).value == "") ||
+                (e(`flow_acceptBooking_sDate${i}_mobile`).value != "" &&
+                    e(`flow_acceptBooking_service${i}_mobile`).value != "" &&
+                    e(`flow_acceptBooking_desc${i}_mobile`).value != "" &&
+                    e(`flow_acceptBooking_qty${i}_mobile`).value != "" &&
+                    e(`flow_acceptBooking_rate${i}_mobile`).value != "")
+            ) {
+                rows[`r${i}`] = true
+            }
+        }
+
+        rowsCheck = rows.r1 && rows.r2 && rows.r3;
     }
 
     let essentials = {
