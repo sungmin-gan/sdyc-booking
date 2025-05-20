@@ -56,3 +56,4 @@ for (let i = 1; i < 4; i++) {
         e(`flow_acceptBooking_amt${i}_mobile`).innerHTML = "$0.00"
     })
 }
+
