@@ -318,7 +318,7 @@ e("flow_sendOptions_send").addEventListener("click", () => {
             if (response.success == "true") {
                 let booking = getCurrentBooking();
                 if (booking.textOptIn && booking.textOptIn != "false" &&
-                       booking.phone && booking.phone != ""
+                       booking.phone && booking.phone != "" && device != "desktop"
                    ) {
                     e("flow_sendOptions_successTab_text").classList.remove("hidden")
                     let href = `sms:${formatPhone(bdElements.phone.value)}&body=${encodeURIComponent(e("flow_sendOptions_msg").value)}`;
