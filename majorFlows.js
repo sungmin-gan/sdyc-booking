@@ -475,7 +475,7 @@ function setDescription() {
     let vessel = vessels.find(x => x.id == bdElements.vessel.value);
     let vesselDisplayName = vessel.displayName;
     let maxPassengers = vessel.maxCapacity;
-    if (device = "desktop") {
+    if (device == "desktop") {
         e("flow_acceptBooking_desc1").value = `${timeStart}-${timeEnd} San Diego Bay Cruise on ${vesselDisplayName} for up to ${maxPassengers} passengers.`;
     } else {
         e("flow_acceptBooking_desc1_mobile").value = `${timeStart}-${timeEnd} San Diego Bay Cruise on ${vesselDisplayName} for up to ${maxPassengers} passengers.`;
@@ -527,7 +527,7 @@ function flow_acceptBooking_setNote() {
     let text = "";
     if (e("flow_acceptBooking_dueDate").value == e("flow_acceptBooking_invoiceDate").value) {
         let l1 = "Payment & Cancellation Terms:";
-        let l2 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
+        let l2 = "* Cancel 8-13 days: 50% refund minus $100.";
         let l3 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
         text = `${l1}\n${l2}\n${l3}`;
     } else {
