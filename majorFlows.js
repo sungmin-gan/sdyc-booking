@@ -276,6 +276,18 @@ function flow_sendOptions_clearForm() {
     e("flow_sendOptions_defaultTab").click()
 }
 
+function formatPhone(phone) {
+    phone = phone.replaceAll("(", "");
+    phone = phone.replaceAll(")", "");
+    phone = phone.replaceAll("-", "");
+    phone = phone.replaceAll(" ", "");
+    if (phone.length == 11") {
+        return `+${phone}`
+    } else {
+        return `+1${phone}`
+    }
+}
+
 e("flow_sendOptions_send").addEventListener("click", () => {
     let check = false;
     let to_check = false;
@@ -304,6 +316,16 @@ e("flow_sendOptions_send").addEventListener("click", () => {
         gmailOptions(data).then((response) => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
+                let booking = getCurrentBooking();
+                if (booking.textOptIn && booking.textOptIn != "false" &&
+                       booking.phone && booking.phone != ""
+                   ) {
+                    e("flow_sendOptions_successTab_text").classList.remove("hidden")
+                    let href = `sms:${formatPhone(bdElements.phone.value)}&body=${encodeURIComponent(e("flow_sendOptions_msg").value)}`;
+                    e("flow_sendOptions_successTab_text").setAttribute("href", href);
+                } else {
+                    e("flow_sendOptions_successTab_text").classList.add("hidden")
+                }
                 e("flow_sendOptions_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Options Sent";
