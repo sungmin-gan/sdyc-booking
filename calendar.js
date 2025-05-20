@@ -415,6 +415,7 @@ function populateBookingDetails(booking) {
     bdElements.textOptIn.value = booking.textOptIn;
     // List Invoices
     if (booking.qbInvoices && Object.keys(booking.qbInvoices).length > 0) {
+        e("msg_no_invoices").classList.add("hidden");
         Object.keys(booking.qbInvoices).forEach((iid) => {
             let invoice = booking.qbInvoices[iid];
             let link = document.createElement("a");
@@ -452,6 +453,8 @@ function populateBookingDetails(booking) {
             w2.appendChild(invoiceBalance);
 
         })
+    } else {
+        e("msg_no_invoices").classList.remove("hidden");
     }
 }
 
