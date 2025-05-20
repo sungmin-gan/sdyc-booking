@@ -641,8 +641,6 @@ function setBookingUpdate() {
                 delete booking_update.update[key_additional]
             })
         }
-
-
     })
 }
 
@@ -745,12 +743,12 @@ e("saveButton").addEventListener("click", () => {
         if (Object.keys(booking_update.update).length > 0) {
             updateBooking(booking_update.id, booking_update.update).then(() => {
                 console.log(booking_update)
+                updateLocalBooking();
                 if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.update.firstName || booking_update.update.lastName) {
                     clearBookings();
                     extractBookings();
                     displayBookings()
                 }
-                updateLocalBooking();
                 disableBDFields();
                 booking_update = { id: null, update: {} }
             })
@@ -770,12 +768,12 @@ e("confirmSaveBooking_save").addEventListener("click", () => {
     let check = checkSave();
     if (check.pass) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
+            updateLocalBooking();
             if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.update.firstName || booking_update.update.lastName) {
                 clearBookings();
                 extractBookings();
                 displayBookings()
             }
-            updateLocalBooking();
             disableBDFields();
             e("confirmSaveBooking").classList.add("hidden");
             updateLocalBooking();
