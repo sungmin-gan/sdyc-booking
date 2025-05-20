@@ -475,7 +475,11 @@ function setDescription() {
     let vessel = vessels.find(x => x.id == bdElements.vessel.value);
     let vesselDisplayName = vessel.displayName;
     let maxPassengers = vessel.maxCapacity;
-    e("flow_acceptBooking_desc1").value = `${timeStart}-${timeEnd} San Diego Bay Cruise on ${vesselDisplayName} for up to ${maxPassengers} passengers.`;
+    if (device = "desktop") {
+        e("flow_acceptBooking_desc1").value = `${timeStart}-${timeEnd} San Diego Bay Cruise on ${vesselDisplayName} for up to ${maxPassengers} passengers.`;
+    } else {
+        e("flow_acceptBooking_desc1_mobile").value = `${timeStart}-${timeEnd} San Diego Bay Cruise on ${vesselDisplayName} for up to ${maxPassengers} passengers.`;
+    }
 }
 
 function flow_acceptBooking_getTotal() {
@@ -544,7 +548,11 @@ function setTemplate_acceptBooking() {
     let today = new Date(todayDateInput());
     let dueDate = new Date(e("flow_acceptBooking_dueDate").value);
     if (dueDate < today) { e("flow_acceptBooking_dueDate").value = todayDateInput() }
-    e("flow_acceptBooking_sDate1").value = bdElements.charterStartDate.value;
+    if (device == "desktop") {
+        e("flow_acceptBooking_sDate1").value = bdElements.charterStartDate.value;
+    } else {
+        e("flow_acceptBooking_sDate1_mobile").value = bdElements.charterStartDate.value;
+    }
     setCharterLine()
     setDescription()
     flow_acceptBooking_setTotal()
