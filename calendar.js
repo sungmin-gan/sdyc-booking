@@ -740,9 +740,12 @@ e("saveButton").addEventListener("click", () => {
     let check = checkSave();
     if (check.pass) {
         setBookingUpdate();
+        console.log("In saveButton")
+        console.log(booking_update)
         if (Object.keys(booking_update.update).length > 0) {
             updateBooking(booking_update.id, booking_update.update).then(() => {
-                if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
+                console.log(booking_update)
+                if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.update.firstName || booking_update.update.lastName) {
                     clearBookings();
                     extractBookings();
                     displayBookings()
@@ -767,7 +770,7 @@ e("confirmSaveBooking_save").addEventListener("click", () => {
     let check = checkSave();
     if (check.pass) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
-            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.firstName || booking_update.lastName) {
+            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.update.firstName || booking_update.update.lastName) {
                 clearBookings();
                 extractBookings();
                 displayBookings()
