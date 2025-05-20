@@ -392,9 +392,15 @@ function setCharterLine() {
     if (booking.estimate && booking.estimate != 0 && booking.estimate != "") {
         let duration = getDuration(booking.charterStartTimestamp, booking.charterEndTimestamp);
         let rate = (booking.estimate / duration).toFixed(2);
-        e("flow_acceptBooking_qty1").value = duration;
-        e("flow_acceptBooking_rate1").value = rate;
-        e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration * rate).toFixed(2))
+        if (device == "desktop") {
+            e("flow_acceptBooking_qty1").value = duration;
+            e("flow_acceptBooking_rate1").value = rate;
+            e("flow_acceptBooking_amt1").innerHTML = formatCurrency((duration * rate).toFixed(2))
+        } else {
+            e("flow_acceptBooking_qty1_mobile").value = duration;
+            e("flow_acceptBooking_rate1_mobile").value = rate;
+            e("flow_acceptBooking_amt1_mobile").innerHTML = formatCurrency((duration * rate).toFixed(2))
+        }
     }
 }
 
@@ -514,7 +520,7 @@ function flow_acceptBooking_setNote() {
     } else {
         let l1 = "Payment & Cancellation Terms:";
         let l2 = "* 50% deposit secures booking; balance due 14 days prior or deposit may be forfeited. Full payment also accepted.";
-        let l3 = "* Cancel 14+ days: Full refund minus $100. Cancel 8-13 days: 50% refund minus $100.";
+        let l3 = "* Cancel 8-13 days: 50% refund minus $100.";
         let l4 = "* Unsafe weather: Reschedule or refund minus $100. Cooler/rainy weather is not considered unsafe.";
         text = `${l1}\n${l2}\n${l3}\n${l4}`;
     }
