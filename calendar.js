@@ -456,6 +456,22 @@ function populateBookingDetails(booking) {
     } else {
         e("msg_no_invoices").classList.remove("hidden");
     }
+    if ((booking.foodOptions && booking.foodOptions.length > 0) || booking.vessel == "7qc7aPDMLFWSvq7Js1Hg" || booking.vessel == "ZbsHfr4Bjdql9Tt0E3s7") {
+        e("foodOptions").classList.remove("hidden");
+        if (booking.foodOptions.length > 0) {
+            booking.foodOptions.forEach((option) => {
+                e(option.input).value = option.count
+            })
+        }
+    } else {
+        e("foodOptions").classList.add("hidden")
+    }
+}
+
+function clearFoodOptions() {
+    foodOptions.forEach((option) => {
+        e(option.input).value = 0
+    })
 }
 
 function clearInvoiceList() {
@@ -475,6 +491,7 @@ function clearBookingDetails() {
         bdElements[key].value = ""
     })
     clearInvoiceList()
+    clearFoodOptions()
     currentBooking = "";
 }
 
