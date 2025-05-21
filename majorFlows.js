@@ -307,6 +307,7 @@ e("flow_sendOptions_send").addEventListener("click", () => {
                 e("flow_sendOptions_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Options Sent";
+                bdElements.status.value = "Options Sent"; 
                 updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
@@ -815,6 +816,7 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
                 e("flow_acceptBooking_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Request Accepted";
+                bdElements.status.value = "Request Accepted";
                 updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
@@ -973,6 +975,7 @@ e("flow_sendEmail_send").addEventListener("click", () => {
                 e("flow_sendEmail_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = sendEmailStatus;
+                bdElements.status.value = sendEmailStatus;
                 updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
                     booking_update.id = null;
