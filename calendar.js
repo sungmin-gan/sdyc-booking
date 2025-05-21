@@ -463,6 +463,7 @@ function populateBookingDetails(booking) {
                 e(option.input).value = option.count;
                 let foodOption = foodOptions.find(x => x.input == option.input);
                 foodOption.count = option.count;
+                foodOption.total = (foodOption.count * foodOption.unit).toFixed(0)
             })
             setFoodEstimate()
         }
