@@ -747,10 +747,15 @@ e("saveButton").addEventListener("click", () => {
             updateBooking(booking_update.id, booking_update.update).then(() => {
                 console.log(booking_update)
                 updateLocalBooking();
-                if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.update.firstName || booking_update.update.lastName) {
+                if (device == "desktop") {
                     clearBookings();
                     extractBookings();
                     displayBookings()
+                } else {
+                    clearBookingsList()
+                    getCalendarDatesStrict();
+                    extractBookings();
+                    fillBookingsList();
                 }
                 disableBDFields();
                 booking_update = { id: null, update: {} }
@@ -772,10 +777,15 @@ e("confirmSaveBooking_save").addEventListener("click", () => {
     if (check.pass) {
         updateBooking(booking_update.id, booking_update.update).then(() => {
             updateLocalBooking();
-            if (booking_update.update.charterStart || booking_update.update.charterEnd || booking_update.update.status || booking_update.update.firstName || booking_update.update.lastName) {
+            if (device == "desktop") {
                 clearBookings();
                 extractBookings();
                 displayBookings()
+            } else {
+                clearBookingsList()
+                getCalendarDatesStrict();
+                extractBookings();
+                fillBookingsList();
             }
             disableBDFields();
             e("confirmSaveBooking").classList.add("hidden");
