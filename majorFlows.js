@@ -312,10 +312,12 @@ e("flow_sendOptions_send").addEventListener("click", () => {
                     booking_update.id = null;
                     booking_update.update = {};
                     if (device == "desktop") {
+                        console.log("In rendering - desktop")
                         clearBookings();
                         extractBookings();
                         displayBookings()
                     } else {
+                        console.log("In rendering - mobile")
                         clearBookingsList()
                         getCalendarDatesStrict();
                         extractBookings();
