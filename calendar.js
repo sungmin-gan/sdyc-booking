@@ -461,7 +461,8 @@ function populateBookingDetails(booking) {
         if (booking.foodOptions && booking.foodOptions.length > 0) {
             booking.foodOptions.forEach((option) => {
                 e(option.input).value = option.count;
-                foodOptions[option.input].count = option.count;
+                let foodOption = foodOptions.find(x => x.input == option.input);
+                foodOption.count = option.count;
             })
             setFoodEstimate()
         }
