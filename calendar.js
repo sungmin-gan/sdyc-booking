@@ -462,6 +462,7 @@ function populateBookingDetails(booking) {
             booking.foodOptions.forEach((option) => {
                 e(option.input).value = option.count
             })
+            setFoodEstimate()
         }
     } else {
         e("foodOptions").classList.add("hidden")
