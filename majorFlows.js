@@ -276,18 +276,6 @@ function flow_sendOptions_clearForm() {
     e("flow_sendOptions_defaultTab").click()
 }
 
-function formatPhone(phone) {
-    phone = phone.replaceAll("(", "");
-    phone = phone.replaceAll(")", "");
-    phone = phone.replaceAll("-", "");
-    phone = phone.replaceAll(" ", "");
-    if (phone.length == 11) {
-        return `+${phone}`
-    } else {
-        return `+1${phone}`
-    }
-}
-
 e("flow_sendOptions_send").addEventListener("click", () => {
     let check = false;
     let to_check = false;
@@ -316,16 +304,6 @@ e("flow_sendOptions_send").addEventListener("click", () => {
         gmailOptions(data).then((response) => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
-                let booking = getCurrentBooking();
-                if (booking.textOptIn && booking.textOptIn != "false" &&
-                       booking.phone && booking.phone != "" && device != "desktop"
-                   ) {
-                    e("flow_sendOptions_successTab_text").classList.remove("hidden")
-                    let href = `sms:${formatPhone(bdElements.phone.value)}&body=${encodeURIComponent(e("flow_sendOptions_msg").value)}`;
-                    e("flow_sendOptions_successTab_text").setAttribute("href", href);
-                } else {
-                    e("flow_sendOptions_successTab_text").classList.add("hidden")
-                }
                 e("flow_sendOptions_successTab").click();
                 booking_update.id = currentBooking;
                 booking_update.update["status"] = "Options Sent";
@@ -732,16 +710,14 @@ e("flow_acceptBooking_create").addEventListener("click", () => {
 
         rowsCheck = rows.r1 && rows.r2 && rows.r3;
     }
-    let r1 = null;
-    if (device == "desktop") { r1 = e("flow_acceptBooking_sDate1").value != "" }
-    else { r1 = e("flow_acceptBooking_sDate1_mobile").value != "" }
+
     let essentials = {
         customerName: e("flow_acceptBooking_customerName").value != "",
         customerEmail: e("flow_acceptBooking_customerEmail").value != "",
         terms: e("flow_acceptBooking_terms").value != "",
         invoiceDate: e("flow_acceptBooking_invoiceDate").value != "",
         dueDate: e("flow_acceptBooking_dueDate").value != "",
-        row1: r1
+        row1: e("flow_acceptBooking_sDate1").value != ""
     }
     Object.keys(essentials).forEach((key) => {
         if (!essentials[key]) { essentialsCheck = false }
@@ -842,10 +818,12 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
                     booking_update.id = null;
                     booking_update.update = {};
                     if (device == "desktop") {
+                        console.log("In rendering - desktop")
                         clearBookings();
                         extractBookings();
                         displayBookings()
                     } else {
+                        console.log("In rendering - mobile")
                         clearBookingsList()
                         getCalendarDatesStrict();
                         extractBookings();
