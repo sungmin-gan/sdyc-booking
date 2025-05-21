@@ -305,10 +305,10 @@ e("flow_sendOptions_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 e("flow_sendOptions_successTab").click();
-                booking_update.id = currentBooking;
-                booking_update.update["status"] = "Options Sent";
-                updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = currentBooking;
+                    booking_update.update["status"] = "Options Sent";
+                    updateLocalBooking();
                     booking_update.id = null;
                     booking_update.update = {};
                     if (device == "desktop") {
@@ -813,10 +813,10 @@ e("flow_acceptBooking_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 e("flow_acceptBooking_successTab").click();
-                booking_update.id = currentBooking;
-                booking_update.update["status"] = "Request Accepted";
-                updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = currentBooking;
+                    booking_update.update["status"] = "Request Accepted";
+                    updateLocalBooking();
                     booking_update.id = null;
                     booking_update.update = {};
                     if (device == "desktop") {
@@ -973,18 +973,19 @@ e("flow_sendEmail_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden")
             if (response.success && response.success != "false") {
                 e("flow_sendEmail_successTab").click();
-                booking_update.id = currentBooking;
-                booking_update.update["status"] = sendEmailStatus;
-                updateLocalBooking();
                 updateBooking(booking_update.id, booking_update.update).then(() => {
+                    booking_update.id = currentBooking;
+                    booking_update.update["status"] = sendEmailStatus;
+                    updateLocalBooking();
                     booking_update.id = null;
                     booking_update.update = {};
-                    sendEmailStatus = "";
                     if (device == "desktop") {
+                        console.log("In rendering - desktop")
                         clearBookings();
                         extractBookings();
                         displayBookings()
                     } else {
+                        console.log("In rendering - mobile")
                         clearBookingsList()
                         getCalendarDatesStrict();
                         extractBookings();
