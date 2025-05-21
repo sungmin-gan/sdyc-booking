@@ -5,8 +5,8 @@ const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const YEARABBR = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-let currentDate = new Date("March 1, 2025");
-//let currentDate = new Date();
+//let currentDate = new Date("March 1, 2025");
+let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 let currentDay = currentDate.getDay();
@@ -456,9 +456,9 @@ function populateBookingDetails(booking) {
     } else {
         e("msg_no_invoices").classList.remove("hidden");
     }
-    if ((booking.foodOptions && booking.foodOptions.length > 0) || booking.vessel == "7qc7aPDMLFWSvq7Js1Hg" || booking.vessel == "ZbsHfr4Bjdql9Tt0E3s7") {
+    if (booking.vessel == "7qc7aPDMLFWSvq7Js1Hg" || booking.vessel == "ZbsHfr4Bjdql9Tt0E3s7") {
         e("foodOptions").classList.remove("hidden");
-        if (booking.foodOptions.length > 0) {
+        if (booking.foodOptions && booking.foodOptions.length > 0) {
             booking.foodOptions.forEach((option) => {
                 e(option.input).value = option.count
             })
