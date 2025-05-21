@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -460,7 +462,8 @@ function populateBookingDetails(booking) {
         e("foodOptions").classList.remove("hidden");
         if (booking.foodOptions && booking.foodOptions.length > 0) {
             booking.foodOptions.forEach((option) => {
-                e(option.input).value = option.count
+                e(option.input).value = option.count;
+                foodOptions[option.input].count = option.count;
             })
             setFoodEstimate()
         }
@@ -472,6 +475,7 @@ function populateBookingDetails(booking) {
 function clearFoodOptions() {
     foodOptions.forEach((option) => {
         e(option.input).value = 0
+        option.count = 0
     })
 }
 
