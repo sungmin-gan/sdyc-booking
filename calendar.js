@@ -695,7 +695,7 @@ function setBookingUpdate() {
         foodMatch = true
     }
     if (!foodMatch) {
-        booking_update.foodOptions = selectedOptions
+        booking_update.update.foodOptions = selectedOptions
     }
 }
 
