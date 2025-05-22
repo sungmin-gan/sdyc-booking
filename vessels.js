@@ -273,7 +273,7 @@ e("confirmSaveVessel_save").addEventListener("click", () => {
                 switchTabs(goToTab) 
             }
         } else {
-            if (vesselTo) { changeVesselMobile(e(vesselTo)) }
+            if (vesselTo) { changeVesselMobile(vesselTo) }
             else if (goToTab) { 
                 changeVesselMobile(e("7qc7aPDMLFWSvq7Js1Hg"));
                 switchTabs(goToTab) 
@@ -295,7 +295,7 @@ e("confirmSaveVessel_discard").addEventListener("click", () => {
             switchTabs(goToTab) 
         }
     } else {
-        if (vesselTo) { setVesselMobile(e(vesselTo)) }
+        if (vesselTo) { setVesselMobile(vesselTo) }
         else if (goToTab) { 
             changeVesselMobile(e("7qc7aPDMLFWSvq7Js1Hg"));
             switchTabs(goToTab) 
