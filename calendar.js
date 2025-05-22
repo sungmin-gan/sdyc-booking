@@ -460,6 +460,7 @@ function populateBookingDetails(booking) {
         e("foodOptions").classList.remove("hidden");
         if (booking.foodOptions && booking.foodOptions.length > 0) {
             booking.foodOptions.forEach((option) => {
+                console.log(option)
                 e(option.input).value = option.count;
                 let foodOption = foodOptions.find(x => x.input == option.input);
                 foodOption.count = option.count;
