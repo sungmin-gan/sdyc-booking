@@ -687,11 +687,13 @@ function setBookingUpdate() {
     if (selectedOptions) {
         selectedOptions.sort((a, b) => a.name.localeCompare(b.name));
     }
+    console.log(selectedOptions)
     let currentOptions = booking.foodOptions;
     if (currentOptions) {
         currentOptions.sort((a, b) => a.name.localeCompare(b.name));
     }
-    if (selectedOptions == currentOptions) {
+    console.log(currentOptions)
+    if (JSON.stringify(selectedOptions) == JSON.stringify(currentOptions)) {
         foodMatch = true
     }
     if (!foodMatch) {
@@ -821,7 +823,6 @@ e("saveButton").addEventListener("click", () => {
             //disableBDFields();
         } else {
             disableBDFields()
-            booking_update = { id: null, update: {} }
         }
     } else {
         e("flow_saveBooking_err").classList.remove("hidden");
