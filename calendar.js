@@ -698,7 +698,10 @@ function setBookingUpdate() {
         foodMatch = true
     }
     if (!foodMatch) {
-        booking_update.update.foodOptions = selectedOptions
+        booking_update.update.foodOptions = [];
+        selectedOptions.forEach((option) => {
+            booking_update.update.foodOptions.push(option)
+        })
     }
 }
 
