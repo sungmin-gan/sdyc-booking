@@ -1,5 +1,7 @@
 //// //// //// //// Declarations //// //// //// ////
 
+const e = require("express");
+
 let vessels = [];
 
 let currentVessel = "7qc7aPDMLFWSvq7Js1Hg";
@@ -60,32 +62,46 @@ function updateVessel(id, data) {
 
 function fillVesselLists() {
     return new Promise(async (resolve) => {
-        vessels.forEach((vessel) => {
-            let slot = document.createElement("div");
-            slot.classList.add("div-block-40");
-            slot.setAttribute("id", vessel.id);
-            let name = document.createElement("div");
-            name.classList.add("text-block-22");
-            if (vessel.name.length > 23) {
-                let vesselName = `${vessel.name.substring(0, 23)}...`;
-                if (vesselName[22] == " ") {
-                    vesselName = `${vesselName.substring(0, 22)}...`
+        if (device == "desktop") {
+            vessels.forEach((vessel) => {
+                let slot = document.createElement("div");
+                slot.classList.add("div-block-40");
+                slot.setAttribute("id", vessel.id);
+                let name = document.createElement("div");
+                name.classList.add("text-block-22");
+                if (vessel.name.length > 23) {
+                    let vesselName = `${vessel.name.substring(0, 23)}...`;
+                    if (vesselName[22] == " ") {
+                        vesselName = `${vesselName.substring(0, 22)}...`
+                    }
+                    name.innerHTML = vesselName;
+                } else {
+                    name.innerHTML = vessel.name;
                 }
-                name.innerHTML = vesselName;
-            } else {
-                name.innerHTML = vessel.name;
-            }
-            let displayName = document.createElement("div");
-            displayName.classList.add("text-block-23");
-            displayName.innerHTML = vessel.displayName;
-            slot.appendChild(name);
-            slot.appendChild(displayName);
-            slot.addEventListener("click", () => { 
-                changeVessel(slot)
+                let displayName = document.createElement("div");
+                displayName.classList.add("text-block-23");
+                displayName.innerHTML = vessel.displayName;
+                slot.appendChild(name);
+                slot.appendChild(displayName);
+                slot.addEventListener("click", () => { 
+                    changeVessel(slot)
+                })
+                e(vesselList[vessel.class]).appendChild(slot)
             })
-            e(vesselList[vessel.class]).appendChild(slot)
-        })
-        resolve()
+            resolve()
+        } else {
+            vessels.forEach((vessel) => {
+                let option = document.createElement("option");
+                option.setAttribute("id", vessel.id)
+                option.value = vessel.id;
+                option.text = vessel.name;
+                e("vesselSelectMobile").appendChild(option)
+            })
+            e("vesselSelectMobile").value = currentVessel;
+            e("vesselSelectMobile").addEventListener("change", () => {
+                changeVesselMobile(e("vesselSelectMobile").value)
+            })
+        }
     })
 }
 
@@ -163,6 +179,20 @@ function setVessel(slot) {
     vessel_update = { id: vid, update: {} }
 }
 
+function setVesselMobile(id) {
+    disableVfFields()
+    
+    let vessel = vessels.find((v) => v.id == id);
+    
+    Object.keys(vfElements).forEach((key) => {
+        vfElements[key].value = vessel[key] || "";
+    })
+    e("vf_vesselURL").setAttribute("href", vfElements.sdycURL.value)
+    currentVessel = id;
+    vesselTo = "";
+    vessel_update = { id: vid, update: {} }
+}
+
 function changeVessel(slot) {
     if (slot.getAttribute("id") != currentVessel) {
         setVesselUpdate();
@@ -171,6 +201,18 @@ function changeVessel(slot) {
             vesselTo = slot.getAttribute("id")
         } else {
             setVessel(slot)
+        }
+    }
+}
+
+function changeVesselMobile(id) {
+    if (id != currentVessel) {
+        setVesselUpdate();
+        if (Object.keys(vessel_update.update).length > 0) {
+            e("confirmSaveVessel").classList.remove("hidden");
+            vesselTo = id
+        } else {
+            setVesselMobile(id)
         }
     }
 }
