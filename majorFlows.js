@@ -448,13 +448,13 @@ function setFoodOptionsLine() {
             e("flow_acceptBooking_qty2").value = 1;
             e("flow_acceptBooking_rate2").value = parseFloat(foodOptionsTotal.toFixed(2));
             e("flow_acceptBooking_amt2").innerHTML = formatCurrency(foodOptionsTotal);
-            e("flow_acceptBooking_desc2").innerHTML = foodOptionsDesc;
+            e("flow_acceptBooking_desc2").value = foodOptionsDesc;
             e("flow_acceptBooking_sDate2").value = e("flow_acceptBooking_sDate1").value;
         } else {
             e("flow_acceptBooking_qty2_mobile").value = 1;
             e("flow_acceptBooking_rate2_mobile").value = parseFloat(foodOptionsTotal.toFixed(2));
             e("flow_acceptBooking_amt2_mobile").innerHTML = formatCurrency(foodOptionsTotal);
-            e("flow_acceptBooking_desc2_mobile").innerHTML = foodOptionsDesc;
+            e("flow_acceptBooking_desc2_mobile").value = foodOptionsDesc;
             e("flow_acceptBooking_sDate2_mobile").value = e("flow_acceptBooking_sDate1_mobile").value;
         }
     }
