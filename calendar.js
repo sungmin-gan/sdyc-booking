@@ -803,6 +803,8 @@ e("saveButton").addEventListener("click", () => {
             // //let displayedBooking = bookingsToDisplay.find(x => x.booking.id == booking_update.id).booking;
             // //populateBookingDetails(displayedBooking);
             //disableBDFields();
+        } else {
+            disableBDFields()
         }
     } else {
         e("flow_saveBooking_err").classList.remove("hidden");
