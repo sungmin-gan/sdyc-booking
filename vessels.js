@@ -1,7 +1,5 @@
 //// //// //// //// Declarations //// //// //// ////
 
-const e = require("express");
-
 let vessels = [];
 
 let currentVessel = "7qc7aPDMLFWSvq7Js1Hg";
@@ -267,10 +265,18 @@ e("confirmSaveVessel_save").addEventListener("click", () => {
     disableVfFields();
     updateVessel(vessel_update.id, vessel_update.update).then(() => {
         updateLocalVessel();
-        if (vesselTo) { changeVessel(e(vesselTo)) }
-        else if (goToTab) { 
-            changeVessel(e("7qc7aPDMLFWSvq7Js1Hg"));
-            switchTabs(goToTab) 
+        if (device == "desktop") {
+            if (vesselTo) { changeVessel(e(vesselTo)) }
+            else if (goToTab) { 
+                changeVessel(e("7qc7aPDMLFWSvq7Js1Hg"));
+                switchTabs(goToTab) 
+            }
+        } else {
+            if (vesselTo) { changeVesselMobile(e(vesselTo)) }
+            else if (goToTab) { 
+                changeVesselMobile(e("7qc7aPDMLFWSvq7Js1Hg"));
+                switchTabs(goToTab) 
+            }
         }
     });
 })
@@ -281,9 +287,17 @@ e("confirmSaveVessel_cancel").addEventListener("click", () => {
 
 e("confirmSaveVessel_discard").addEventListener("click", () => {
     e("confirmSaveVessel").classList.add("hidden");
-    if (vesselTo) { setVessel(e(vesselTo)) }
-    else if (goToTab) { 
-        changeVessel(e("7qc7aPDMLFWSvq7Js1Hg"));
-        switchTabs(goToTab) 
+    if (device == "desktop") {
+        if (vesselTo) { setVessel(e(vesselTo)) }
+        else if (goToTab) { 
+            changeVessel(e("7qc7aPDMLFWSvq7Js1Hg"));
+            switchTabs(goToTab) 
+        }
+    } else {
+        if (vesselTo) { setVesselMobile(e(vesselTo)) }
+        else if (goToTab) { 
+            changeVesselMobile(e("7qc7aPDMLFWSvq7Js1Hg"));
+            switchTabs(goToTab) 
+        }
     }
 })
