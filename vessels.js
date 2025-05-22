@@ -284,6 +284,8 @@ e("confirmSaveVessel_save").addEventListener("click", () => {
 
 e("confirmSaveVessel_cancel").addEventListener("click", () => {
     e("confirmSaveVessel").classList.add("hidden");
+    e("mainMenu").classList.add("hidden");
+    mobileMenuStatus = "closed"
 })
 
 e("confirmSaveVessel_discard").addEventListener("click", () => {
