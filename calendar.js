@@ -474,9 +474,11 @@ function populateBookingDetails(booking) {
 
 function clearFoodOptions() {
     foodOptions.forEach((option) => {
-        e(option.input).value = 0
-        option.count = 0
+        e(option.input).value = 0;
+        option.count = 0;
+        option.total = 0
     })
+    foodOptionsTotal = 0
 }
 
 function clearInvoiceList() {
