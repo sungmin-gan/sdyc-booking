@@ -436,6 +436,30 @@ function setCharterLine() {
     }
 }
 
+function setFoodOptionsLine() {
+    if (foodOptionsTotal > 0) {
+        let foodOptionsDesc = "";
+        let selectedOptions = foodOptions.filter(x => x.count > 0);
+        selectedOptions.forEach((option, i) => {
+            let suffix = (i == selectedOptions.length-1 ? "" : "\n")
+            foodOptionsDesc += `${option.name} x ${option.count} @ ${formatCurrency(option.unit)}${suffix}`
+        })
+        if (device == "desktop") {
+            e("flow_acceptBooking_qty2").value = 1;
+            e("flow_acceptBooking_rate2").value = foodOptionsTotal;
+            e("flow_acceptBooking_amt2").innerHTML = formatCurrency(foodOptionsTotal);
+            e("flow_acceptBooking_desc2").innerHTML = foodOptionsDesc;
+            e("flow_acceptBooking_sDate2").value = e("flow_acceptBooking_sDate1").value;
+        } else {
+            e("flow_acceptBooking_qty2_mobile").value = 1;
+            e("flow_acceptBooking_rate2_mobile").value = foodOptionsTotal;
+            e("flow_acceptBooking_amt2_mobile").innerHTML = formatCurrency(foodOptionsTotal);
+            e("flow_acceptBooking_desc2_mobile").innerHTML = foodOptionsDesc;
+            e("flow_acceptBooking_sDate2_mobile").value = e("flow_acceptBooking_sDate1_mobile").value;
+        }
+    }
+}
+
 for (let i = 1; i < 6; i++) {
     e(`flow_acceptBooking_qty${i}`).addEventListener("input", () => {
         let rate = parseFloat(e(`flow_acceptBooking_rate${i}`).value);
@@ -578,6 +602,7 @@ function setTemplate_acceptBooking() {
     }
     setCharterLine()
     setDescription()
+    setFoodOptionsLine()
     flow_acceptBooking_setTotal()
     flow_acceptBooking_setNote()
 }
