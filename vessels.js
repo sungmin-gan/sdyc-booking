@@ -99,6 +99,7 @@ function fillVesselLists() {
             e("vesselSelectMobile").addEventListener("change", () => {
                 changeVesselMobile(e("vesselSelectMobile").value)
             })
+            resolve()
         }
     })
 }
