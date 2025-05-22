@@ -1,5 +1,10 @@
 //// //// //// //// Declarations //// //// //// ////
 
+let device = "desktop";
+
+if (window.matchMedia('(min-width: 992px)').matches) { device = "desktop" }
+else if (window.matchMedia('(max-width: 479px)').matches) { device = "mobile" }
+
 const WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const WEEKABBR = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const YEAR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -35,7 +40,7 @@ function getCurrentBooking() {
 const tabs = {
     calendar: {
         tab: e("calendarTab"),
-        section: e("calendarSection"),
+        section: (device == "desktop" ? e("calendarSection") : e("listSection")),
         icon: e("calendarTabIcon")
     },
     yachts: {
@@ -58,6 +63,10 @@ function switchTabs(dest) {
         dest.icon.classList.add("selected")
         currentTab = dest;
         goToTab = null;
+    }
+    if (device == "mobile") {
+        e("mainMenu").classList.add("hidden");
+        mobileMenuStatus = "closed"
     }
 }
 
