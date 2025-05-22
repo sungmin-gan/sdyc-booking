@@ -189,7 +189,7 @@ function setVesselMobile(id) {
     e("vf_vesselURL").setAttribute("href", vfElements.sdycURL.value)
     currentVessel = id;
     vesselTo = "";
-    vessel_update = { id: vid, update: {} }
+    vessel_update = { id: id, update: {} }
 }
 
 function changeVessel(slot) {
