@@ -508,8 +508,8 @@ function disableBDFields() {
     })
     foodOptions.forEach((option) => {
         e(option.input).disabled = true;
-        e(`${option.input}_plus`).disabled = true;
-        e(`${option.input}_minus`).disabled = true;
+        e(`${option.input}_plus`).classList.add("hidden");
+        e(`${option.input}_minus`).classList.add("hidden");
     })
     e("select_diningOptions").disabled = true;
     if (!dbFieldsDisabled) {
@@ -536,8 +536,8 @@ function enableBDFields() {
     })
     foodOptions.forEach((option) => {
         e(option.input).disabled = false;
-        e(`${option.input}_plus`).disabled = false;
-        e(`${option.input}_minus`).disabled = false;
+        e(`${option.input}_plus`).classList.remove("hidden");
+        e(`${option.input}_minus`).classList.remove("hidden");
     })
     e("select_diningOptions").disabled = false;
     e("saveButton").classList.remove("hidden")
