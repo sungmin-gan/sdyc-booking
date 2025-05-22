@@ -821,6 +821,7 @@ e("saveButton").addEventListener("click", () => {
             //disableBDFields();
         } else {
             disableBDFields()
+            booking_update = { id: null, update: {} }
         }
     } else {
         e("flow_saveBooking_err").classList.remove("hidden");
