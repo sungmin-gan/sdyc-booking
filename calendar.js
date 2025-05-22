@@ -681,6 +681,22 @@ function setBookingUpdate() {
             })
         }
     })
+    
+    let foodMatch = false;
+    let selectedOptions = foodOptions.filter(x => x.count > 0);
+    if (selectedOptions) {
+        selectedOptions.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    let currentOptions = booking.foodOptions;
+    if (currentOptions) {
+        currentOptions.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    if (selectedOptions == currentOptions) {
+        foodMatch = true
+    }
+    if (!foodMatch) {
+        booking_update.foodOptions = selectedOptions
+    }
 }
 
 function updateLocalBooking() {
