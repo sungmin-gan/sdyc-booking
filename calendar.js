@@ -506,6 +506,10 @@ function disableBDFields() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].disabled = true
     })
+    foodOptions.forEach((option) => {
+        e(option.input).disabled = true
+    })
+    e("select_diningOptions").disabled = true;
     if (!dbFieldsDisabled) {
         e("saveButton").classList.add("hidden")
         e("editButton").classList.remove("hidden")
@@ -528,6 +532,10 @@ function enableBDFields() {
     Object.keys(bdElements).forEach((key) => {
         bdElements[key].disabled = false
     })
+    foodOptions.forEach((option) => {
+        e(option.input).disabled = false
+    })
+    e("select_diningOptions").disabled = false;
     e("saveButton").classList.remove("hidden")
     e("editButton").classList.add("hidden")
     e("linePassengersInput").classList.remove("hidden")
