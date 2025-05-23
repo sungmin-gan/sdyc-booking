@@ -996,10 +996,11 @@ e("button_forward").addEventListener("click", () => {
         bdElements.vessel.value && 
         bdElements.vessel.value != ""
     ) {
+        let vessel = vessels.find(x => x.id == bdElements.vessel.value);
         e("tab_sendEmail").click();
-        e("flow_sendEmail_to").value = vfElements.forwardRequestsTo.value;
+        e("flow_sendEmail_to").value = vessel.primaryName.forwardRequestsTo;
         e("flow_sendEmail_subject").value = flow_sendEmail_getSubject("FWD");
-        let msg = `Hello ${vfElements.primaryName.value},\n\n`;
+        let msg = `Hello ${vessel.primaryName},\n\n`;
         msg += "Please see the attached vessel request below:\n\n";
         msg += getCurrentBooking().originalForm;
         e("flow_sendEmail_msg").value = msg;
