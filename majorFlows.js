@@ -321,7 +321,7 @@ e("flow_sendOptions_send").addEventListener("click", () => {
             e("loadingScreen").classList.add("hidden");
             if (response.success == "true") {
                 let booking = getCurrentBooking();
-                if (booking.textOptIn && booking.textOptIn != "false" &&
+                if (((booking.textOptIn && booking.textOptIn != "false") || (booking.contactMode == "Text")) &&
                        booking.phone && booking.phone != ""
                    ) {
                     e("flow_sendOptions_successTab_text").classList.remove("hidden")
