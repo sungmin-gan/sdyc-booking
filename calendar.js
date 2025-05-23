@@ -276,7 +276,7 @@ let statusClass = {
     "Deposit Paid": "depositpaid",
     "Fully Paid": "fullypaid",
     "Referred Out": "referredout",
-    "Declined": "Declined",
+    "Declined": "declined",
     "Cancelled": "cancelled"
 }
 
