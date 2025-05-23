@@ -226,14 +226,16 @@ e("newCharter_saveButton").addEventListener("click", () => {
         calendarMonth = bookingDate.getMonth();
         calendarDates = [];
         if (device == "desktop") {
-          clearBookings();
-          extractBookings();
+          clearBookings()
+          resetCalendarClasses()
+          fillCalendar()
+          extractBookings()
           displayBookings()
         } else {
-            clearBookingsList()
-            getCalendarDatesStrict();
-            extractBookings();
-            fillBookingsList();
+          clearBookingsList()
+          getCalendarDatesStrict();
+          extractBookings();
+          fillBookingsList();
         }    
         clearNcForm();
         clearNcElements();
