@@ -975,9 +975,7 @@ e("button_cancelBooking").addEventListener("click", () => {
 
 function check_forward() {
     if (dbFieldsDisabled &&
-        (!(bdElements.status.value == "Vessel Request" &&
-            bdElements.vessel.value &&
-            bdElements.vessel.value != ""))
+        (bdElements.vessel.value && bdElements.vessel.value != "")
     ) {
         e("button_forward").classList.add("disabled");
         e("button_forward_icon").classList.add("disabled");
