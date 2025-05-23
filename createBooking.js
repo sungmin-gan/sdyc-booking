@@ -225,11 +225,16 @@ e("newCharter_saveButton").addEventListener("click", () => {
         calendarYear = bookingDate.getFullYear();
         calendarMonth = bookingDate.getMonth();
         calendarDates = [];
-        clearBookings();
-        resetCalendarClasses();
-        fillCalendar();
-        extractBookings();
-        displayBookings();        
+        if (device == "desktop") {
+          clearBookings();
+          extractBookings();
+          displayBookings()
+        } else {
+            clearBookingsList()
+            getCalendarDatesStrict();
+            extractBookings();
+            fillBookingsList();
+        }    
         clearNcForm();
         clearNcElements();
         e("createBooking_defaultTab").click();
