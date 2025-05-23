@@ -975,7 +975,8 @@ e("button_cancelBooking").addEventListener("click", () => {
 
 function check_forward() {
     if (dbFieldsDisabled &&
-        (bdElements.vessel.value && bdElements.vessel.value != "")
+        bdElements.vessel.value && 
+        bdElements.vessel.value != ""
     ) {
         e("button_forward").classList.add("disabled");
         e("button_forward_icon").classList.add("disabled");
@@ -984,9 +985,8 @@ function check_forward() {
 
 e("button_forward").addEventListener("click", () => {
     if (dbFieldsDisabled &&
-        (bdElements.status.value == "Vessel Request" &&
-            bdElements.vessel.value &&
-            bdElements.vessel.value != "")
+        bdElements.vessel.value && 
+        bdElements.vessel.value != ""
     ) {
         e("tab_sendEmail").click();
         e("flow_sendEmail_to").value = vfElements.forwardRequestsTo.value;
