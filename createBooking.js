@@ -101,7 +101,8 @@ let ncForm = {
   textOptIn: false,
   vessel: "",
   vesselDisplayName: "",
-  vesselName: ""
+  vesselName: "",
+  foodOptions: []
 }
 
 function convertToUnix(isoString) {
