@@ -283,8 +283,12 @@ function formatPhone(phone) {
     phone = phone.replaceAll(" ", "");
     if (phone.length == 11) {
         return `+${phone}`
-    } else {
+    }  
+    else if (phone.length == 10) {
         return `+1${phone}`
+    }
+    else {
+        return `${phone}`
     }
 }
 
