@@ -998,7 +998,7 @@ e("button_forward").addEventListener("click", () => {
     ) {
         let vessel = vessels.find(x => x.id == bdElements.vessel.value);
         e("tab_sendEmail").click();
-        e("flow_sendEmail_to").value = vessel.primaryName.forwardRequestsTo;
+        e("flow_sendEmail_to").value = vessel.forwardRequestsTo;
         e("flow_sendEmail_subject").value = flow_sendEmail_getSubject("FWD");
         let msg = `Hello ${vessel.primaryName},\n\n`;
         msg += "Please see the attached vessel request below:\n\n";
