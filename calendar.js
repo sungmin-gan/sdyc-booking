@@ -285,6 +285,7 @@ function displayBookings() {
         // Render elements
         let bookingDiv = document.createElement("div");
         bookingDiv.classList.add("div-block-11");
+        bookingDiv.setAttribute("id", `bookingContainer_${i}`)
         let bookingBadge = document.createElement("div");
         bookingBadge.classList.add("text-block-6");
         bookingBadge.setAttribute("id", `booking_${i}`)
@@ -303,7 +304,7 @@ function displayBookings() {
 
 function clearBookings() {
     for (let i = 0; i < bookingsToDisplay.length; i++) {
-        e(`booking_${i}`).remove();
+        e(`bookingContainer_${i}`).remove();
     }
     bookingsToDisplay = []
 }
