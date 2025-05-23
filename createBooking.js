@@ -175,7 +175,7 @@ function packageNcForm() {
   ncForm.passengers = parseFloat(ncElements.passengers.value);
   ncForm.phone = ncElements.phone.value;
   ncForm.status = ncElements.status.value;
-  ncForm.textOptIn = (ncElements.textOptIn.value == "true" ? true : false);
+  ncForm.textOptIn = (ncElements.textOptIn.value == "true" || ncElements.contactMode == "Text" ? true : false);
   ncForm.vessel = ncElements.vessel.value;
   ncForm.charterStart = `${ncElements.charterStartDate.value}T${ncElements.charterStartTime.value}:00-07:00`;
   ncForm.charterEnd = `${ncElements.charterEndDate.value}T${ncElements.charterEndTime.value}:00-07:00`;
