@@ -950,10 +950,10 @@ e("button_decline").addEventListener("click", () => {
 })
 
 function check_cancelBooking() {
-    if (!dbFieldsDisabled &&
-        (!(bdElements.status.value == "Request Accepted" ||
-            bdElements.status.value == "Deposit Paid" ||
-            bdElements.status.value == "Fully Paid"))
+    if (!(dbFieldsDisabled &&
+        (bdElements.status.value == "Request Accepted" ||
+        bdElements.status.value == "Deposit Paid" ||
+        bdElements.status.value == "Fully Paid"))
     ) {
         e("button_cancelBooking").classList.add("disabled");
         e("button_cancelBooking_icon").classList.add("disabled");
