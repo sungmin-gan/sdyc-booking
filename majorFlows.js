@@ -1004,7 +1004,7 @@ e("button_forward").addEventListener("click", () => {
         msg += "Please see the attached vessel request below:\n\n";
         msg += getCurrentBooking().originalForm;
         e("flow_sendEmail_msg").value = msg;
-        sendEmailStatus = "Forwarded Out"
+        sendEmailStatus = "Referred Out"
     }
 })
 
