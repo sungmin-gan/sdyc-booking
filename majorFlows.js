@@ -929,9 +929,11 @@ let sendEmailStatus = "";
 
 function check_decline() {
     if (dbFieldsDisabled &&
-        (!(bdElements.status.value == "Send Options" ||
-            bdElements.status.value == "Vessel Request"))
-    ) {
+        (bdElements.status.value == "Send Options" ||
+        bdElements.status.value == "Vessel Request")) {
+            e("button_decline").classList.remove("disabled");
+            e("button_decline_icon").classList.remove("disabled");
+    } else {
         e("button_decline").classList.add("disabled");
         e("button_decline_icon").classList.add("disabled");
     }
