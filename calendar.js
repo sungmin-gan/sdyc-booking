@@ -352,10 +352,6 @@ function resizeTextarea(textarea, fieldSizing) {
     textarea.style.height = `${fieldSizing.offsetHeight}px`
 }
 
-e("internalNotes").addEventListener("input", () => {
-    resizeTextarea(e("internalNotes"), e("internalNotesFieldSizing"))
-})
-
 function formatCurrency(amount = 0) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -411,7 +407,6 @@ function populateBookingDetails(booking) {
     bdElements.alcohol.value = booking.alcohol || false;
     e("notes").innerHTML = booking.additionalInfo || "-";
     bdElements.internalNotes.value = booking.internalNotes || "";
-    resizeTextarea(bdElements.internalNotes, e("internalNotesFieldSizing"));
     e("estimate").innerHTML = `Quote: ${formatCurrency(booking.estimate)}`;
     if (Object.keys(statusClass).includes(booking.status)) { bdElements.status.value = booking.status }
     if (booking.originalForm && booking.originalForm != "") {
