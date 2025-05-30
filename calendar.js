@@ -404,6 +404,7 @@ function populateBookingDetails(booking) {
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
     e("childrenText").innerHTML = `${booking.children || 0} Children`;
     bdElements.passengers.value = booking.passengers;
+    bdElements.children.value = booking.children || 0;
     bdElements.vessel.value = booking.vessel || "";
     bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
