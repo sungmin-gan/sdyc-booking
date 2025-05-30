@@ -367,6 +367,7 @@ let bdElements = {
     charterEndTime: e("charterEndTime"),
     status: e("status"),
     passengers: e("passengers"),
+    children: e("children"),
     vessel: e("vessel"),
     occasion: e("occasion"),
     alcohol: e("alcohol"),
@@ -401,6 +402,7 @@ function populateBookingDetails(booking) {
     bdElements.charterEndDate.value = segmentedDateTime(booking.charterEnd).date;
     bdElements.charterEndTime.value = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
+    e("childrenText").innerHTML = `${booking.children} Children`;
     bdElements.passengers.value = booking.passengers;
     bdElements.vessel.value = booking.vessel || "";
     bdElements.occasion.value = booking.occasion;
@@ -523,12 +525,15 @@ function disableBDFields() {
         e("saveButton").classList.add("hidden")
         e("editButton").classList.remove("hidden")
         e("linePassengersInput").classList.add("hidden")
+        e("lineChildrenInput").classList.add("hidden")
         e("linePassengersText").classList.remove("hidden")
+        e("lineChildrenText").classList.remove("hidden")
         e("lineCharterDatetimeInput").classList.add("hidden")
         e("lineCharterDatetimeText").classList.remove("hidden")
     }
     e("dateTimeText").innerHTML = makeDateSpanPretty(getCurrentBooking().charterStart, getCurrentBooking().charterEnd);
     e("passengersText").innerHTML = `${getCurrentBooking().passengers} Passengers`;
+    e("childrenText").innerHTML = `${getCurrentBooking().children} Children`;
     dbFieldsDisabled = true;
     check_sendOptions();
     check_acceptBooking();
@@ -550,7 +555,9 @@ function enableBDFields() {
     e("saveButton").classList.remove("hidden")
     e("editButton").classList.add("hidden")
     e("linePassengersInput").classList.remove("hidden")
+    e("lineChildrenInput").classList.remove("hidden")
     e("linePassengersText").classList.add("hidden")
+    e("lineChildrenText").classList.add("hidden")
     e("lineCharterDatetimeInput").classList.remove("hidden")
     e("lineCharterDatetimeText").classList.add("hidden")
     dbFieldsDisabled = false;
