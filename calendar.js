@@ -535,7 +535,7 @@ function disableBDFields() {
     }
     e("dateTimeText").innerHTML = makeDateSpanPretty(getCurrentBooking().charterStart, getCurrentBooking().charterEnd);
     e("passengersText").innerHTML = `${getCurrentBooking().passengers} Passengers`;
-    let childrenCount = (booking.children ? parseInt(booking.children) : 0);
+    let childrenCount = (getCurrentBooking().children ? parseInt(getCurrentBooking().children) : 0);
     e("childrenText").innerHTML = `${childrenCount} Children`;
     dbFieldsDisabled = true;
     check_sendOptions();
