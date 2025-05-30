@@ -402,7 +402,7 @@ function populateBookingDetails(booking) {
     bdElements.charterEndDate.value = segmentedDateTime(booking.charterEnd).date;
     bdElements.charterEndTime.value = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
-    let childrenCount = (booking.children ? parseInt(booking.children) : 0);
+    let childrenCount = (booking.children == undefined || booking.children == "" || booking.children == null ? parseInt(booking.children) : 0);
     e("childrenText").innerHTML = `${childrenCount} Children`;
     bdElements.passengers.value = booking.passengers;
     bdElements.children.value = childrenCount;
