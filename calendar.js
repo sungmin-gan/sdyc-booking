@@ -402,7 +402,7 @@ function populateBookingDetails(booking) {
     bdElements.charterEndDate.value = segmentedDateTime(booking.charterEnd).date;
     bdElements.charterEndTime.value = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
-    e("childrenText").innerHTML = `${booking.children} Children`;
+    e("childrenText").innerHTML = `${booking.children || 0} Children`;
     bdElements.passengers.value = booking.passengers;
     bdElements.vessel.value = booking.vessel || "";
     bdElements.occasion.value = booking.occasion;
