@@ -402,9 +402,10 @@ function populateBookingDetails(booking) {
     bdElements.charterEndDate.value = segmentedDateTime(booking.charterEnd).date;
     bdElements.charterEndTime.value = segmentedDateTime(booking.charterEnd).time;
     e("passengersText").innerHTML = `${booking.passengers} Passengers`;
-    e("childrenText").innerHTML = `${booking.children || 0} Children`;
+    let childrenCount = (booking.children ? parseInt(booking.children) : 0);
+    e("childrenText").innerHTML = `${childrenCount} Children`;
     bdElements.passengers.value = booking.passengers;
-    bdElements.children.value = booking.children || 0;
+    bdElements.children.value = childrenCount;
     bdElements.vessel.value = booking.vessel || "";
     bdElements.occasion.value = booking.occasion;
     bdElements.alcohol.value = booking.alcohol || false;
