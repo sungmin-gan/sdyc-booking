@@ -992,8 +992,13 @@ function check_forward() {
 }
 
 function getForwardMsg() {
+    let vessel = "";
+    if (bdElements.vessel.value && bdElements.vessel.value != "") {
+        let v = vessels.find(x => x.id == bdElements.vessel.value);
+        vessel = v.name
+    }
     let form = {
-        Vessel: bdElements.vessel.value,
+        Vessel: vessel,
         Date: e("dateTimeText").innerHTML,
         Estimate: e("estimate").innerHTML.replace("Quote: ", ""),
         Passengers: bdElements.passengers.value,
