@@ -991,7 +991,7 @@ function check_forward() {
     }
 }
 
-function setForwardMsg() {
+function getForwardMsg() {
     let form = {
         Vessel: bdElements.vessel.value,
         Date: e("dateTimeText").innerHTML,
@@ -1011,6 +1011,7 @@ function setForwardMsg() {
     Object.keys(form).forEach((key) => {
         text += `${key}: ${form[key]}\n`
     })
+    return text
 }
 
 e("button_forward").addEventListener("click", () => {
@@ -1024,7 +1025,7 @@ e("button_forward").addEventListener("click", () => {
         e("flow_sendEmail_subject").value = flow_sendEmail_getSubject("FWD");
         let msg = `Hello ${vessel.primaryName},\n\n`;
         msg += "Please see the attached vessel request below:\n\n";
-        msg += getCurrentBooking().originalForm;
+        msg += getForwardMsg();
         e("flow_sendEmail_msg").value = msg;
         sendEmailStatus = "Referred Out"
     }
