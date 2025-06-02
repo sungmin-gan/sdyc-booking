@@ -1001,7 +1001,7 @@ function getForwardMsg() {
         FirstName: bdElements.firstName.value,
         LastName: bdElements.lastName.value,
         Occasion: bdElements.occasion.value,
-        AdditionalInfo: e("info").innerHTML.replaceAll("<br>", "\n"),
+        AdditionalInfo: e("notes").innerHTML.replaceAll("<br>", "\n"),
         Email: bdElements.email.value,
         Phone: bdElements.phone.value,
         ContactMode: bdElements.contactMode.value,
