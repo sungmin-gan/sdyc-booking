@@ -511,6 +511,8 @@ function clearBookingDetails() {
     clearInvoiceList()
     clearFoodOptions()
     currentBooking = "";
+    e("notes").innerHTML = "-";
+    e("originalForm").innerHTML = "-"
 }
 
 function disableBDFields() {
