@@ -37,6 +37,8 @@ e("newCharter_charterStartDate").addEventListener("change", () => {
 })
 
 e("newCharter_passengers").value = 0;
+e("newCharter_children").value = 0;
+
 
 e("createBookingButton").addEventListener("click", () => {
 	e("newCharterForm").classList.add("open")
