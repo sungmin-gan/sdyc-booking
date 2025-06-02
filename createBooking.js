@@ -26,6 +26,18 @@ function addBooking(data) {
 
 //// //// //// //// Main Functions //// //// //// ////
 
+e("newCharter_contactMode").addEventListener("change", () => {
+  if (e("newCharter_contactMode").value == "Text") {
+    e("newCharter_textOptIn").value = "true"
+  }
+})
+
+e("newCharter_charterStartDate").addEventListener("change", () => {
+  e("newCharter_charterEndDate").value = e("newCharter_charterStartDate").value
+})
+
+e("newCharter_passengers").value = 0;
+
 e("createBookingButton").addEventListener("click", () => {
 	e("newCharterForm").classList.add("open")
 })
@@ -70,6 +82,7 @@ let ncElements = {
   charterEndTime: e("newCharter_charterEndTime"),
   status: e("newCharter_status"),
   passengers: e("newCharter_passengers"),
+  children: e("newCharter_children"),
   vessel: e("newCharter_vessel"),
   occasion: e("newCharter_occasion"),
   alcohol: e("newCharter_alcohol"),
@@ -89,6 +102,7 @@ let ncForm = {
   charterLength: 0,
   charterStart: "",
   charterStartTimestamp: "",
+  children: 0,
   contactMode: "",
   email: "",
   firstName: "",
@@ -173,6 +187,7 @@ function packageNcForm() {
   ncForm.lastName = ncElements.lastName.value;
   ncForm.occasion = ncElements.occasion.value;
   ncForm.passengers = parseFloat(ncElements.passengers.value);
+  ncForm.children = parseFloat(ncElements.children.value);
   ncForm.phone = ncElements.phone.value;
   ncForm.status = ncElements.status.value;
   ncForm.textOptIn = (ncElements.textOptIn.value == "true" || ncElements.contactMode == "Text" ? true : false);
