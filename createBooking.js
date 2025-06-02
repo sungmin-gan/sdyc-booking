@@ -36,12 +36,10 @@ e("newCharter_charterStartDate").addEventListener("change", () => {
   e("newCharter_charterEndDate").value = e("newCharter_charterStartDate").value
 })
 
-e("newCharter_passengers").value = 0;
-e("newCharter_children").value = 0;
-
-
 e("createBookingButton").addEventListener("click", () => {
-	e("newCharterForm").classList.add("open")
+	e("newCharterForm").classList.add("open");
+  e("newCharter_passengers").value = 0;
+  e("newCharter_children").value = 0;
 })
 
 e("createBookingButton_mobile").addEventListener("click", () => {
