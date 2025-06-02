@@ -991,6 +991,28 @@ function check_forward() {
     }
 }
 
+function setForwardMsg() {
+    let form = {
+        Vessel: bdElements.vessel.value,
+        Date: e("dateTimeText").innerHTML,
+        Estimate: e("estimate").innerHTML.replace("Quote: ", ""),
+        Passengers: bdElements.passengers.value,
+        Children: bdElements.children.value,
+        FirstName: bdElements.firstName.value,
+        LastName: bdElements.lastName.value,
+        Occasion: bdElements.occasion.value,
+        AdditionalInfo: e("info").innerHTML.replaceAll("<br>", "\n"),
+        Email: bdElements.email.value,
+        Phone: bdElements.phone.value,
+        ContactMode: bdElements.contactMode.value,
+        BYOB: bdElements.alcohol.value
+    }
+    let text = "";
+    Object.keys(form).forEach((key) => {
+        text += `${key}: ${form[key]}\n`
+    })
+}
+
 e("button_forward").addEventListener("click", () => {
     if (dbFieldsDisabled &&
         bdElements.vessel.value && 
